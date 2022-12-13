@@ -4,3 +4,9 @@ parameters:
     paths:
         - src
         - tests
+
+    checkGenericClassInNonGenericObjectType: false
+
+    excludePaths:
+        - "*/Fixture/*"
+        - "*/Source/*"

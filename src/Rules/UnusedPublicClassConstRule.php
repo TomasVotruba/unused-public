@@ -70,49 +70,6 @@ final class UnusedPublicClassConstRule implements Rule
         return $ruleErrors;
     }
 
-    public function getRuleDefinition(): RuleDefinition
-    {
-        return new RuleDefinition(self::ERROR_MESSAGE, [
-            new CodeSample(
-                <<<'CODE_SAMPLE'
-final class Direction
-{
-    public LEFT = 'left';
-
-    public RIGHT = 'right';
-
-    public STOP = 'stop';
-}
-
-if ($direction === Direction::LEFT) {
-    echo 'left';
-}
-
-if ($direction === Direction::RIGHT) {
-    echo 'right';
-}
-CODE_SAMPLE
-                ,
-                <<<'CODE_SAMPLE'
-final class Direction
-{
-    public LEFT = 'left';
-
-    public RIGHT = 'right';
-}
-
-if ($direction === Direction::LEFT) {
-    echo 'left';
-}
-
-if ($direction === Direction::RIGHT) {
-    echo 'right';
-}
-CODE_SAMPLE
-            ),
-        ]);
-    }
-
     /**
      * @param mixed[] $usedConstFetches
      */

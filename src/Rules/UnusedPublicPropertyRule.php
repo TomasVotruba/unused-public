@@ -70,37 +70,6 @@ final class UnusedPublicPropertyRule implements Rule
         return $ruleErrors;
     }
 
-    public function getRuleDefinition(): RuleDefinition
-    {
-        return new RuleDefinition(self::ERROR_MESSAGE, [
-            new CodeSample(
-                <<<'CODE_SAMPLE'
-final class Car
-{
-    public $name;
-
-    public function getName()
-    {
-        return $this->name;
-    }
-}
-CODE_SAMPLE
-                ,
-                <<<'CODE_SAMPLE'
-final class Car
-{
-    private $name;
-
-    public function getName()
-    {
-        return $this->name;
-    }
-}
-CODE_SAMPLE
-            ),
-        ]);
-    }
-
     /**
      * @param mixed[] $usedProperties
      */

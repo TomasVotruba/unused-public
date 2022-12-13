@@ -68,51 +68,6 @@ final class UnusedPublicClassMethodRule implements Rule
         return $ruleErrors;
     }
 
-    public function getRuleDefinition(): RuleDefinition
-    {
-        return new RuleDefinition(self::ERROR_MESSAGE, [
-            new CodeSample(
-                <<<'CODE_SAMPLE'
-final class Car
-{
-    public function turn()
-    {
-    }
-
-    public function stay()
-    {
-    }
-}
-
-final class Driver
-{
-    public function driveCar(Car $car)
-    {
-        $car->turn();
-    }
-}
-CODE_SAMPLE
-                ,
-                <<<'CODE_SAMPLE'
-final class Car
-{
-    public function turn()
-    {
-    }
-}
-
-final class Driver
-{
-    public function driveCar(Car $car)
-    {
-        $car->turn();
-    }
-}
-CODE_SAMPLE
-            ),
-        ]);
-    }
-
     /**
      * @param mixed[] $usedClassMethods
      */
