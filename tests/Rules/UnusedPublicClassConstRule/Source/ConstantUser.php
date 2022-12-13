@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassConstRule\Source;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassConstRule\Source;
 
-use TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassConstRule\Fixture\SkipUsedPublicConstant;
+use TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassConstRule\Fixture\SkipUsedPublicConstant;
 
 final class ConstantUser
 {

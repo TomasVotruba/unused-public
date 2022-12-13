@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod;
+namespace TomasVotruba\UnusedPublic\Collector\ClassMethod;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use TomasVotruba\UnusedPublicPHPStanRules\Matcher\Collector\PublicClassMethodMatcher;
-use TomasVotruba\UnusedPublicPHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\Matcher\Collector\PublicClassMethodMatcher;
+use TomasVotruba\UnusedPublic\PhpDoc\ApiDocStmtAnalyzer;
 use Twig\Extension\ExtensionInterface;
 
 /**

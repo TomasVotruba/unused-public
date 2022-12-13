@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\PropertyFetch;
+namespace TomasVotruba\UnusedPublic\Collector\PropertyFetch;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\PropertyFetch;

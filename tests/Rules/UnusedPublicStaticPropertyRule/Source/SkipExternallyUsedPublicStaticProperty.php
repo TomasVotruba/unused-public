@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\Source;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\Source;
 
 final class SkipExternallyUsedPublicStaticProperty
 {

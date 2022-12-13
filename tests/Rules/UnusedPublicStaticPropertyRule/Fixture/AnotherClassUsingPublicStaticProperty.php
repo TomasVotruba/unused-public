@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\Fixture;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\Fixture;
 
-use TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\Source\SkipExternallyUsedPublicStaticProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\Source\SkipExternallyUsedPublicStaticProperty;
 
 final class AnotherClassUsingPublicStaticProperty
 {

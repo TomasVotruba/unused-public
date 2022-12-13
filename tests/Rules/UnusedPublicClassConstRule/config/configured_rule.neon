@@ -2,10 +2,10 @@ includes:
     - ../../../../config/included_services.neon
 
 rules:
-    - TomasVotruba\UnusedPublicPHPStanRules\Rules\UnusedPublicClassConstRule
+    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
 
 services:
     -
-        class: TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst\PublicClassLikeConstCollector
+        class: TomasVotruba\UnusedPublic\Collector\ClassConst\PublicClassLikeConstCollector
         tags:
             - phpstan.collector

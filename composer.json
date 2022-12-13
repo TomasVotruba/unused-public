@@ -1,5 +1,5 @@
 {
-    "name": "tomasvotruba/unused-public-phpstan-rules",
+    "name": "tomasvotruba/unused-public",
     "description": "Detect unused public properties, constants and methods in your code",
     "license": "MIT",
     "require": {
@@ -15,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "TomasVotruba\\UnusedPublicPHPStanRules\\": "src"
+            "TomasVotruba\\UnusedPublic\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TomasVotruba\\UnusedPublicPHPStanRules\\Tests\\": "tests"
+            "TomasVotruba\\UnusedPublic\\Tests\\": "tests"
         }
     },
     "scripts": {

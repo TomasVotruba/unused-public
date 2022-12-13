@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule;
 
 use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use TomasVotruba\UnusedPublicPHPStanRules\Collector\Class_\PublicStaticPropertyCollector;
-use TomasVotruba\UnusedPublicPHPStanRules\Collector\StaticPropertyFetch\PublicStaticPropertyFetchCollector;
-use TomasVotruba\UnusedPublicPHPStanRules\Rules\UnusedPublicStaticPropertyRule;
+use TomasVotruba\UnusedPublic\Collector\Class_\PublicStaticPropertyCollector;
+use TomasVotruba\UnusedPublic\Collector\StaticPropertyFetch\PublicStaticPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule;
 
 /**
  * @extends RuleTestCase<UnusedPublicStaticPropertyRule>

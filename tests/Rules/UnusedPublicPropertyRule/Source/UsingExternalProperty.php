@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Source;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Source;
 
-use TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 
 final class UsingExternalProperty
 {

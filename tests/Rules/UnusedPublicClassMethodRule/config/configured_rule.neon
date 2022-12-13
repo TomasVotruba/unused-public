@@ -2,15 +2,15 @@ includes:
     - ../../../../config/included_services.neon
 
 rules:
-    - TomasVotruba\UnusedPublicPHPStanRules\Rules\UnusedPublicClassMethodRule
+    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
 
 services:
     -
-        class: TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod\PublicClassMethodCollector
+        class: TomasVotruba\UnusedPublic\Collector\ClassMethod\PublicClassMethodCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod\MethodCallCollector
+        class: TomasVotruba\UnusedPublic\Collector\ClassMethod\MethodCallCollector
         tags:
             - phpstan.collector

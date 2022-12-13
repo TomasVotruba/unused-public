@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Fixture;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Fixture;
 
 final class LocalyUsedPublicProperty
 {
