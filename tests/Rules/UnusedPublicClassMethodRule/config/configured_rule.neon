@@ -6,11 +6,11 @@ rules:
 
 services:
     -
-        class: TomasVotruba\UnusedPublic\Collectors\ClassMethod\PublicClassMethodCollector
+        class: TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\ClassMethod\MethodCallCollector
+        class: TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
         tags:
             - phpstan.collector
