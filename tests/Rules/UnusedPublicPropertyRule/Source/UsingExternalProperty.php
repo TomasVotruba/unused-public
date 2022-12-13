@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Source;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Source;
 
-use TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 
 final class UsingExternalProperty
 {

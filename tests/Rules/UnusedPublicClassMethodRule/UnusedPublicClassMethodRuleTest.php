@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassMethodRule;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule;
 
 use Iterator;
 use PHPStan\Collectors\Collector;

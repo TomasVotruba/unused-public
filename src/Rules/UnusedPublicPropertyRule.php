@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 
 /**
- * @see \TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
+ * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
  */
 final class UnusedPublicPropertyRule implements Rule
 {

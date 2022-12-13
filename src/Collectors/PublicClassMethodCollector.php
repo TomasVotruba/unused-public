@@ -9,8 +9,8 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use TomasVotruba\UnusedPublic\Matcher\PublicClassMethodMatcher;
-use TomasVotruba\UnusedPublic\PhpDoc\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
+use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 
 /**
  * @implements Collector<ClassMethod, array{class-string, string, int}|null>

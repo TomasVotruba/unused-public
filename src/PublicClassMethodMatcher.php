@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Matcher;
+namespace TomasVotruba\UnusedPublic;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Reflection\ClassReflection;
 use PHPUnit\Framework\TestCase;
+use function TomasVotruba\UnusedPublic\Matcher\str_contains;
 
 final class PublicClassMethodMatcher
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassMethodRule\Fixture;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture;
 
-use TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassMethodRule\Source\Contract\MethodRequiredInterface;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Contract\MethodRequiredInterface;
 
 final class InterfaceWithExtraMethod implements MethodRequiredInterface
 {

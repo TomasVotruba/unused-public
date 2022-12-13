@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassMethodRule\Fixture;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture;
 
-use TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassMethodRule\Source\Repository\ChildRepository;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Repository\ChildRepository;
 
 final class SkipChildUsedPublicMethod
 {

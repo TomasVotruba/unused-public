@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\PhpDoc;
+namespace TomasVotruba\UnusedPublic;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt;
