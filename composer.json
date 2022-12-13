@@ -1,8 +1,20 @@
 {
+    "name": "tomasvotruba/unused-public-phpstan-rules",
+    "description": "Detect unused public properties, constants and methods in your code",
+    "license": "MIT",
     "require": {
+        "php": "^8.1",
         "phpstan/phpstan": "^1.9"
     },
     "require-dev": {
-        "phpstan/extension-installer": "^1.2"
+        "phpstan/extension-installer": "^1.2",
+        "phpunit/phpunit": "^9.5",
+        "symplify/easy-coding-standard": "^11.1"
+    },
+    "scripts": {
+        "check-cs": "vendor/bin/ecs check --ansi",
+        "fix-cs": "vendor/bin/ecs check --fix --ansi",
+        "phpstan": "vendor/bin/phpstan --ansi --error-format=symplify",
+        "rector": "vendor/bin/rector --dry-run --ansi"
     }
 }
