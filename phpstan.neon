@@ -10,3 +10,7 @@ parameters:
     excludePaths:
         - "*/Fixture/*"
         - "*/Source/*"
+
+    ignoreErrors:
+        # collectors generics
+        -  '#Parameter (.*?) of method (.*?)Collector::processNode\(\) should be compatible with parameter#'

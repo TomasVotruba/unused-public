@@ -11,11 +11,8 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
-use TomasVotruba\UnusedPublic\Collector\ClassConst\ClassConstFetchCollector;
-use TomasVotruba\UnusedPublic\Collector\ClassConst\PublicClassLikeConstCollector;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest

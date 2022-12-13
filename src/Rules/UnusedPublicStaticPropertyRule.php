@@ -11,8 +11,8 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
-use TomasVotruba\UnusedPublic\Collector\Class_\PublicStaticPropertyCollector;
-use TomasVotruba\UnusedPublic\Collector\StaticPropertyFetch\PublicStaticPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\UnusedPublicStaticPropertyRuleTest

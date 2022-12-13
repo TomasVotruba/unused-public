@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Collector\PropertyFetch;
+namespace TomasVotruba\UnusedPublic\Collectors;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\PropertyFetch;
@@ -11,6 +11,7 @@ use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Type\TypeWithClassName;
+use TomasVotruba\UnusedPublic\Collectors\PropertyFetch\class
 
 /**
  * @implements Collector<PropertyFetch, string[]>

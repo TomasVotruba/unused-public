@@ -8,8 +8,8 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use TomasVotruba\UnusedPublic\Collector\Class_\PublicStaticPropertyCollector;
-use TomasVotruba\UnusedPublic\Collector\StaticPropertyFetch\PublicStaticPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule;
 
 /**
