@@ -10,7 +10,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Node\InClassNode;
 use PHPStan\Reflection\ClassReflection;
-use TomasVotruba\UnusedPublic\Collectors\Class_\classuse TomasVotruba\UnusedPublic\PhpDoc\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\PhpDoc\ApiDocStmtAnalyzer;
 
 /**
  * @implements Collector<Class_, array<array{class-string, string, int}>>

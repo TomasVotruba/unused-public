@@ -10,7 +10,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ReflectionProvider;
-use TomasVotruba\UnusedPublic\Matcher\ClassMethodCallReferenceResolver;
+use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
 use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**

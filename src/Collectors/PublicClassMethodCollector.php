@@ -9,9 +9,8 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use TomasVotruba\UnusedPublic\Matcher\Collector\PublicClassMethodMatcher;
+use TomasVotruba\UnusedPublic\Matcher\PublicClassMethodMatcher;
 use TomasVotruba\UnusedPublic\PhpDoc\ApiDocStmtAnalyzer;
-use Twig\Extension\ExtensionInterface;
 
 /**
  * @implements Collector<ClassMethod, array{class-string, string, int}|null>
@@ -38,7 +37,7 @@ final class PublicClassMethodCollector implements Collector
         $classReflection = $scope->getClassReflection();
 
         // skip
-        if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf(ExtensionInterface::class)) {
+        if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf('Twig\Extension\ExtensionInterface')) {
             return null;
         }
 
