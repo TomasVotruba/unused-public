@@ -6,12 +6,12 @@ namespace Symplify\PHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassMethodRule
 
 final class LocallyUsedPublicMethod
 {
+    public function runHere()
+    {
+    }
+
     private function run()
     {
         $this->runHere();
-    }
-
-    public function runHere()
-    {
     }
 }

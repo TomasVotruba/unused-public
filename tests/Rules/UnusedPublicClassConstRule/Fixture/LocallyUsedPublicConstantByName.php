@@ -10,6 +10,6 @@ final class LocallyUsedPublicConstantByName
 
     public function run()
     {
-        return LocallyUsedPublicConstantByName::LOCALLY_ONLY_NAMED;
+        return self::LOCALLY_ONLY_NAMED;
     }
 }

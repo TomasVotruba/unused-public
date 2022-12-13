@@ -6,9 +6,9 @@ namespace Symplify\PHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyR
 
 final class SkipPrivateProperty
 {
+    private $somePublicStaticProperty;
+
     private function run()
     {
     }
-
-    private $somePublicStaticProperty;
 }

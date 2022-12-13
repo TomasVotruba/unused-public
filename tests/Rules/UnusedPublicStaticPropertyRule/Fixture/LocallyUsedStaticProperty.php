@@ -6,10 +6,10 @@ namespace Symplify\PHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyR
 
 final class LocallyUsedStaticProperty
 {
+    public static $somePublicStaticProperty;
+
     private function run()
     {
         return self::$somePublicStaticProperty;
     }
-
-    public static $somePublicStaticProperty;
 }
