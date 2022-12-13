@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Rules\DeadCode;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Rules;
 
 use Nette\Utils\Arrays;
 use PhpParser\Node;
@@ -11,16 +11,13 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
-use Symplify\PHPStanRules\Collector\Class_\PublicStaticPropertyCollector;
-use Symplify\PHPStanRules\Collector\StaticPropertyFetch\PublicStaticPropertyFetchCollector;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use TomasVotruba\UnusedPublicPHPStanRules\Collector\Class_\PublicStaticPropertyCollector;
+use TomasVotruba\UnusedPublicPHPStanRules\Collector\StaticPropertyFetch\PublicStaticPropertyFetchCollector;
 
 /**
- * @see \Symplify\PHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\UnusedPublicStaticPropertyRuleTest
+ * @see \TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicStaticPropertyRule\UnusedPublicStaticPropertyRuleTest
  */
-final class UnusedPublicStaticPropertyRule implements Rule, DocumentedRuleInterface
+final class UnusedPublicStaticPropertyRule implements Rule
 {
     /**
      * @var string
@@ -72,37 +69,6 @@ final class UnusedPublicStaticPropertyRule implements Rule, DocumentedRuleInterf
         }
 
         return $ruleErrors;
-    }
-
-    public function getRuleDefinition(): RuleDefinition
-    {
-        return new RuleDefinition(self::ERROR_MESSAGE, [
-            new CodeSample(
-                <<<'CODE_SAMPLE'
-final class ResultProvider
-{
-    public static $some;
-
-    public function getSome()
-    {
-        return self::$some;
-    }
-}
-CODE_SAMPLE
-                ,
-                <<<'CODE_SAMPLE'
-final class ResultProvider
-{
-    private static $some;
-
-    public function getSome()
-    {
-        return self::$some;
-    }
-}
-CODE_SAMPLE
-            ),
-        ]);
     }
 
     /**

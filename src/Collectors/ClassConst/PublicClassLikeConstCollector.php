@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassConst;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use Symplify\PHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublicPHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
 
 /**
  * @implements Collector<ClassConst, array<array{class-string, string, int}>>

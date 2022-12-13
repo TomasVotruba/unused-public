@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassLike;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassLike;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
@@ -14,7 +14,7 @@ use PHPStan\Collectors\Collector;
 /**
  * @implements Collector<ClassLike, array{int, int, string}>>
  *
- * @see \Symplify\PHPStanRules\Rules\Explicit\PropertyTypeDeclarationSeaLevelRule
+ * @see \TomasVotruba\UnusedPublicPHPStanRules\Rules\Explicit\PropertyTypeDeclarationSeaLevelRule
  */
 final class PropertyTypeSeaLevelCollector implements Collector
 {

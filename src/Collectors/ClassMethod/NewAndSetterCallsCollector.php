@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassMethod;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr;

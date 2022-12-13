@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassMethod;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr;
@@ -10,8 +10,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ReflectionProvider;
-use Symplify\PHPStanRules\Matcher\ClassMethodCallReferenceResolver;
-use Symplify\PHPStanRules\ValueObject\MethodCallReference;
+use TomasVotruba\UnusedPublicPHPStanRules\Matcher\ClassMethodCallReferenceResolver;
+use TomasVotruba\UnusedPublicPHPStanRules\ValueObject\MethodCallReference;
 
 /**
  * @implements Collector<MethodCall, array<string>|null>

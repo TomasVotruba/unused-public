@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassMethod;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -13,7 +13,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\HttpKernel\Kernel;
-use Symplify\PHPStanRules\Printer\DuplicatedClassMethodPrinter;
+use TomasVotruba\UnusedPublicPHPStanRules\Printer\DuplicatedClassMethodPrinter;
 
 /**
  * @implements Collector<InClassMethodNode, mixed[]|null>

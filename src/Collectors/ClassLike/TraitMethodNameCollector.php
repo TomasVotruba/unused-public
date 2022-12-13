@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassLike;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassLike;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;

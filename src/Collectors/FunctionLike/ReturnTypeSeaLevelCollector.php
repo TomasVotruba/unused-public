@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\FunctionLike;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\FunctionLike;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -13,7 +13,7 @@ use PHPStan\Collectors\Collector;
 /**
  * @implements Collector<ClassMethod, array{int, int, string}>>
  *
- * @see \Symplify\PHPStanRules\Rules\Explicit\ReturnTypeDeclarationSeaLevelRule
+ * @see \TomasVotruba\UnusedPublicPHPStanRules\Rules\Explicit\ReturnTypeDeclarationSeaLevelRule
  */
 final class ReturnTypeSeaLevelCollector implements Collector
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassConst;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;

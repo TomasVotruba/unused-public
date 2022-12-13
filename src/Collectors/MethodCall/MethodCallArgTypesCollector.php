@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\MethodCall;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\MethodCall;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
-use Symplify\PHPStanRules\Matcher\ClassMethodCallReferenceResolver;
-use Symplify\PHPStanRules\Printer\CollectorMetadataPrinter;
-use Symplify\PHPStanRules\ValueObject\MethodCallReference;
+use TomasVotruba\UnusedPublicPHPStanRules\Matcher\ClassMethodCallReferenceResolver;
+use TomasVotruba\UnusedPublicPHPStanRules\Printer\CollectorMetadataPrinter;
+use TomasVotruba\UnusedPublicPHPStanRules\ValueObject\MethodCallReference;
 
 /**
  * @implements Collector<MethodCall, array<string>|null>

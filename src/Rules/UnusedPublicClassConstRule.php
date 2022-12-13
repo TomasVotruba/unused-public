@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Rules\DeadCode;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Rules;
 
 use Nette\Utils\Arrays;
 use PhpParser\Node;
@@ -11,16 +11,16 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
-use Symplify\PHPStanRules\Collector\ClassConst\ClassConstFetchCollector;
-use Symplify\PHPStanRules\Collector\ClassConst\PublicClassLikeConstCollector;
+use TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst\ClassConstFetchCollector;
+use TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst\PublicClassLikeConstCollector;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \Symplify\PHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest
+ * @see \TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest
  */
-final class UnusedPublicClassConstRule implements Rule, DocumentedRuleInterface
+final class UnusedPublicClassConstRule implements Rule
 {
     /**
      * @var string

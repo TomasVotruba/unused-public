@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\ClassMethod;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassMethod;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use Symplify\PHPStanRules\Matcher\Collector\PublicClassMethodMatcher;
-use Symplify\PHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
-use Symplify\PHPStanRules\Printer\CollectorMetadataPrinter;
+use TomasVotruba\UnusedPublicPHPStanRules\Matcher\Collector\PublicClassMethodMatcher;
+use TomasVotruba\UnusedPublicPHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublicPHPStanRules\Printer\CollectorMetadataPrinter;
 
 /**
  * @implements Collector<ClassMethod, array{class-string, string, string, int}|null>

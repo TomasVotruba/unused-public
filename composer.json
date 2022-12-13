@@ -4,12 +4,23 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "phpstan/phpstan": "^1.9"
+        "phpstan/phpstan": "^1.9",
+        "nette/utils": "^3.2"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.2",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "TomasVotruba\\UnusedPublicPHPStanRules\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TomasVotruba\\UnusedPublicPHPStanRules\\Tests\\": "tests"
+        }
     },
     "scripts": {
         "check-cs": "vendor/bin/ecs check --ansi",

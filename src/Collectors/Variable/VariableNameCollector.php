@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\Variable;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\Variable;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr;

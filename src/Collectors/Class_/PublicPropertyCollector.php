@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\Class_;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\Class_;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -10,7 +10,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Node\InClassNode;
 use PHPStan\Reflection\ClassReflection;
-use Symplify\PHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublicPHPStanRules\PhpDoc\ApiDocStmtAnalyzer;
 
 /**
  * @implements Collector<Class_, array<array{class-string, string, int}>>

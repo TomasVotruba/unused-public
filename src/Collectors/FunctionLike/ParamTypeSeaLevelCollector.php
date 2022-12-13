@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Collector\FunctionLike;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Collector\FunctionLike;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
@@ -14,7 +14,7 @@ use PHPStan\Collectors\Collector;
 /**
  * @implements Collector<FunctionLike, array{int, int, string}>>
  *
- * @see \Symplify\PHPStanRules\Rules\Explicit\ParamTypeDeclarationSeaLevelRule
+ * @see \TomasVotruba\UnusedPublicPHPStanRules\Rules\Explicit\ParamTypeDeclarationSeaLevelRule
  */
 final class ParamTypeSeaLevelCollector implements Collector
 {

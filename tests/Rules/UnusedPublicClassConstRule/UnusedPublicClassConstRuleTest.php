@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Symplify\PHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassConstRule;
+namespace TomasVotruba\UnusedPublicPHPStanRules\Tests\Rules\DeadCode\UnusedPublicClassConstRule;
 
 use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use Symplify\PHPStanRules\Collector\ClassConst\ClassConstFetchCollector;
-use Symplify\PHPStanRules\Collector\ClassConst\PublicClassLikeConstCollector;
-use Symplify\PHPStanRules\Rules\DeadCode\UnusedPublicClassConstRule;
+use TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst\ClassConstFetchCollector;
+use TomasVotruba\UnusedPublicPHPStanRules\Collector\ClassConst\PublicClassLikeConstCollector;
+use TomasVotruba\UnusedPublicPHPStanRules\Rules\UnusedPublicClassConstRule;
 
 /**
  * @extends RuleTestCase<UnusedPublicClassConstRule>
