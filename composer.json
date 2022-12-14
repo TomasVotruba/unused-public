@@ -31,5 +31,10 @@
         "fix-cs": "vendor/bin/ecs check --fix --ansi",
         "phpstan": "vendor/bin/phpstan --ansi",
         "rector": "vendor/bin/rector --dry-run --ansi"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     }
 }
