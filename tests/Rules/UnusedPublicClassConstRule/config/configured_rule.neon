@@ -6,6 +6,6 @@ rules:
 
 services:
     -
-        class: TomasVotruba\UnusedPublic\Collectors\ClassConst\PublicClassLikeConstCollector
+        class: TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector
         tags:
             - phpstan.collector

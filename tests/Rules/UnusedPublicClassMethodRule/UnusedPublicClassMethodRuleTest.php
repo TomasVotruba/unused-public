@@ -31,7 +31,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'runHere');
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'],
-            [[$errorMessage, 14, UnusedPublicClassMethodRule::TIP_MESSAGE]], ];
+            [[$errorMessage, 9, UnusedPublicClassMethodRule::TIP_MESSAGE]], ];
 
         $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'extraMethod');
         yield [[__DIR__ . '/Fixture/InterfaceWithExtraMethod.php'],

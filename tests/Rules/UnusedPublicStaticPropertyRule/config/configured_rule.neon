@@ -6,11 +6,11 @@ rules:
 
 services:
     -
-        class: TomasVotruba\UnusedPublic\Collectors\Class_\PublicStaticPropertyCollector
+        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\StaticPropertyFetch\PublicStaticPropertyFetchCollector
+        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
         tags:
             - phpstan.collector

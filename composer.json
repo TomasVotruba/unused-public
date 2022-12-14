@@ -21,7 +21,10 @@
     "autoload-dev": {
         "psr-4": {
             "TomasVotruba\\UnusedPublic\\Tests\\": "tests"
-        }
+        },
+        "classmap": [
+            "stubs"
+        ]
     },
     "scripts": {
         "check-cs": "vendor/bin/ecs check --ansi",

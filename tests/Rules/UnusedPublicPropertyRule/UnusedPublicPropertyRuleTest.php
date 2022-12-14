@@ -31,7 +31,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, 'name');
         yield [[__DIR__ . '/Fixture/LocalyUsedPublicProperty.php'],
-            [[$errorMessage, 6, UnusedPublicPropertyRule::TIP_MESSAGE]], ];
+            [[$errorMessage, 7, UnusedPublicPropertyRule::TIP_MESSAGE]], ];
 
         yield [
             [__DIR__ . '/Fixture/LocalyUsedPublicProperty.php', __DIR__ . '/Source/UsingExternalProperty.php'],
