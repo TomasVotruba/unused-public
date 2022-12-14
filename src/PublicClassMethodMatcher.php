@@ -8,7 +8,6 @@ use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Reflection\ClassReflection;
 use PHPUnit\Framework\TestCase;
-use function TomasVotruba\UnusedPublic\Matcher\str_contains;
 
 final class PublicClassMethodMatcher
 {
