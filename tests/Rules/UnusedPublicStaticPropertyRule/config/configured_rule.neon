@@ -1,5 +1,9 @@
 includes:
-    - ../../../../config/services.neon
+    - ../../../../config/extension.neon
+
+parameters:
+    unused_public:
+        - "static_property"
 
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule

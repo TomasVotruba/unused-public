@@ -1,4 +1,0 @@
-services:
-    - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
-    - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
-    - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver

@@ -1,5 +1,9 @@
 includes:
-    - ../../../../config/services.neon
+    - ../../../../config/extension.neon
+
+parameters:
+    unused_public:
+        methods: true
 
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule

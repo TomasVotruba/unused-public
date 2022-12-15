@@ -10,6 +10,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 
 /**
@@ -20,6 +21,7 @@ final class PublicClassMethodCollector implements Collector
     public function __construct(
         private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
         private PublicClassMethodMatcher $publicClassMethodMatcher,
+        private Configuration $configuration,
     ) {
     }
 
@@ -34,6 +36,10 @@ final class PublicClassMethodCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedMethodEnabled()) {
+            return null;
+        }
+
         $classReflection = $scope->getClassReflection();
 
         // skip

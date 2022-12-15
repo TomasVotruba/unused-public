@@ -11,6 +11,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ReflectionProvider;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
+use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
@@ -21,6 +22,7 @@ final class MethodCallCollector implements Collector
     public function __construct(
         private ReflectionProvider $reflectionProvider,
         private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
+        private Configuration $configuration,
     ) {
     }
 
@@ -35,6 +37,10 @@ final class MethodCallCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedMethodEnabled()) {
+            return null;
+        }
+
         if ($node->name instanceof Expr) {
             return null;
         }

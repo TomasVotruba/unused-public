@@ -1,9 +1,25 @@
-includes:
-    - services.neon
-
 parametersSchema:
     unused_public: structure([
         methods: bool()
         properties: bool()
         constants: bool()
+        static_properties: bool()
     ])
+
+# default parameters
+parameters:
+    unused_public:
+        methods: false
+        properties: false
+        constants: false
+        static_properties: false
+
+services:
+    - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+    - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+    - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
+
+    -
+        factory: TomasVotruba\UnusedPublic\Configuration
+        arguments:
+            - %unused_public%
