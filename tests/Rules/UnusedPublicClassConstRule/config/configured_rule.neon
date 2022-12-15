@@ -1,11 +1,6 @@
 includes:
-    - ../../../../config/services.neon
+    - ../../../../config/extension.neon
 
-rules:
-    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
-
-services:
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector
-        tags:
-            - phpstan.collector
+parameters:
+    unused_public:
+        constants: true

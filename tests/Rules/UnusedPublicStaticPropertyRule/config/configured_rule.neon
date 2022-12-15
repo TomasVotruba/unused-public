@@ -3,18 +3,4 @@ includes:
 
 parameters:
     unused_public:
-        - "static_property"
-
-rules:
-    - TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule
-
-services:
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
-        tags:
-            - phpstan.collector
+        static_properties: true

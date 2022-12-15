@@ -4,17 +4,3 @@ includes:
 parameters:
     unused_public:
         methods: true
-
-rules:
-    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
-
-services:
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
-        tags:
-            - phpstan.collector

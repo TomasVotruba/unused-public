@@ -10,12 +10,18 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @implements Collector<ClassConstFetch, string[]>
  */
 final class ClassConstFetchCollector implements Collector
 {
+    public function __construct(
+        private Configuration $configuration
+    ) {
+    }
+
     public function getNodeType(): string
     {
         return ClassConstFetch::class;
@@ -27,6 +33,10 @@ final class ClassConstFetchCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedConstantsEnabled()) {
+            return [];
+        }
+
         if (! $node->class instanceof Name) {
             return null;
         }

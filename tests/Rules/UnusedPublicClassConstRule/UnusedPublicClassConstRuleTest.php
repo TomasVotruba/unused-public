@@ -70,8 +70,10 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
      */
     protected function getCollectors(): array
     {
-        $publicClassLikeConstCollector = self::getContainer()->getByType(PublicClassLikeConstCollector::class);
-        return [new ClassConstFetchCollector(), $publicClassLikeConstCollector];
+        return [
+            self::getContainer()->getByType(PublicClassLikeConstCollector::class),
+            self::getContainer()->getByType(ClassConstFetchCollector::class),
+        ];
     }
 
     protected function getRule(): Rule

@@ -10,6 +10,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @implements Collector<ClassConst, array<array{class-string, string, int}>>
@@ -17,7 +18,8 @@ use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 final class PublicClassLikeConstCollector implements Collector
 {
     public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer
+        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private Configuration $configuration,
     ) {
     }
 
@@ -32,6 +34,10 @@ final class PublicClassLikeConstCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedConstantsEnabled()) {
+            return [];
+        }
+
         $classReflection = $scope->getClassReflection();
         if (! $classReflection instanceof ClassReflection) {
             return null;
