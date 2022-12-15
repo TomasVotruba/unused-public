@@ -1,5 +1,5 @@
 includes:
-    - ../../../../config/included_services.neon
+    - ../../../../config/services.neon
 
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule

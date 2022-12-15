@@ -1,0 +1,9 @@
+includes:
+    - services.neon
+
+parametersSchema:
+    unused_public: structure([
+        methods: bool()
+        properties: bool()
+        constants: bool()
+    ])

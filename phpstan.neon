@@ -1,4 +1,13 @@
+includes:
+    - config/extension.neon
+
 parameters:
+    # parameters of this extension
+    unused_public:
+        methods: true
+        properties: true
+        constants: true
+
     level: 8
 
     paths:
