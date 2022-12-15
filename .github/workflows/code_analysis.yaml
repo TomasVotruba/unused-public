@@ -2,7 +2,9 @@ name: Code Analysis
 
 on:
     pull_request: null
-    push: null
+    push:
+        branches:
+            - main
 
 jobs:
     code_analysis:
