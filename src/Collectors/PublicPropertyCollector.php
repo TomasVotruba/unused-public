@@ -11,6 +11,7 @@ use PHPStan\Collectors\Collector;
 use PHPStan\Node\InClassNode;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @implements Collector<Class_, array<array{class-string, string, int}>>
@@ -18,7 +19,8 @@ use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 final class PublicPropertyCollector implements Collector
 {
     public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer
+        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private Configuration $configuration
     ) {
     }
 
@@ -36,6 +38,10 @@ final class PublicPropertyCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedPropertyEnabled()) {
+            return null;
+        }
+
         $classReflection = $scope->getClassReflection();
         if (! $classReflection instanceof ClassReflection) {
             return null;
