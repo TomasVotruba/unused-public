@@ -13,9 +13,13 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
+ *
+ * @see \TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
+ * @see \TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
  */
 final class UnusedPublicClassMethodRule implements Rule
 {
@@ -29,6 +33,11 @@ final class UnusedPublicClassMethodRule implements Rule
      */
     public const TIP_MESSAGE = 'Either reduce the methods visibility or annotate it or its class with @api.';
 
+    public function __construct(
+        private readonly Configuration $configuration
+    ) {
+    }
+
     public function getNodeType(): string
     {
         return CollectedDataNode::class;
@@ -40,6 +49,10 @@ final class UnusedPublicClassMethodRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if (! $this->configuration->isUnusedMethodEnabled()) {
+            return [];
+        }
+
         $methodCallCollector = $node->get(MethodCallCollector::class);
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
 

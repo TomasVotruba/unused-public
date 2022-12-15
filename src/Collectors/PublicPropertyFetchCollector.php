@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
+use PhpParser\Node;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Type\TypeWithClassName;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @implements Collector<PropertyFetch, string[]>
  */
 final class PublicPropertyFetchCollector implements Collector
 {
+    public function __construct(
+        private readonly Configuration $configuration
+    ) {
+    }
+
     /**
-     * @return class-string<\PhpParser\Node>
+     * @return class-string<Node>
      */
     public function getNodeType(): string
     {
@@ -28,8 +35,12 @@ final class PublicPropertyFetchCollector implements Collector
      * @param PropertyFetch $node
      * @return string[]|null
      */
-    public function processNode(\PhpParser\Node $node, Scope $scope): ?array
+    public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedPropertyEnabled()) {
+            return null;
+        }
+
         if (! $node->var instanceof Variable) {
             return null;
         }

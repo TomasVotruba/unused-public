@@ -10,12 +10,18 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @implements Collector<StaticPropertyFetch, string[]>
  */
 final class PublicStaticPropertyFetchCollector implements Collector
 {
+    public function __construct(
+        private readonly Configuration $configuration
+    ) {
+    }
+
     public function getNodeType(): string
     {
         return StaticPropertyFetch::class;
@@ -27,6 +33,10 @@ final class PublicStaticPropertyFetchCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedStaticPropertyEnabled()) {
+            return null;
+        }
+
         if (! $node->class instanceof Name) {
             return null;
         }

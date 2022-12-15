@@ -1,16 +1,6 @@
 includes:
-    - ../../../../config/included_services.neon
+    - ../../../../config/extension.neon
 
-rules:
-    - TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule
-
-services:
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
-        tags:
-            - phpstan.collector
+parameters:
+    unused_public:
+        static_properties: true

@@ -13,6 +13,7 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
@@ -29,6 +30,11 @@ final class UnusedPublicPropertyRule implements Rule
      */
     public const TIP_MESSAGE = 'Either reduce the property visibility or annotate it or its class with @api.';
 
+    public function __construct(
+        private readonly Configuration $configuration
+    ) {
+    }
+
     public function getNodeType(): string
     {
         return CollectedDataNode::class;
@@ -40,6 +46,10 @@ final class UnusedPublicPropertyRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if (! $this->configuration->isUnusedPropertyEnabled()) {
+            return [];
+        }
+
         $publicPropertyCollector = $node->get(PublicPropertyCollector::class);
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
 

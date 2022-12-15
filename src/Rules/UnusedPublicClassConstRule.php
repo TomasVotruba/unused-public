@@ -13,6 +13,7 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector;
+use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest
@@ -29,6 +30,11 @@ final class UnusedPublicClassConstRule implements Rule
      */
     public const TIP_MESSAGE = 'Either reduce the constants visibility or annotate it or its class with @api.';
 
+    public function __construct(
+        private readonly Configuration $configuration
+    ) {
+    }
+
     public function getNodeType(): string
     {
         return CollectedDataNode::class;
@@ -40,6 +46,10 @@ final class UnusedPublicClassConstRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if (! $this->configuration->isUnusedConstantsEnabled()) {
+            return [];
+        }
+
         $classConstFetchCollector = $node->get(ClassConstFetchCollector::class);
         $publicClassLikeConstCollector = $node->get(PublicClassLikeConstCollector::class);
 

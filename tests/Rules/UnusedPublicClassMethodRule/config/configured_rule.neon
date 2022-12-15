@@ -1,16 +1,6 @@
 includes:
-    - ../../../../config/included_services.neon
+    - ../../../../config/extension.neon
 
-rules:
-    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
-
-services:
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
-        tags:
-            - phpstan.collector
+parameters:
+    unused_public:
+        methods: true

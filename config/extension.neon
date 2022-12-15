@@ -1,0 +1,76 @@
+parametersSchema:
+    unused_public: structure([
+        methods: bool()
+        properties: bool()
+        constants: bool()
+        static_properties: bool()
+    ])
+
+# default parameters
+parameters:
+    unused_public:
+        methods: false
+        properties: false
+        constants: false
+        static_properties: false
+
+services:
+    - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+    - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+    - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
+
+    -
+        factory: TomasVotruba\UnusedPublic\Configuration
+        arguments:
+            - %unused_public%
+
+    # collectors
+
+    # methods
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
+        tags:
+            - phpstan.collector
+
+    # static_properties
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector
+        tags:
+            - phpstan.collector
+
+# rules
+rules:
+    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
+    - TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule
+    - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
+    - TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule

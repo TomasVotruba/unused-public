@@ -4,14 +4,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan": "^1.9.3",
         "nette/utils": "^3.2"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.2",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1",
-        "rector/rector": "^0.15.0"
+        "rector/rector": "^0.15.1",
+        "tracy/tracy": "^2.9"
     },
     "autoload": {
         "psr-4": {
