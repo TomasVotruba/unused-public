@@ -20,9 +20,9 @@ use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 final class MethodCallCollector implements Collector
 {
     public function __construct(
-        private ReflectionProvider $reflectionProvider,
-        private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
-        private Configuration $configuration,
+        private readonly ReflectionProvider $reflectionProvider,
+        private readonly ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
+        private readonly Configuration $configuration,
     ) {
     }
 

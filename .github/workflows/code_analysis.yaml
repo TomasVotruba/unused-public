@@ -12,11 +12,23 @@ jobs:
                 actions:
                     -
                         name: 'PHPStan'
-                        run: composer phpstan
+                        run: composer phpstan --ansi
 
                     -
                         name: 'Composer Validate'
-                        run: composer validate
+                        run: composer validate --ansi
+
+                    -
+                        name: 'Rector'
+                        run: composer rector --ansi
+
+                    -
+                        name: 'Coding Standard'
+                        run: composer fix-cs --ansi
+
+                    -
+                        name: 'Tests'
+                        run: vendor/bin/phpunit
 
         name: ${{ matrix.actions.name }}
         runs-on: ubuntu-latest

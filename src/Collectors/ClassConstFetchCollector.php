@@ -18,7 +18,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class ClassConstFetchCollector implements Collector
 {
     public function __construct(
-        private Configuration $configuration
+        private readonly Configuration $configuration
     ) {
     }
 

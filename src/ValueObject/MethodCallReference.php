@@ -7,8 +7,8 @@ namespace TomasVotruba\UnusedPublic\ValueObject;
 final class MethodCallReference
 {
     public function __construct(
-        private string $class,
-        private string $method
+        private readonly string $class,
+        private readonly string $method
     ) {
     }
 

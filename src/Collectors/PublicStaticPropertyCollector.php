@@ -19,8 +19,8 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class PublicStaticPropertyCollector implements Collector
 {
     public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private Configuration $configuration,
+        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private readonly Configuration $configuration,
     ) {
     }
 

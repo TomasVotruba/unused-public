@@ -19,7 +19,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class PublicPropertyFetchCollector implements Collector
 {
     public function __construct(
-        private Configuration $configuration
+        private readonly Configuration $configuration
     ) {
     }
 

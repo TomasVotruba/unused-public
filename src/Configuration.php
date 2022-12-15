@@ -13,7 +13,7 @@ final class Configuration
      * @param array<string, mixed> $parameters
      */
     public function __construct(
-        private array $parameters
+        private readonly array $parameters
     ) {
     }
 

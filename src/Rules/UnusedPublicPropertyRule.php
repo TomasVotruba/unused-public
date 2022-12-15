@@ -31,7 +31,7 @@ final class UnusedPublicPropertyRule implements Rule
     public const TIP_MESSAGE = 'Either reduce the property visibility or annotate it or its class with @api.';
 
     public function __construct(
-        private Configuration $configuration
+        private readonly Configuration $configuration
     ) {
     }
 
