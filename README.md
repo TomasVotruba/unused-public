@@ -3,7 +3,9 @@
 It's easy to find unused private class elements, because they're not used in the class itself. But what about public class elements?
 
 
-To detect an unused public class element, you have to:
+<br>
+
+**To detect an unused public class element**, you have to:
 
 * find a public method
 * find all public method calls
@@ -15,11 +17,15 @@ That's exactly what this package does.
 
 This technique is very useful for private projects and to detect accidentally open public API that should be used only locally.
 
+<br>
+
 ## Install
 
 ```bash
 composer require tomasvotruba/unused-public --dev
 ```
+
+<br>
 
 ## Usage
 
