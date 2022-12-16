@@ -57,7 +57,9 @@ In some cases, the method reports false positives:
 
 <br>
 
-Is element reported as unused, but it's actually used? Mark the class or element wit `@api` to declare it as public API and skip it:
+Is element reported as unused, but it's actually used?
+
+Mark the class or element wit `@api` to declare it as public API and skip it:
 
 ```php
 final class Book
