@@ -74,6 +74,8 @@ In some cases, the method reports false positives:
 
 <br>
 
+## Skip False Positives
+
 Is element reported as unused, but it's actually used?
 
 Mark the class or element wit `@api` to declare it as public API and skip it:
