@@ -1,10 +1,27 @@
 # Find Unused Public Constants, Properties and Methods in Your Code
 
-It's easy to find unused private class elements, because they're not used in the class itself. But what about public class elements?
+It's easy to find unused private class elements, because they're not used in the class itself:
+
+```diff
+ final class Book
+ {
+     public function getTitle(): string
+     {
+         // ...
+     }
+
+-    private function getSubtitle(): string
+-    {
+-        // ...
+-    }
+}
+```
+
+But what about public class elements?
 
 <br>
 
-**How to detect an unused public class element?**
+**How can we detect such element?**
 
 * find a e.g. public method
 * find all public method calls
