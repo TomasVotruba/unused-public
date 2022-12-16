@@ -1,5 +1,7 @@
 # Find Unused Public Constants, Properties and Methods in Your Code
 
+<img src="/docs/unused_public.jpg" style="width: 10em">
+
 It's easy to find unused private class elements, because they're not used in the class itself:
 
 ```diff
