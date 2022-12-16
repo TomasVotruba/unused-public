@@ -7,7 +7,6 @@ namespace TomasVotruba\UnusedPublic;
 use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Reflection\ClassReflection;
-use PHPUnit\Framework\TestCase;
 
 final class PublicClassMethodMatcher
 {
@@ -15,7 +14,7 @@ final class PublicClassMethodMatcher
      * @var string[]
      */
     private const SKIPPED_TYPES = [
-        TestCase::class,
+        'PHPUnit\Framework\TestCase',
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
 

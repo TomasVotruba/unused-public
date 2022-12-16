@@ -21,11 +21,11 @@ This technique is very useful for private projects and to detect accidentally op
 
 ## Install
 
-@todo use on PHP 7.1
-
 ```bash
 composer require tomasvotruba/unused-public --dev
 ```
+
+The package is available on PHP 7.2-8.1 versions in tagged releases.
 
 <br>
 

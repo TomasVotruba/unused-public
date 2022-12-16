@@ -21,6 +21,8 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::PRIVATIZATION,
         SetList::NAMING,
         SetList::DEAD_CODE,
+        SetList::CODE_QUALITY,
+        SetList::CODING_STYLE,
     ]);
 
     $rectorConfig->skip([
