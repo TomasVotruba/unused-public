@@ -19,13 +19,27 @@ use Twig\Extension\ExtensionInterface;
  */
 final class PublicClassMethodCollector implements Collector
 {
-    public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+     */
+    private $publicClassMethodMatcher;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+    public function __construct(ApiDocStmtAnalyzer $apiDocStmtAnalyzer, PublicClassMethodMatcher $publicClassMethodMatcher, Configuration $configuration)
+    {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->publicClassMethodMatcher = $publicClassMethodMatcher;
+        $this->configuration = $configuration;
     }
-
     public function getNodeType(): string
     {
         return ClassMethod::class;
