@@ -59,5 +59,6 @@ jobs:
                     git commit -m "${{ matrix.tools.name }} ${GITHUB_REF#refs/tags/}" -m "release downgraded version" --allow-empty
                     git push --set-upstream origin "release-${GITHUB_REF#refs/tags/}"
 
-                    git tag ${GITHUB_REF#refs/tags/} -m "release-${GITHUB_REF#refs/tags/}"
-                    git push --quiet origin "release-${GITHUB_REF#refs/tags/}"
+                    # available for PHP 7.2
+                    git tag ${GITHUB_REF#refs/tags/} -m "${GITHUB_REF#refs/tags/}.72"
+                    git push --quiet origin "${GITHUB_REF#refs/tags/}.72"
