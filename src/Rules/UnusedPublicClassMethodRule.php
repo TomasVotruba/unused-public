@@ -32,10 +32,15 @@ final class UnusedPublicClassMethodRule implements Rule
      * @var string
      */
     public const TIP_MESSAGE = 'Either reduce the methods visibility or annotate it or its class with @api.';
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
