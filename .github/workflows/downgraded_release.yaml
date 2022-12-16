@@ -32,15 +32,12 @@ jobs:
             # to have all local tools available
             -   run: composer update --no-progress --ansi
 
-            # remove test files
-            -   run: rm -rf tests stubs
-
             # 3. downgrade directly
             -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
 
             # copy metafiles to repository as well
             -   run: cp -R build/target-repository/. .
-            -   run: rm -rf build .github
+            -   run: rm -rf build .github tests stubs
 
             # setup git user
             -
