@@ -60,4 +60,4 @@ jobs:
                     git push --set-upstream origin "release-${GITHUB_REF#refs/tags/}"
 
                     git tag ${GITHUB_REF#refs/tags/} -m "release-${GITHUB_REF#refs/tags/}"
-                    git push --quiet origin ${GITHUB_REF#refs/tags/}
+                    git push --quiet origin "release-${GITHUB_REF#refs/tags/}"
