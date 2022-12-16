@@ -11,5 +11,7 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->sets([
         SetList::COMMON,
         SetList::PSR_12,
+        SetList::CLEAN_CODE,
+        SetList::SYMPLIFY,
     ]);
 };
