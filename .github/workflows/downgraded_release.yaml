@@ -57,8 +57,8 @@ jobs:
                     git checkout -b "release-${GITHUB_REF#refs/tags/}"
                     git add --all
                     git commit -m "${{ matrix.tools.name }} ${GITHUB_REF#refs/tags/}" -m "release downgraded version" --allow-empty
-                    git push --quiet origin main
+                    git push
 
                     # @todo uncomment when everything else works to avoid many debug tags
                     # git tag ${GITHUB_REF#refs/tags/} -m "${GITHUB_REF#refs/tags/}"
-                    git push --quiet origin ${GITHUB_REF#refs/tags/}
+                    # git push --quiet origin ${GITHUB_REF#refs/tags/}
