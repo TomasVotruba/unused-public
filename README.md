@@ -2,14 +2,14 @@
 
 It's easy to find unused private class elements, because they're not used in the class itself. But what about public class elements?
 
-
 <br>
 
-**To detect an unused public class element**, you have to:
+**How to detect an unused public class element?**
 
-* find a public method
+* find a e.g. public method
 * find all public method calls
-* compare those and if not found, it's unused
+* compare those in simple diff
+* if the public method is not found, it probably unused
 
 That's exactly what this package does.
 
@@ -20,6 +20,8 @@ This technique is very useful for private projects and to detect accidentally op
 <br>
 
 ## Install
+
+@todo use on PHP 7.1
 
 ```bash
 composer require tomasvotruba/unused-public --dev
@@ -34,10 +36,38 @@ With PHPStan extension installer, everything is ready to run.
 Enable each item on their own with simple configuration:
 
 ```neon
+# phpstan.neon
 parameters:
     unused_public:
         methods: true
         properties: true
         constants: true
         static_properties: true
+```
+
+<br>
+
+## Known Limitations
+
+In some cases, the method reports false positives:
+
+* it's not possible to detect unused public method that are called only in Twig templates
+* following cases are skipped
+    * public function in Twig extensions - those are functions/filters callable
+
+<br>
+
+Is element reported as unused, but it's actually used? Mark the class or element wit `@api` to declare it as public API and skip it:
+
+```php
+final class Book
+{
+    /**
+     * @api
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+}
 ```
