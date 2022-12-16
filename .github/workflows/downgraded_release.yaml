@@ -60,5 +60,5 @@ jobs:
                     git push
 
                     # @todo uncomment when everything else works to avoid many debug tags
-                    # git tag ${GITHUB_REF#refs/tags/} -m "${GITHUB_REF#refs/tags/}"
-                    # git push --quiet origin ${GITHUB_REF#refs/tags/}
+                    git tag ${GITHUB_REF#refs/tags/} -m "release-${GITHUB_REF#refs/tags/}"
+                    git push --quiet origin ${GITHUB_REF#refs/tags/}
