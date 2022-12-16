@@ -1,4 +1,4 @@
-# Find Unused Public Constants, Properties and Methods in Your Code
+# Find Unused Public Elements in Your Code
 
 <br>
 
