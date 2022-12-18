@@ -33,7 +33,7 @@ final class PublicStaticPropertyFetchCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
-        if (! $this->configuration->isUnusedStaticPropertyEnabled()) {
+        if (! $this->configuration->isUnusedPropertyEnabled()) {
             return null;
         }
 

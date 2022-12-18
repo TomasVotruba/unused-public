@@ -10,6 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
 
 /**
@@ -37,6 +38,19 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             [__DIR__ . '/Fixture/LocalyUsedPublicProperty.php', __DIR__ . '/Source/UsingExternalProperty.php'],
             [],
         ];
+
+        $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, 'somePublicStaticProperty');
+        yield [
+            [__DIR__ . '/Fixture/LocallyUsedStaticProperty.php'],
+            [[$errorMessage, 7, UnusedPublicPropertyRule::TIP_MESSAGE]],
+        ];
+
+        yield [[
+            __DIR__ . '/Fixture/AnotherClassUsingPublicStaticProperty.php',
+            __DIR__ . '/Source/SkipExternallyUsedPublicStaticProperty.php',
+        ], []];
+
+        yield [[__DIR__ . '/Fixture/SkipPrivateProperty.php'], []];
     }
 
     /**
@@ -55,6 +69,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         return [
             self::getContainer()->getByType(PublicPropertyCollector::class),
             self::getContainer()->getByType(PublicPropertyFetchCollector::class),
+            self::getContainer()->getByType(PublicStaticPropertyFetchCollector::class),
         ];
     }
 

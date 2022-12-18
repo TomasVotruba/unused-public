@@ -22,11 +22,6 @@ final class Configuration
         return $this->parameters['methods'] ?? false;
     }
 
-    public function isUnusedStaticPropertyEnabled(): bool
-    {
-        return $this->parameters['static_properties'] ?? false;
-    }
-
     public function isUnusedPropertyEnabled(): bool
     {
         return $this->parameters['properties'] ?? false;
