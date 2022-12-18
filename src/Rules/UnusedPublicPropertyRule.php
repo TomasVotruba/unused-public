@@ -13,6 +13,7 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -52,6 +53,9 @@ final class UnusedPublicPropertyRule implements Rule
 
         $publicPropertyCollector = $node->get(PublicPropertyCollector::class);
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
+        $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
+
+        $publicPropertyFetchCollector = [...$publicPropertyFetchCollector, ...$publicStaticPropertyFetchCollector];
 
         $ruleErrors = [];
 

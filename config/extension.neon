@@ -3,7 +3,6 @@ parametersSchema:
         methods: bool()
         properties: bool()
         constants: bool()
-        static_properties: bool()
     ])
 
 # default parameters
@@ -12,7 +11,6 @@ parameters:
         methods: false
         properties: false
         constants: false
-        static_properties: false
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
@@ -38,11 +36,6 @@ services:
             - phpstan.collector
 
     # static_properties
-    -
-        class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyCollector
-        tags:
-            - phpstan.collector
-
     -
         class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
         tags:
@@ -71,6 +64,5 @@ services:
 # rules
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
-    - TomasVotruba\UnusedPublic\Rules\UnusedPublicStaticPropertyRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule
