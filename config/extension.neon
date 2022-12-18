@@ -35,7 +35,6 @@ services:
         tags:
             - phpstan.collector
 
-    # static_properties
     -
         class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
         tags:

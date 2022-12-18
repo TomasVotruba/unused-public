@@ -67,7 +67,6 @@ parameters:
         methods: true
         properties: true
         constants: true
-        static_properties: true
 ```
 
 <br>
