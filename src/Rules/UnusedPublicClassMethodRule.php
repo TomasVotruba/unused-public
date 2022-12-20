@@ -17,6 +17,7 @@ use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider;
+use TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
@@ -30,7 +31,8 @@ final class UnusedPublicClassMethodRule implements Rule
 
     public function __construct(
         private readonly Configuration $configuration,
-        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider
+        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
+        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
     ) {
     }
 
@@ -82,15 +84,15 @@ final class UnusedPublicClassMethodRule implements Rule
 
     /**
      * @param mixed[] $usedClassMethods
-     * @param string[] $twigMethods
+     * @param string[] $twigMethodNames
      */
     private function isUsedClassMethod(
         string $className,
         string $methodName,
         array $usedClassMethods,
-        array $twigMethods
+        array $twigMethodNames
     ): bool {
-        if ($twigMethods !== [] && in_array($methodName, $twigMethods, true)) {
+        if ($this->usedMethodAnalyzer->isUsedInTwig($methodName, $twigMethodNames)) {
             return true;
         }
 
