@@ -14,6 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\Enum\RuleTips;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest
@@ -24,11 +25,6 @@ final class UnusedPublicClassConstRule implements Rule
      * @var string
      */
     public const ERROR_MESSAGE = 'Class constant "%s" is never used outside of its class';
-
-    /**
-     * @var string
-     */
-    public const TIP_MESSAGE = 'Either reduce the constants visibility or annotate it or its class with @api.';
 
     public function __construct(
         private readonly Configuration $configuration
@@ -68,7 +64,7 @@ final class UnusedPublicClassConstRule implements Rule
                     $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                         ->file($filePath)
                         ->line($line)
-                        ->tip(self::TIP_MESSAGE)
+                        ->tip(RuleTips::SOLUTION_MESSAGE)
                         ->build();
                 }
             }

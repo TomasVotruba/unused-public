@@ -15,6 +15,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\Enum\RuleTips;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
@@ -25,11 +26,6 @@ final class UnusedPublicPropertyRule implements Rule
      * @var string
      */
     public const ERROR_MESSAGE = 'Property "%s()" is never used outside of its class';
-
-    /**
-     * @var string
-     */
-    public const TIP_MESSAGE = 'Either reduce the property visibility or annotate it or its class with @api.';
 
     public function __construct(
         private readonly Configuration $configuration
@@ -72,7 +68,7 @@ final class UnusedPublicPropertyRule implements Rule
                     $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                         ->file($filePath)
                         ->line($line)
-                        ->tip(self::TIP_MESSAGE)
+                        ->tip(RuleTips::SOLUTION_MESSAGE)
                         ->build();
                 }
             }

@@ -13,14 +13,13 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
+use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
- *
- * @see \TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
- * @see \TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
  */
 final class UnusedPublicClassMethodRule implements Rule
 {
@@ -28,11 +27,6 @@ final class UnusedPublicClassMethodRule implements Rule
      * @var string
      */
     public const ERROR_MESSAGE = 'Class method "%s()" is never used outside of its class';
-
-    /**
-     * @var string
-     */
-    public const TIP_MESSAGE = 'Either reduce the methods visibility or annotate it or its class with @api.';
 
     public function __construct(
         private readonly Configuration $configuration,
@@ -58,6 +52,10 @@ final class UnusedPublicClassMethodRule implements Rule
         $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
 
         $methodCallCollector = $node->get(MethodCallCollector::class);
+        $staticMethodCallCollector = $node->get(StaticMethodCallCollector::class);
+
+        $methodCallCollector = array_merge_recursive($methodCallCollector, $staticMethodCallCollector);
+
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
 
         $ruleErrors = [];
@@ -74,7 +72,7 @@ final class UnusedPublicClassMethodRule implements Rule
                 $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                     ->file($filePath)
                     ->line($line)
-                    ->tip(self::TIP_MESSAGE)
+                    ->tip(RuleTips::SOLUTION_MESSAGE)
                     ->build();
             }
         }

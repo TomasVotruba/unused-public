@@ -12,7 +12,6 @@ use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
-use Twig\Extension\ExtensionInterface;
 
 /**
  * @implements Collector<ClassMethod, array{class-string, string, int}|null>
@@ -50,7 +49,9 @@ final class PublicClassMethodCollector implements Collector
         $classReflection = $scope->getClassReflection();
 
         // skip
-        if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf(ExtensionInterface::class)) {
+        if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf(
+            'Twig\Extension\ExtensionInterface'
+        )) {
             return null;
         }
 

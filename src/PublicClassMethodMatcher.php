@@ -58,10 +58,6 @@ final class PublicClassMethodMatcher
             return true;
         }
 
-        if ($classMethod->isStatic()) {
-            return true;
-        }
-
         // skip attributes
         if ($classMethod->attrGroups !== []) {
             return true;
