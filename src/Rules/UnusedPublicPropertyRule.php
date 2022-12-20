@@ -30,10 +30,15 @@ final class UnusedPublicPropertyRule implements Rule
      * @var string
      */
     public const TIP_MESSAGE = 'Either reduce the property visibility or annotate it or its class with @api.';
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -55,7 +60,7 @@ final class UnusedPublicPropertyRule implements Rule
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
         $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
 
-        $publicPropertyFetchCollector = [...$publicPropertyFetchCollector, ...$publicStaticPropertyFetchCollector];
+        $publicPropertyFetchCollector = array_merge($publicPropertyFetchCollector, $publicStaticPropertyFetchCollector);
 
         $ruleErrors = [];
 
