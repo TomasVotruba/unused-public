@@ -31,4 +31,12 @@ final class Configuration
     {
         return $this->parameters['constants'] ?? false;
     }
+
+    /**
+     * @return string[]
+     */
+    public function getTwigTemplatePaths(): array
+    {
+        return $this->parameters['twig_template_paths'];
+    }
 }

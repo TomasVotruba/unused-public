@@ -71,6 +71,27 @@ parameters:
 
 <br>
 
+## Exclude Twig Methods
+
+Some methods are used only in TWIG templates, and could be reported false positively as unused.
+
+```twig
+{{ book.getTitle() }}
+```
+
+How can we exclude them? Add your TWIG template directories in config to exclude methods names:
+
+
+```neon
+# phpstan.neon
+parameters:
+    unused_public:
+        twig_template_paths:
+            - templates
+```
+
+<br>
+
 ## Known Limitations
 
 In some cases, the method reports false positives:
