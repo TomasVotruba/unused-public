@@ -39,6 +39,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // public methods expected
         yield [[__DIR__ . '/Fixture/SkipTestPublicMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipTestUnderscorePublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipControllerMethod.php'], []];
 
         // method required by parent

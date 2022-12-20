@@ -56,7 +56,6 @@ final class UnusedPublicClassMethodRule implements Rule
         }
 
         $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
-        dump($twigMethodNames);
 
         $methodCallCollector = $node->get(MethodCallCollector::class);
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
@@ -65,7 +64,7 @@ final class UnusedPublicClassMethodRule implements Rule
 
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
             foreach ($declarations as [$className, $methodName, $line]) {
-                if ($this->isClassMethod($className, $methodName, $methodCallCollector)) {
+                if ($this->isUsedClassMethod($className, $methodName, $methodCallCollector, $twigMethodNames)) {
                     continue;
                 }
 
@@ -85,10 +84,19 @@ final class UnusedPublicClassMethodRule implements Rule
 
     /**
      * @param mixed[] $usedClassMethods
+     * @param string[] $twigMethods
      */
-    private function isClassMethod(string $className, string $constantName, array $usedClassMethods): bool
-    {
-        $publicMethodReference = $className . '::' . $constantName;
+    private function isUsedClassMethod(
+        string $className,
+        string $methodName,
+        array $usedClassMethods,
+        array $twigMethods
+    ): bool {
+        if ($twigMethods !== [] && in_array($methodName, $twigMethods, true)) {
+            return true;
+        }
+
+        $publicMethodReference = $className . '::' . $methodName;
         $usedClassMethods = Arrays::flatten($usedClassMethods);
 
         return in_array($publicMethodReference, $usedClassMethods, true);
