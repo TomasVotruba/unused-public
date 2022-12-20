@@ -4,3 +4,6 @@ includes:
 parameters:
     unused_public:
         methods: true
+
+        twig_template_paths:
+            - tests/Rules/UnusedPublicClassMethodRule/templates
