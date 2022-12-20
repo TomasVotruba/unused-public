@@ -14,6 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
@@ -34,7 +35,8 @@ final class UnusedPublicClassMethodRule implements Rule
     public const TIP_MESSAGE = 'Either reduce the methods visibility or annotate it or its class with @api.';
 
     public function __construct(
-        private readonly Configuration $configuration
+        private readonly Configuration $configuration,
+        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider
     ) {
     }
 
@@ -52,6 +54,9 @@ final class UnusedPublicClassMethodRule implements Rule
         if (! $this->configuration->isUnusedMethodEnabled()) {
             return [];
         }
+
+        $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
+        dump($twigMethodNames);
 
         $methodCallCollector = $node->get(MethodCallCollector::class);
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);

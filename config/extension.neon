@@ -3,6 +3,7 @@ parametersSchema:
         methods: bool()
         properties: bool()
         constants: bool()
+        twig_template_paths: listOf(string())
     ])
 
 # default parameters
@@ -11,11 +12,14 @@ parameters:
         methods: false
         properties: false
         constants: false
+        twig_template_paths:
+            - 'templates'
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
+    - TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
 
     -
         factory: TomasVotruba\UnusedPublic\Configuration
