@@ -33,11 +33,21 @@ final class UnusedPublicClassMethodRule implements Rule
      * @var string
      */
     public const TIP_MESSAGE = 'Either reduce the methods visibility or annotate it or its class with @api.';
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
+     */
+    private $possibleTwigMethodCallsProvider;
 
-    public function __construct(
-        private readonly Configuration $configuration,
-        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider
-    ) {
+    public function __construct(Configuration $configuration, PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider)
+    {
+        $this->configuration = $configuration;
+        $this->possibleTwigMethodCallsProvider = $possibleTwigMethodCallsProvider;
     }
 
     public function getNodeType(): string
