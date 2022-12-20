@@ -26,6 +26,10 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODING_STYLE,
     ]);
 
+    $rectorConfig->ruleWithConfiguration(\Rector\Php55\Rector\String_\StringClassNameToClassConstantRector::class, [
+        'Twig\Extension\ExtensionInterface',
+    ]);
+
     $rectorConfig->skip([
         '*/Fixture/*',
         '*/Source/*',

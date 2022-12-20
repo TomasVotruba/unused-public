@@ -11,6 +11,7 @@ use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
+use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
 
 /**
@@ -32,7 +33,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, 'name');
         yield [[__DIR__ . '/Fixture/LocalyUsedPublicProperty.php'],
-            [[$errorMessage, 7, UnusedPublicPropertyRule::TIP_MESSAGE]], ];
+            [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]], ];
 
         yield [
             [__DIR__ . '/Fixture/LocalyUsedPublicProperty.php', __DIR__ . '/Source/UsingExternalProperty.php'],
@@ -42,7 +43,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, 'somePublicStaticProperty');
         yield [
             [__DIR__ . '/Fixture/LocallyUsedStaticProperty.php'],
-            [[$errorMessage, 7, UnusedPublicPropertyRule::TIP_MESSAGE]],
+            [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]],
         ];
 
         yield [[

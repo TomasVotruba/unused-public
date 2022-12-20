@@ -10,6 +10,8 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
+use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
+use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 
 /**
@@ -31,15 +33,21 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'runHere');
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'],
-            [[$errorMessage, 9, UnusedPublicClassMethodRule::TIP_MESSAGE]], ];
+            [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
 
         $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'extraMethod');
         yield [[__DIR__ . '/Fixture/InterfaceWithExtraMethod.php'],
-            [[$errorMessage, 15, UnusedPublicClassMethodRule::TIP_MESSAGE]], ];
+            [[$errorMessage, 15, RuleTips::SOLUTION_MESSAGE]],
+        ];
+
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'runHere');
+        yield [[
+            __DIR__ . '/Source/StaticCalls.php',
+            __DIR__ . '/Fixture/StaticPublicMethod.php',
+        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
         // public methods expected
         yield [[__DIR__ . '/Fixture/SkipTestPublicMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipTestUnderscorePublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipControllerMethod.php'], []];
 
         // method required by parent
@@ -47,7 +55,6 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipImplementsInterfaceCoveredByContract.php'], []];
 
         yield [[__DIR__ . '/Fixture/SkipClassWithAttribute.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipStaticPublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipPublicApiClassMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipInterfaceMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipPrivateClassMethod.php'], []];
@@ -81,10 +88,11 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
      */
     protected function getCollectors(): array
     {
-        $publicClassMethodCollector = self::getContainer()->getByType(PublicClassMethodCollector::class);
-        $methodCallCollector = self::getContainer()->getByType(MethodCallCollector::class);
-
-        return [$methodCallCollector, $publicClassMethodCollector];
+        return [
+            self::getContainer()->getByType(PublicClassMethodCollector::class),
+            self::getContainer()->getByType(MethodCallCollector::class),
+            self::getContainer()->getByType(StaticMethodCallCollector::class),
+        ];
     }
 
     protected function getRule(): Rule

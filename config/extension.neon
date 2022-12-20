@@ -40,6 +40,11 @@ services:
             - phpstan.collector
 
     -
+        class: TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector
+        tags:
+            - phpstan.collector
+
+    -
         class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
         tags:
             - phpstan.collector
