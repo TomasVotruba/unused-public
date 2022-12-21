@@ -38,7 +38,9 @@ jobs:
             # publish it to local repository to new branch with a tag
             -
                 name: "Commit Downgraded - tag"
+                env:
+                    CURRENT_TAG: ${GITHUB_REF#refs/tags/}
                 run: |
-                    git commit -a -m "release PHP 7.2 downgraded ${GITHUB_REF#refs/tags/}"
-                    git tag "${GITHUB_REF#refs/tags/}.72"
-                    git push origin "${GITHUB_REF#refs/tags/}.72"
+                    git commit -a -m "release PHP 7.2 downgraded ${CURRENT_TAG}"
+                    git tag "${CURRENT_TAG}.72"
+                    git push origin "${CURRENT_TAG}.72"
