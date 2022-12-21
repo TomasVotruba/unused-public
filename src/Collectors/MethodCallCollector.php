@@ -19,13 +19,27 @@ use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
  */
 final class MethodCallCollector implements Collector
 {
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
-        private readonly Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \PHPStan\Reflection\ReflectionProvider
+     */
+    private $reflectionProvider;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
+     */
+    private $classMethodCallReferenceResolver;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+    public function __construct(ReflectionProvider $reflectionProvider, ClassMethodCallReferenceResolver $classMethodCallReferenceResolver, Configuration $configuration)
+    {
+        $this->reflectionProvider = $reflectionProvider;
+        $this->classMethodCallReferenceResolver = $classMethodCallReferenceResolver;
+        $this->configuration = $configuration;
     }
-
     public function getNodeType(): string
     {
         return MethodCall::class;
