@@ -8,6 +8,7 @@ use Nette\Utils\Strings;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use TomasVotruba\UnusedPublic\Configuration;
+use Webmozart\Assert\Assert;
 
 final class PossibleTwigMethodCallsProvider
 {
@@ -37,9 +38,8 @@ final class PossibleTwigMethodCallsProvider
 
         foreach ($this->configuration->getTwigTemplatePaths() as $twigTemplatePath) {
             $absoluteTwigTemplatePath = getcwd() . '/' . $twigTemplatePath;
-            if (! file_exists($absoluteTwigTemplatePath)) {
-                continue;
-            }
+            Assert::directory($absoluteTwigTemplatePath);
+            Assert::fileExists($absoluteTwigTemplatePath);
 
             $fileInfos = $this->findTwigFileInfos($absoluteTwigTemplatePath);
 
