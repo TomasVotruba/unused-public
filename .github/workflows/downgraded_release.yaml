@@ -51,4 +51,4 @@ jobs:
                 run: |
                     git commit -a -m "release PHP 7.2 downgraded ${GITHUB_REF#refs/tags/}"
                     git tag "${GITHUB_REF#refs/tags/}.72"
-                    git push --quiet origin "${GITHUB_REF#refs/tags/}.72"
+                    git push origin "${GITHUB_REF#refs/tags/}.72"
