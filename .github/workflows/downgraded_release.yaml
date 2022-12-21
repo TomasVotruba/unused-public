@@ -1,8 +1,4 @@
-# builds the content of:
-# * https://github.com/symplify/phpstan-rules
-
 # inspired by https://raw.githubusercontent.com/symplify/symplify/38d5929624d0ceb47d25d97ab020d685ac7b39a5/.github/workflows/downgrade_packages.yaml
-
 name: Downgraded Release
 
 on:
@@ -16,12 +12,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            -
-                uses: "actions/checkout@v2"
-                # this is required for "WyriHaximus/github-action-get-previous-tag" workflow
-                # see https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
-                with:
-                    fetch-depth: 0
+            -   uses: "actions/checkout@v2"
 
             -
                 uses: "shivammathur/setup-php@v2"
@@ -29,10 +20,9 @@ jobs:
                     php-version: 8.1
                     coverage: none
 
-            # to have all local tools available
             -   run: composer update --no-progress --ansi
 
-            # 3. downgrade directly
+            # downgrade directly
             -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
 
             # copy metafiles to repository as well
