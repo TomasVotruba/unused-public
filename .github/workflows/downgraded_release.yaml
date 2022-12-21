@@ -53,7 +53,7 @@ jobs:
                     # create new tag-based branch
                     # git checkout -b "release-${GITHUB_REF#refs/tags/}"
                     git add --all
-                    # git commit -m "${{ matrix.tools.name }} ${GITHUB_REF#refs/tags/}" -m "release downgraded version" --allow-empty
+                    git commit -m "${{ matrix.tools.name }} ${GITHUB_REF#refs/tags/}" -m "release downgraded version" --allow-empty
                     # git push --set-upstream origin "release-${GITHUB_REF#refs/tags/}"
 
                     # available for PHP 7.2
