@@ -67,6 +67,11 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ];
 
         yield [[__DIR__ . '/Fixture/SkipPublicMethodInTwigExtension.php'], []];
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'useMe');
+        yield [[
+            __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
+            __DIR__ . '/Source/TestCaseUser.php',
+        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
         // parent abstract method used by child call
         yield [[

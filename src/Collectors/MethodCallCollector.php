@@ -9,6 +9,7 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
 use TomasVotruba\UnusedPublic\Configuration;
@@ -37,6 +38,14 @@ final class MethodCallCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        // skip calls in tests, as they are not used in production
+        $classReflection = $scope->getClassReflection();
+        if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf(
+            'PHPUnit\Framework\TestCase'
+        )) {
+            return null;
+        }
+
         if (! $this->configuration->isUnusedMethodEnabled()) {
             return null;
         }
