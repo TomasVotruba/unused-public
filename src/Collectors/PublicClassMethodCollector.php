@@ -49,10 +49,14 @@ final class PublicClassMethodCollector implements Collector
         $classReflection = $scope->getClassReflection();
 
         // skip
-        if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf(
-            'Twig\Extension\ExtensionInterface'
-        )) {
-            return null;
+        if ($classReflection instanceof ClassReflection) {
+            if ($classReflection->isSubclassOf('Twig\Extension\ExtensionInterface')) {
+                return null;
+            }
+
+            if ($classReflection->isSubclassOf('Symfony\Bundle\FrameworkBundle\Controller\Controller')) {
+                return null;
+            }
         }
 
         if ($this->publicClassMethodMatcher->shouldSkipClassMethod($node)) {
