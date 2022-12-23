@@ -42,7 +42,7 @@ final class PublicPropertyFetchCollector implements Collector
         }
 
         // skip local
-        if ($node->var->name === 'this') {
+        if ($node->var instanceof Variable && $node->var->name === 'this') {
             return null;
         }
 
