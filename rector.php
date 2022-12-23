@@ -29,6 +29,7 @@ return static function (RectorConfig $rectorConfig): void {
         'Twig\Extension\ExtensionInterface',
         'PHPUnit\Framework\TestCase',
         'Symfony\Bundle\FrameworkBundle\Controller\Controller',
+        'Symfony\Component\EventDispatcher\EventSubscriberInterface',
     ]);
 
     $rectorConfig->skip([

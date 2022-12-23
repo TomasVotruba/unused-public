@@ -18,6 +18,15 @@ use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
  */
 final class PublicClassMethodCollector implements Collector
 {
+    /**
+     * @var string[]
+     */
+    private const SKIPPED_TYPES = [
+        'Symfony\Component\EventDispatcher\EventSubscriberInterface',
+        'Twig\Extension\ExtensionInterface',
+        'Symfony\Bundle\FrameworkBundle\Controller\Controller',
+    ];
+
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
         private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
@@ -50,12 +59,10 @@ final class PublicClassMethodCollector implements Collector
 
         // skip
         if ($classReflection instanceof ClassReflection) {
-            if ($classReflection->isSubclassOf('Twig\Extension\ExtensionInterface')) {
-                return null;
-            }
-
-            if ($classReflection->isSubclassOf('Symfony\Bundle\FrameworkBundle\Controller\Controller')) {
-                return null;
+            foreach (self::SKIPPED_TYPES as $skippedType) {
+                if ($classReflection->isSubclassOf($skippedType)) {
+                    return null;
+                }
             }
         }
 
