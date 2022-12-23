@@ -23,10 +23,15 @@ final class PossibleTwigMethodCallsProvider
      * @var string
      */
     private const TWIG_METHOD_CALL_REGEX = '#\w+\.(?<method_name>\w+)#';
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**

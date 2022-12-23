@@ -28,12 +28,26 @@ final class UnusedPublicClassMethodRule implements Rule
      * @var string
      */
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
-
-    public function __construct(
-        private readonly Configuration $configuration,
-        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
-        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
+     */
+    private $possibleTwigMethodCallsProvider;
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer
+     */
+    private $usedMethodAnalyzer;
+    public function __construct(Configuration $configuration, PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider, UsedMethodAnalyzer $usedMethodAnalyzer)
+    {
+        $this->configuration = $configuration;
+        $this->possibleTwigMethodCallsProvider = $possibleTwigMethodCallsProvider;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
     }
 
     public function getNodeType(): string
