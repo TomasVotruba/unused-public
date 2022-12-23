@@ -25,7 +25,7 @@ final class UnusedPublicPropertyRule implements Rule
     /**
      * @var string
      */
-    public const ERROR_MESSAGE = 'Property "%s()" is never used outside of its class';
+    public const ERROR_MESSAGE = 'Public property "%s::$%s" is never used';
 
     public function __construct(
         private readonly Configuration $configuration
@@ -63,7 +63,7 @@ final class UnusedPublicPropertyRule implements Rule
                     }
 
                     /** @var string $propertyName */
-                    $errorMessage = sprintf(self::ERROR_MESSAGE, $propertyName);
+                    $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $propertyName);
 
                     $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                         ->file($filePath)

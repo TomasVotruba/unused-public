@@ -31,16 +31,28 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'runHere');
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\LocallyUsedPublicMethod::class,
+            'runHere'
+        );
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'],
             [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
 
-        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'extraMethod');
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\InterfaceWithExtraMethod::class,
+            'extraMethod'
+        );
         yield [[__DIR__ . '/Fixture/InterfaceWithExtraMethod.php'],
             [[$errorMessage, 15, RuleTips::SOLUTION_MESSAGE]],
         ];
 
-        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'runHere');
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod::class,
+            'runHere'
+        );
         yield [[
             __DIR__ . '/Source/StaticCalls.php',
             __DIR__ . '/Fixture/StaticPublicMethod.php',
@@ -67,7 +79,11 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ];
 
         yield [[__DIR__ . '/Fixture/SkipPublicMethodInTwigExtension.php'], []];
-        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, 'useMe');
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly::class,
+            'useMe'
+        );
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',

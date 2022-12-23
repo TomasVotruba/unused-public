@@ -27,7 +27,7 @@ final class UnusedPublicClassMethodRule implements Rule
     /**
      * @var string
      */
-    public const ERROR_MESSAGE = 'Class method "%s()" is never used outside of its class';
+    public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
 
     public function __construct(
         private readonly Configuration $configuration,
@@ -69,7 +69,7 @@ final class UnusedPublicClassMethodRule implements Rule
                 }
 
                 /** @var string $methodName */
-                $errorMessage = sprintf(self::ERROR_MESSAGE, $methodName);
+                $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $methodName);
 
                 $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                     ->file($filePath)

@@ -31,7 +31,11 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, 'name');
+        $errorMessage = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty::class,
+            'name'
+        );
         yield [[__DIR__ . '/Fixture/LocalyUsedPublicProperty.php'],
             [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]], ];
 
@@ -40,7 +44,11 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             [],
         ];
 
-        $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, 'somePublicStaticProperty');
+        $errorMessage = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty::class,
+            'somePublicStaticProperty'
+        );
         yield [
             [__DIR__ . '/Fixture/LocallyUsedStaticProperty.php'],
             [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]],

@@ -24,7 +24,7 @@ final class UnusedPublicClassConstRule implements Rule
     /**
      * @var string
      */
-    public const ERROR_MESSAGE = 'Class constant "%s" is never used outside of its class';
+    public const ERROR_MESSAGE = 'Public constant "%s::%s" is never used';
 
     public function __construct(
         private readonly Configuration $configuration
@@ -59,7 +59,7 @@ final class UnusedPublicClassConstRule implements Rule
                     }
 
                     /** @var string $constantName */
-                    $errorMessage = sprintf(self::ERROR_MESSAGE, $constantName);
+                    $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $constantName);
 
                     $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                         ->file($filePath)

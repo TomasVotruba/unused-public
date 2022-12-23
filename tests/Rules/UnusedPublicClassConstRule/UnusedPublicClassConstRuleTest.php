@@ -30,23 +30,38 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, 'UNUSED');
+        $errorMessage = sprintf(
+            UnusedPublicClassConstRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant::class,
+            'UNUSED'
+        );
         yield [[__DIR__ . '/Fixture/UnusedPublicConstant.php'], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
-        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, 'UNUSED');
+        $errorMessage = sprintf(
+            UnusedPublicClassConstRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule::class,
+            'UNUSED'
+        );
         yield [[__DIR__ . '/Fixture/UnusedPublicConstantFromInterface.php'],
             [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
 
-        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, 'LOCALLY_ONLY');
+        $errorMessage = sprintf(
+            UnusedPublicClassConstRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstant::class,
+            'LOCALLY_ONLY'
+        );
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicConstant.php'],
             [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
 
-        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, 'LOCALLY_ONLY_NAMED');
+        $errorMessage = sprintf(
+            UnusedPublicClassConstRule::ERROR_MESSAGE,
+            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstantByName::class,
+            'LOCALLY_ONLY_NAMED'
+        );
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicConstantByName.php'],
             [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
 
         yield [[__DIR__ . '/Fixture/SkipApiPublicConstant.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipPrivateConstant.php'], []];
         yield [[__DIR__ . '/Fixture/SkipApiClassPublicConstant.php'], []];
         yield [[__DIR__ . '/Fixture/SkipUsedPublicConstant.php', __DIR__ . '/Source/ConstantUser.php'], []];
         yield [[
