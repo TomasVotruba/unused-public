@@ -11,4 +11,8 @@ final class SkipPublicMethodInTwigExtension extends AbstractExtension
     public function someFilterMethod()
     {
     }
+
+    public function getLoader()
+    {
+    }
 }

@@ -71,6 +71,13 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipInterfaceMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipPrivateClassMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php'], []];
+
+        // this method is required by parent contract, and should be skipped
+        yield [[
+            __DIR__ . '/Fixture/SkipParentInterfaceRequired.php',
+            __DIR__ . '/Source/Twig/ExistingTwigExtension.php',
+        ], []];
+
         yield [[__DIR__ . '/Fixture/SkipUsedPublicMethod.php', __DIR__ . '/Source/ClassMethodCaller.php'], []];
 
         yield [[

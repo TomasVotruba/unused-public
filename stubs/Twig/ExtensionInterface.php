@@ -10,4 +10,5 @@ if (interface_exists('Twig\Extension\ExtensionInterface')) {
 
 interface ExtensionInterface
 {
+    public function getLoader();
 }

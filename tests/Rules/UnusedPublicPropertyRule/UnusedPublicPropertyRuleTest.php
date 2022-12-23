@@ -60,7 +60,11 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipPrivateProperty.php'], []];
 
         yield [
-            [__DIR__ . '/Fixture/AbstractBaseclass.php', __DIR__ . '/Fixture/ExtendsAbstract.php', __DIR__ . '/Fixture/Provider.php'],
+            [
+                __DIR__ . '/Fixture/AbstractBaseclass.php',
+                __DIR__ . '/Fixture/ExtendsAbstract.php',
+                __DIR__ . '/Fixture/Provider.php',
+            ],
             [],
         ];
     }
