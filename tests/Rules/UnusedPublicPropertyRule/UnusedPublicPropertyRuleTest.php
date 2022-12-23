@@ -13,6 +13,8 @@ use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 
 /**
  * @extends RuleTestCase<UnusedPublicPropertyRule>
@@ -31,11 +33,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(
-            UnusedPublicPropertyRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty::class,
-            'name'
-        );
+        $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, LocalyUsedPublicProperty::class, 'name');
         yield [[__DIR__ . '/Fixture/LocalyUsedPublicProperty.php'],
             [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]], ];
 
@@ -46,7 +44,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
 
         $errorMessage = sprintf(
             UnusedPublicPropertyRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty::class,
+            LocallyUsedStaticProperty::class,
             'somePublicStaticProperty'
         );
         yield [

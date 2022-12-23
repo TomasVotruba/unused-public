@@ -12,6 +12,10 @@ use TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstant;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstantByName;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstantFromInterface;
 
 /**
  * @extends RuleTestCase<UnusedPublicClassConstRule>
@@ -30,16 +34,12 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(
-            UnusedPublicClassConstRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant::class,
-            'UNUSED'
-        );
+        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, UnusedPublicConstant::class, 'UNUSED');
         yield [[__DIR__ . '/Fixture/UnusedPublicConstant.php'], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
         $errorMessage = sprintf(
             UnusedPublicClassConstRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule::class,
+            UnusedPublicConstantFromInterface::class,
             'UNUSED'
         );
         yield [[__DIR__ . '/Fixture/UnusedPublicConstantFromInterface.php'],
@@ -47,7 +47,7 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
 
         $errorMessage = sprintf(
             UnusedPublicClassConstRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstant::class,
+            LocallyUsedPublicConstant::class,
             'LOCALLY_ONLY'
         );
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicConstant.php'],
@@ -55,7 +55,7 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
 
         $errorMessage = sprintf(
             UnusedPublicClassConstRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstantByName::class,
+            LocallyUsedPublicConstantByName::class,
             'LOCALLY_ONLY_NAMED'
         );
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicConstantByName.php'],

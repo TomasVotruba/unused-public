@@ -13,6 +13,10 @@ use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\InterfaceWithExtraMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\LocallyUsedPublicMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 
 /**
  * @extends RuleTestCase<UnusedPublicClassMethodRule>
@@ -33,7 +37,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(
             UnusedPublicClassMethodRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\LocallyUsedPublicMethod::class,
+            LocallyUsedPublicMethod::class,
             'runHere'
         );
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'],
@@ -41,18 +45,14 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         $errorMessage = sprintf(
             UnusedPublicClassMethodRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\InterfaceWithExtraMethod::class,
+            InterfaceWithExtraMethod::class,
             'extraMethod'
         );
         yield [[__DIR__ . '/Fixture/InterfaceWithExtraMethod.php'],
             [[$errorMessage, 15, RuleTips::SOLUTION_MESSAGE]],
         ];
 
-        $errorMessage = sprintf(
-            UnusedPublicClassMethodRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod::class,
-            'runHere'
-        );
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, StaticPublicMethod::class, 'runHere');
         yield [[
             __DIR__ . '/Source/StaticCalls.php',
             __DIR__ . '/Fixture/StaticPublicMethod.php',
@@ -79,11 +79,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ];
 
         yield [[__DIR__ . '/Fixture/SkipPublicMethodInTwigExtension.php'], []];
-        $errorMessage = sprintf(
-            UnusedPublicClassMethodRule::ERROR_MESSAGE,
-            \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly::class,
-            'useMe'
-        );
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMe');
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
