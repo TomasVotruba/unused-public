@@ -54,22 +54,22 @@ final class PublicClassMethodMatcher
 
     public function shouldSkipClassMethod(ClassMethod $classMethod): bool
     {
+        if (! $classMethod->isPublic()) {
+            return true;
+        }
+
         if ($classMethod->isMagic()) {
             return true;
         }
 
-        // skip attributes
+        // skip attributes, there is some purpose for these
         if ($classMethod->attrGroups !== []) {
-            return true;
-        }
-
-        if (! $classMethod->isPublic()) {
             return true;
         }
 
         $doc = $classMethod->getDocComment();
 
-        // skip symfony action
+        // skip symfony controller action
         return $doc instanceof Doc && str_contains($doc->getText(), '@Route');
     }
 }

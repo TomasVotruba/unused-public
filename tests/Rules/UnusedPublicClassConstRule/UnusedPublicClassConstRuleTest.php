@@ -17,9 +17,6 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\Loc
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstantFromInterface;
 
-/**
- * @extends RuleTestCase<UnusedPublicClassConstRule>
- */
 final class UnusedPublicClassConstRuleTest extends RuleTestCase
 {
     /**

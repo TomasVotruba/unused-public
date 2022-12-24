@@ -16,9 +16,6 @@ use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 
-/**
- * @extends RuleTestCase<UnusedPublicPropertyRule>
- */
 final class UnusedPublicPropertyRuleTest extends RuleTestCase
 {
     /**

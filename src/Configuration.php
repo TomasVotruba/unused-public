@@ -22,6 +22,20 @@ final class Configuration
         return $this->parameters['methods'] ?? false;
     }
 
+    public function shouldCollectMethods(): bool
+    {
+        if ($this->parameters['methods']) {
+            return true;
+        }
+
+        return $this->parameters['local_methods'];
+    }
+
+    public function isLocalMethodEnabled(): bool
+    {
+        return $this->parameters['local_methods'] ?? false;
+    }
+
     public function isUnusedPropertyEnabled(): bool
     {
         return $this->parameters['properties'] ?? false;

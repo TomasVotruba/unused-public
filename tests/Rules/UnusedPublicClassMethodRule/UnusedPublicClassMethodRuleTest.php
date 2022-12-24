@@ -17,9 +17,6 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\In
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 
-/**
- * @extends RuleTestCase<UnusedPublicClassMethodRule>
- */
 final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 {
     /**
