@@ -12,4 +12,11 @@ final class NullableClassMethodCaller
     {
         $skipNullableUsedPublicMethod->useMeMaybe();
     }
+
+    private function goAgain(?SkipNullableUsedPublicMethod $skipNullableUsedPublicMethod)
+    {
+        if ($skipNullableUsedPublicMethod instanceof SkipNullableUsedPublicMethod) {
+            $skipNullableUsedPublicMethod->useMeMaybe();
+        }
+    }
 }
