@@ -105,11 +105,9 @@ parameters:
 
 ## Known Limitations
 
-In some cases, the method reports false positives:
+In some cases, the rules report false positives:
 
-* it's not possible to detect unused public method that are called only in Twig templates
-* following cases are skipped
-    * public function in Twig extensions - those are functions/filters callable
+* when used only in templates, apart Twig paths, it's not possible to detect them
 
 <br>
 
