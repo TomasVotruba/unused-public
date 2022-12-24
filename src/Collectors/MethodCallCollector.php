@@ -55,7 +55,7 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
-        $classMethodCallReference = $this->classMethodCallReferenceResolver->resolve($node, $scope, false);
+        $classMethodCallReference = $this->classMethodCallReferenceResolver->resolve($node, $scope);
         if (! $classMethodCallReference instanceof MethodCallReference) {
             return null;
         }
