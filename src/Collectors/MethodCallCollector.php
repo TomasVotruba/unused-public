@@ -38,6 +38,10 @@ final class MethodCallCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
+        if (! $this->configuration->isUnusedMethodEnabled()) {
+            return null;
+        }
+
         // skip calls in tests, as they are not used in production
         $classReflection = $scope->getClassReflection();
         if ($classReflection instanceof ClassReflection && $classReflection->isSubclassOf(
@@ -46,15 +50,12 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
-        if (! $this->configuration->isUnusedMethodEnabled()) {
-            return null;
-        }
-
+        // unable to resolve method name
         if ($node->name instanceof Expr) {
             return null;
         }
 
-        $classMethodCallReference = $this->classMethodCallReferenceResolver->resolve($node, $scope, false);
+        $classMethodCallReference = $this->classMethodCallReferenceResolver->resolve($node, $scope);
         if (! $classMethodCallReference instanceof MethodCallReference) {
             return null;
         }

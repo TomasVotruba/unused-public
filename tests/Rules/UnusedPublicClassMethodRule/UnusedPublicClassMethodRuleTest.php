@@ -13,8 +13,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
-use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\InterfaceWithExtraMethod;
-use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\LocallyUsedPublicMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Interface\InterfaceWithExtraMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 
@@ -35,20 +34,14 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(
-            UnusedPublicClassMethodRule::ERROR_MESSAGE,
-            LocallyUsedPublicMethod::class,
-            'runHere'
-        );
-        yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'],
-            [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
+        yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
         $errorMessage = sprintf(
             UnusedPublicClassMethodRule::ERROR_MESSAGE,
             InterfaceWithExtraMethod::class,
             'extraMethod'
         );
-        yield [[__DIR__ . '/Fixture/InterfaceWithExtraMethod.php'],
+        yield [[__DIR__ . '/Fixture/Interface/InterfaceWithExtraMethod.php'],
             [[$errorMessage, 15, RuleTips::SOLUTION_MESSAGE]],
         ];
 
@@ -60,16 +53,16 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // public methods expected
         yield [[__DIR__ . '/Fixture/SkipTestPublicMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipControllerMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipNoRoutingControllerMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/Controller/SkipControllerMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/Controller/SkipNoRoutingControllerMethod.php'], []];
 
         // method required by parent
         yield [[__DIR__ . '/Fixture/SkipParentMethodOverride.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipImplementsInterfaceCoveredByContract.php'], []];
+        yield [[__DIR__ . '/Fixture/Interface/SkipImplementsInterfaceCoveredByContract.php'], []];
 
         yield [[__DIR__ . '/Fixture/SkipClassWithAttribute.php'], []];
         yield [[__DIR__ . '/Fixture/SkipPublicApiClassMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipInterfaceMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/Interface/SkipInterfaceMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipPrivateClassMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php'], []];
 

@@ -14,7 +14,7 @@ use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 final class ClassMethodCallReferenceResolver
 {
-    public function resolve(MethodCall $methodCall, Scope $scope, bool $allowThisType): ?MethodCallReference
+    public function resolve(MethodCall $methodCall, Scope $scope): ?MethodCallReference
     {
         if ($methodCall->name instanceof Expr) {
             return null;
@@ -27,8 +27,9 @@ final class ClassMethodCallReferenceResolver
             $callerType = TypeCombinator::removeNull($callerType);
         }
 
-        if (! $allowThisType && $callerType instanceof ThisType) {
-            return null;
+        // unwrap this type, as method is used
+        if ($callerType instanceof ThisType) {
+            $callerType = $callerType->getStaticObjectType();
         }
 
         if (! $callerType instanceof TypeWithClassName) {
