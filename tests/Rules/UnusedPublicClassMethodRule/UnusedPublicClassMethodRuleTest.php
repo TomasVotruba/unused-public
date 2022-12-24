@@ -14,7 +14,7 @@ use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Interface\InterfaceWithExtraMethod;
-use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\LocallyUsedPublicMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\SkipLocallyUsedPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 
@@ -35,13 +35,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
-        $errorMessage = sprintf(
-            UnusedPublicClassMethodRule::ERROR_MESSAGE,
-            LocallyUsedPublicMethod::class,
-            'runHere'
-        );
-        yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'],
-            [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]], ];
+        yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
         $errorMessage = sprintf(
             UnusedPublicClassMethodRule::ERROR_MESSAGE,
