@@ -13,6 +13,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
 use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
@@ -38,7 +39,7 @@ final class MethodCallCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
-        if (! $this->configuration->isUnusedMethodEnabled()) {
+        if (! $this->configuration->shouldCollectMethods()) {
             return null;
         }
 
@@ -64,7 +65,13 @@ final class MethodCallCollector implements Collector
         $methodName = $classMethodCallReference->getMethod();
 
         $classMethodReferences = $this->findParentClassMethodReferences($className, $methodName);
-        $classMethodReferences[] = $className . '::' . $methodName;
+
+        $classMethodReference = $className . '::' . $methodName;
+        if ($classMethodCallReference->isLocal()) {
+            $classMethodReference = ReferenceMarker::LOCAL . $classMethodReference;
+        }
+
+        $classMethodReferences[] = $classMethodReference;
 
         return $classMethodReferences;
     }

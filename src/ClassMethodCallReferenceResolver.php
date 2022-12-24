@@ -28,8 +28,11 @@ final class ClassMethodCallReferenceResolver
         }
 
         // unwrap this type, as method is used
+        $isLocal = false;
+
         if ($callerType instanceof ThisType) {
             $callerType = $callerType->getStaticObjectType();
+            $isLocal = true;
         }
 
         if (! $callerType instanceof TypeWithClassName) {
@@ -40,6 +43,6 @@ final class ClassMethodCallReferenceResolver
         $className = $callerType->getClassName();
         $methodName = $methodCall->name->toString();
 
-        return new MethodCallReference($className, $methodName);
+        return new MethodCallReference($className, $methodName, $isLocal);
     }
 }

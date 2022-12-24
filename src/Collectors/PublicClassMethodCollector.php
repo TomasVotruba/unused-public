@@ -45,7 +45,7 @@ final class PublicClassMethodCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
-        if (! $this->configuration->isUnusedMethodEnabled()) {
+        if (! $this->configuration->shouldCollectMethods()) {
             return null;
         }
 

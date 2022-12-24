@@ -60,13 +60,24 @@ With PHPStan extension installer, everything is ready to run.
 
 Enable each item on their own with simple configuration:
 
-```neon
+```yaml
 # phpstan.neon
 parameters:
     unused_public:
         methods: true
         properties: true
         constants: true
+```
+
+<br>
+
+Do you want to check local-only method calls that should not be removed, but be turned into `private`/`protected` instead?
+
+```yaml
+# phpstan.neon
+parameters:
+    unused_public:
+        local_methods: true
 ```
 
 <br>

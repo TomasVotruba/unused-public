@@ -8,7 +8,8 @@ final class MethodCallReference
 {
     public function __construct(
         private readonly string $class,
-        private readonly string $method
+        private readonly string $method,
+        private readonly bool $isLocal
     ) {
     }
 
@@ -20,5 +21,10 @@ final class MethodCallReference
     public function getMethod(): string
     {
         return $this->method;
+    }
+
+    public function isLocal(): bool
+    {
+        return $this->isLocal;
     }
 }

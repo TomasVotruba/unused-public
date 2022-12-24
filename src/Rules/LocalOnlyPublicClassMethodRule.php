@@ -18,22 +18,23 @@ use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider;
 use TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer;
+use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
 
 /**
- * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
+ * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
  */
-final class UnusedPublicClassMethodRule implements Rule
+final class LocalOnlyPublicClassMethodRule implements Rule
 {
     /**
      * @var string
      */
-    public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
+    public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should turned protected/private';
 
     public function __construct(
         private readonly Configuration $configuration,
-        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
         private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
+        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
+        private readonly MethodCallCollectorMapper $methodCallCollectorMapper
     ) {
     }
 
@@ -48,13 +49,13 @@ final class UnusedPublicClassMethodRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if (! $this->configuration->isUnusedMethodEnabled()) {
+        if (! $this->configuration->isLocalMethodEnabled()) {
             return [];
         }
 
         $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
 
-        $completeMethodCallReferences = $this->methodCallCollectorMapper->mapToMethodCallReferences(
+        $localAndExternalMethodCallReferences = $this->methodCallCollectorMapper->mapToLocalAndExternal(
             $node->get(MethodCallCollector::class),
             $node->get(StaticMethodCallCollector::class)
         );
@@ -65,10 +66,10 @@ final class UnusedPublicClassMethodRule implements Rule
 
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
             foreach ($declarations as [$className, $methodName, $line]) {
-                if ($this->isUsedClassMethod(
+                if (! $this->isUsedOnlyLocally(
                     $className,
                     $methodName,
-                    $completeMethodCallReferences,
+                    $localAndExternalMethodCallReferences,
                     $twigMethodNames
                 )) {
                     continue;
@@ -80,7 +81,7 @@ final class UnusedPublicClassMethodRule implements Rule
                 $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                     ->file($filePath)
                     ->line($line)
-                    ->tip(RuleTips::SOLUTION_MESSAGE)
+                    ->tip(RuleTips::NARROW_SCOPE)
                     ->build();
             }
         }
@@ -90,19 +91,31 @@ final class UnusedPublicClassMethodRule implements Rule
 
     /**
      * @param string[] $twigMethodNames
-     * @param string[] $completeMethodCallReferences
      */
-    private function isUsedClassMethod(
+    private function isUsedOnlyLocally(
         string $className,
         string $methodName,
-        array $completeMethodCallReferences,
+        LocalAndExternalMethodCallReferences $localAndExternalMethodCallReferences,
         array $twigMethodNames
     ): bool {
         if ($this->usedMethodAnalyzer->isUsedInTwig($methodName, $twigMethodNames)) {
             return true;
         }
 
-        $methodReference = $className . '::' . $methodName;
-        return in_array($methodReference, $completeMethodCallReferences, true);
+        $publicMethodReference = $className . '::' . $methodName;
+
+        if (in_array(
+            $publicMethodReference,
+            $localAndExternalMethodCallReferences->getExternalMethodCallReferences(),
+            true
+        )) {
+            return false;
+        }
+
+        return in_array(
+            $publicMethodReference,
+            $localAndExternalMethodCallReferences->getLocalMethodCallReferences(),
+            true
+        );
     }
 }

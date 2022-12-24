@@ -1,6 +1,7 @@
 parametersSchema:
     unused_public: structure([
         methods: bool()
+        local_methods: bool()
         properties: bool()
         constants: bool()
         twig_template_paths: listOf(string())
@@ -10,6 +11,7 @@ parametersSchema:
 parameters:
     unused_public:
         methods: false
+        local_methods: false
         properties: false
         constants: false
         twig_template_paths: []
@@ -20,6 +22,7 @@ services:
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
     - TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
     - TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer
+    - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
 
     -
         factory: TomasVotruba\UnusedPublic\Configuration
@@ -27,8 +30,6 @@ services:
             - %unused_public%
 
     # collectors
-
-    # methods
     -
         class: TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector
         tags:
@@ -69,8 +70,8 @@ services:
         tags:
             - phpstan.collector
 
-# rules
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule
+    - TomasVotruba\UnusedPublic\Rules\LocalOnlyPublicClassMethodRule
