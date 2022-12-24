@@ -27,11 +27,16 @@ final class PossibleTwigMethodCallsProvider
     /**
      * @var string[]
      */
-    private array $resolvedTwigMethodNames = [];
+    private $resolvedTwigMethodNames = [];
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**
