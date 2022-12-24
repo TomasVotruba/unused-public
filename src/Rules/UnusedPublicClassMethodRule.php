@@ -102,7 +102,7 @@ final class UnusedPublicClassMethodRule implements Rule
             return true;
         }
 
-        $publicMethodReference = $className . '::' . $methodName;
-        return in_array($publicMethodReference, $completeMethodCallReferences, true);
+        $methodReference = $className . '::' . $methodName;
+        return in_array($methodReference, $completeMethodCallReferences, true);
     }
 }

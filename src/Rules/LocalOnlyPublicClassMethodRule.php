@@ -55,17 +55,9 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
 
-        $completeMethodCallCollector = $this->methodCallCollectorMapper->mapToMethodCallReferences(
+        $localAndExternalMethodCallReferences = $this->methodCallCollectorMapper->mapToLocalAndExternal(
             $node->get(MethodCallCollector::class),
             $node->get(StaticMethodCallCollector::class)
-        );
-
-        //        $methodCallCollector = $node->get(MethodCallCollector::class);
-        //        $staticMethodCallCollector = $node->get(StaticMethodCallCollector::class);
-        //        $completeMethodCallCollector = array_merge_recursive($methodCallCollector, $staticMethodCallCollector);
-
-        $localAndExternalMethodCallReferences = $this->methodCallCollectorMapper->mapToLocalAndExternal(
-            $completeMethodCallCollector
         );
 
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);

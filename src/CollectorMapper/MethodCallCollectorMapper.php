@@ -19,18 +19,27 @@ final class MethodCallCollectorMapper
         array $methodCallReferencesByFile,
         array $staticCallReferencesByFile,
     ): array {
-        $completeMethodCallReferences = array_merge_recursive($methodCallReferencesByFile, $staticCallReferencesByFile);
+        $methodCallReferences = $this->mergeAndFlatten($methodCallReferencesByFile, $staticCallReferencesByFile);
 
-        return Arrays::flatten($completeMethodCallReferences);
+        // remove ReferenceMaker::LOCAL prefix
+        return array_map(static function (string $methodCallReference): string {
+            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
+                return substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
+            }
+
+            return $methodCallReference;
+        }, $methodCallReferences);
     }
 
     /**
-     * @param string[] $methodCallReferences
+     * @param array<string, mixed[]> $methodCallReferencesByFile
+     * @param array<string, mixed[]> $staticCallReferencesByFile
      */
-    public function mapToLocalAndExternal(array $methodCallReferences): LocalAndExternalMethodCallReferences
-    {
-        // /** @var string[] $methodCallReferences */
-        //        $methodCallReferences = Arrays::flatten($methodCallReferences);
+    public function mapToLocalAndExternal(
+        array $methodCallReferencesByFile,
+        array $staticCallReferencesByFile
+    ): LocalAndExternalMethodCallReferences {
+        $methodCallReferences = $this->mergeAndFlatten($methodCallReferencesByFile, $staticCallReferencesByFile);
 
         $localMethodCallReferences = [];
         $externalMethodCallReferences = [];
@@ -44,5 +53,18 @@ final class MethodCallCollectorMapper
         }
 
         return new LocalAndExternalMethodCallReferences($localMethodCallReferences, $externalMethodCallReferences);
+    }
+
+    /**
+     * @param array<string, mixed[]> $methodCallReferencesByFile
+     * @param array<string, mixed[]> $staticCallReferencesByFile
+     * @return string[]
+     */
+    private function mergeAndFlatten(array $methodCallReferencesByFile, array $staticCallReferencesByFile): array
+    {
+        return array_merge(
+            Arrays::flatten($methodCallReferencesByFile),
+            Arrays::flatten($staticCallReferencesByFile),
+        );
     }
 }
