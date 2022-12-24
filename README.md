@@ -111,11 +111,11 @@ In some cases, the rules report false positives:
 
 <br>
 
-## Skip False Positives
+## Skip Public-Only Methods
 
-Is element reported as unused, but it's actually used?
+Open-source vendors design public API to be used by projects. Is element reported as unused, but it's actually designed to be used public?
 
-Mark the class or element wit `@api` to declare it as public API and skip it:
+Mark the class or element with `@api` annotation to skip it:
 
 ```php
 final class Book
