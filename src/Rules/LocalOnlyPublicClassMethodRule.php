@@ -28,7 +28,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
     /**
      * @var string
      */
-    public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should turned protected/private';
+    public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally therefore visibility should be reduced';
 
     public function __construct(
         private readonly Configuration $configuration,
