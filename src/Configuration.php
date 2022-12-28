@@ -24,11 +24,11 @@ final class Configuration
 
     public function shouldCollectMethods(): bool
     {
-        if ($this->parameters['methods']) {
+        if ($this->isUnusedMethodEnabled()) {
             return true;
         }
 
-        return $this->parameters['local_methods'];
+        return $this->parameters['local_methods'] ?? false;
     }
 
     public function isLocalMethodEnabled(): bool
