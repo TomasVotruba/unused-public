@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Twig;
 
+use GlobIterator;
 use Nette\Utils\Strings;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
@@ -79,7 +80,7 @@ final class PossibleTwigMethodCallsProvider
      */
     private function findTwigFiles(string $directory): array
     {
-        $it = new \GlobIterator($directory . '/*.twig');
+        $it = new GlobIterator($directory . '/*.twig');
 
         $files = [];
         foreach ($it as $fileInfo) {
@@ -91,6 +92,7 @@ final class PossibleTwigMethodCallsProvider
             if ($path === false) {
                 continue;
             }
+            
             $files[] = $path;
         }
 
