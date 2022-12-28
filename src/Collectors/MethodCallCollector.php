@@ -37,10 +37,8 @@ final class MethodCallCollector implements Collector
      * @param MethodCall $node
      * @return string[]|null
      */
-    public function processNode(
-        Node $node,
-        Scope $scope
-    ): ?array {
+    public function processNode(Node $node, Scope $scope): ?array
+    {
         if (! $this->configuration->shouldCollectMethods()) {
             return null;
         }
@@ -81,10 +79,8 @@ final class MethodCallCollector implements Collector
     /**
      * @return string[]
      */
-    private function findParentClassMethodReferences(
-        string $className,
-        string $methodName
-    ): array {
+    private function findParentClassMethodReferences(string $className, string $methodName): array
+    {
         if (! $this->reflectionProvider->hasClass($className)) {
             return [];
         }
