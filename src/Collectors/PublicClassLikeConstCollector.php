@@ -32,10 +32,8 @@ final class PublicClassLikeConstCollector implements Collector
      * @param ClassConst $node
      * @return array<array{class-string, string, int}>|null
      */
-    public function processNode(
-        Node $node,
-        Scope $scope
-    ): ?array {
+    public function processNode(Node $node, Scope $scope): ?array
+    {
         if (! $this->configuration->isUnusedConstantsEnabled()) {
             return [];
         }
