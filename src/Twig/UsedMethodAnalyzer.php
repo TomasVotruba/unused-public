@@ -9,10 +9,8 @@ final class UsedMethodAnalyzer
     /**
      * @param string[] $twigMethodNames
      */
-    public function isUsedInTwig(
-        string $methodName,
-        array $twigMethodNames
-    ): bool {
+    public function isUsedInTwig(string $methodName, array $twigMethodNames): bool
+    {
         if ($twigMethodNames === []) {
             return false;
         }
