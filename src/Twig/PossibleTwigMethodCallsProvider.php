@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Twig;
 
+use FilesystemIterator;
+use RecursiveIteratorIterator;
 use _PHPStan_5c71ab23c\Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 use GlobIterator;
 use Nette\Utils\Strings;
@@ -81,11 +83,11 @@ final class PossibleTwigMethodCallsProvider
      */
     private function findTwigFiles(string $directory): array
     {
-        $it = new \RecursiveDirectoryIterator($directory, \FilesystemIterator::CURRENT_AS_PATHNAME);
+        $it = new \RecursiveDirectoryIterator($directory, FilesystemIterator::CURRENT_AS_PATHNAME);
 
         $files = [];
-        foreach (new \RecursiveIteratorIterator($it) as $filePath) {
-            if (str_ends_with($filePath, '.twig')) {
+        foreach (new RecursiveIteratorIterator($it) as $filePath) {
+            if (str_ends_with((string) $filePath, '.twig')) {
                 $files[] = $filePath;
             }
         }
