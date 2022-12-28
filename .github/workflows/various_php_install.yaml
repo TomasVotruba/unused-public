@@ -20,7 +20,7 @@ jobs:
                     - "stable"
                     - "lowest"
 
-        name: "Install on PHP ${{ matrix.php }}"
+        name: "Install on PHP ${{ matrix.php }} ${{ matrix.prefer }}"
 
         steps:
             -   uses: shivammathur/setup-php@v2
