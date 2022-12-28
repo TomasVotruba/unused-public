@@ -6,10 +6,7 @@ namespace TomasVotruba\UnusedPublic\Twig;
 
 use FilesystemIterator;
 use RecursiveIteratorIterator;
-use _PHPStan_5c71ab23c\Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
-use GlobIterator;
 use Nette\Utils\Strings;
-use SplFileInfo;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
 
