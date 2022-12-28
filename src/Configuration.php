@@ -51,6 +51,6 @@ final class Configuration
      */
     public function getTwigTemplatePaths(): array
     {
-        return $this->parameters['twig_template_paths'];
+        return $this->parameters['twig_template_paths'] ?? [];
     }
 }

@@ -1,20 +1,11 @@
 parametersSchema:
     unused_public: structure([
-        methods: bool()
-        local_methods: bool()
-        properties: bool()
-        constants: bool()
-        twig_template_paths: listOf(string())
+        ?methods: bool()
+        ?local_methods: bool()
+        ?properties: bool()
+        ?constants: bool()
+        ?twig_template_paths: listOf(string())
     ])
-
-# default parameters
-parameters:
-    unused_public:
-        methods: false
-        local_methods: false
-        properties: false
-        constants: false
-        twig_template_paths: []
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
