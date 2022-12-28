@@ -7,7 +7,7 @@ namespace TomasVotruba\UnusedPublic\Twig;
 use Nette\Utils\Strings;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
-use SplFileInfO;
+use SplFileInfo;
 
 final class PossibleTwigMethodCallsProvider
 {
