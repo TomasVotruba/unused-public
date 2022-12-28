@@ -16,6 +16,9 @@ jobs:
                     - 7.2
                     - 8.0
                     - 8.1
+                prefer:
+                    - "stable"
+                    - "lowest"
 
         name: "Install on PHP ${{ matrix.php }}"
 
@@ -25,4 +28,8 @@ jobs:
                     php-version: ${{ matrix.php }}
                     coverage: none
 
+            -   run: composer require tomasvotruba/unused-public --dev --ansi --prefer-lowest
+                if: "${{matrix.prefer == 'lowest'}}"
+                
             -   run: composer require tomasvotruba/unused-public --dev --ansi
+                if: "${{matrix.prefer == 'stable'}}"
