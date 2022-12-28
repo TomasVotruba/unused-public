@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Twig;
 
 use Nette\Utils\Strings;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
 
@@ -50,10 +48,15 @@ final class PossibleTwigMethodCallsProvider
             Assert::directory($absoluteTwigTemplatePath);
             Assert::fileExists($absoluteTwigTemplatePath);
 
-            $fileInfos = $this->findTwigFileInfos($absoluteTwigTemplatePath);
+            $files = $this->findTwigFiles($absoluteTwigTemplatePath);
 
-            foreach ($fileInfos as $fileInfo) {
-                $matches = Strings::matchAll($fileInfo->getContents(), self::TWIG_INNER_REGEX);
+            foreach ($files as $file) {
+                $templateContent = file_get_contents($file);
+                if ($templateContent === false) {
+                    continue;
+                }
+
+                $matches = Strings::matchAll($templateContent, self::TWIG_INNER_REGEX);
                 foreach ($matches as $match) {
                     $twigContents = $match['contents'];
 
@@ -71,15 +74,25 @@ final class PossibleTwigMethodCallsProvider
     }
 
     /**
-     * @return SplFileInfo[]
+     * @return list<string>
      */
-    private function findTwigFileInfos(string $directory): array
+    private function findTwigFiles(string $directory): array
     {
-        $twigFinder = Finder::create()
-            ->files()
-            ->in($directory)
-            ->name('*.twig');
+        $it = new \GlobIterator($directory . '/*.twig');
 
-        return iterator_to_array($twigFinder->getIterator());
+        $files = [];
+        foreach ($it as $fileInfo) {
+            if (! $fileInfo instanceof SplFileInfo) {
+                continue;
+            }
+
+            $path = $fileInfo->getRealPath();
+            if ($path === false) {
+                continue;
+            }
+            $files[] = $path;
+        }
+
+        return $files;
     }
 }

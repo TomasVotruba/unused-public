@@ -24,8 +24,10 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorMessagesWithLines
      */
-    public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
-    {
+    public function testRule(
+        array $filePaths,
+        array $expectedErrorMessagesWithLines
+    ): void {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
@@ -66,7 +68,10 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
             [],
         ];
 
-        yield [[__DIR__ . '/Fixture/SkipInterfaceConstantUsed.php', __DIR__ . '/Source/InterfaceConstantUser.php'], []];
+        yield [[
+            __DIR__ . '/Fixture/SkipInterfaceConstantUsed.php', __DIR__ . '/Source/InterfaceConstantUser.php'],
+            [],
+        ];
     }
 
     /**

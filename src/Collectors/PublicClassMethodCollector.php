@@ -43,8 +43,10 @@ final class PublicClassMethodCollector implements Collector
      * @param ClassMethod $node
      * @return array<array{class-string, string, int}>|null
      */
-    public function processNode(Node $node, Scope $scope): ?array
-    {
+    public function processNode(
+        Node $node,
+        Scope $scope
+    ): ?array {
         if (! $this->configuration->shouldCollectMethods()) {
             return null;
         }
@@ -87,7 +89,10 @@ final class PublicClassMethodCollector implements Collector
         $methodName = $node->name->toString();
 
         // is this method required by parent contract? skip it
-        if ($this->publicClassMethodMatcher->isUsedByParentClassOrInterface($classReflection, $methodName)) {
+        if ($this->publicClassMethodMatcher->isUsedByParentClassOrInterface(
+            $classReflection,
+            $methodName
+        )) {
             return null;
         }
 

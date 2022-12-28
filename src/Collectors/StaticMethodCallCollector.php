@@ -31,8 +31,10 @@ final class StaticMethodCallCollector implements Collector
      * @param StaticCall $node
      * @return string[]|null
      */
-    public function processNode(Node $node, Scope $scope): ?array
-    {
+    public function processNode(
+        Node $node,
+        Scope $scope
+    ): ?array {
         if (! $this->configuration->shouldCollectMethods()) {
             return null;
         }

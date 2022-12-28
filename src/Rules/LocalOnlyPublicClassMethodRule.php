@@ -47,8 +47,10 @@ final class LocalOnlyPublicClassMethodRule implements Rule
      * @param CollectedDataNode $node
      * @return RuleError[]
      */
-    public function processNode(Node $node, Scope $scope): array
-    {
+    public function processNode(
+        Node $node,
+        Scope $scope
+    ): array {
         if (! $this->configuration->isLocalMethodEnabled()) {
             return [];
         }

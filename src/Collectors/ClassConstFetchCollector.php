@@ -31,8 +31,10 @@ final class ClassConstFetchCollector implements Collector
      * @param ClassConstFetch $node
      * @return string[]|null
      */
-    public function processNode(Node $node, Scope $scope): ?array
-    {
+    public function processNode(
+        Node $node,
+        Scope $scope
+    ): ?array {
         if (! $this->configuration->isUnusedConstantsEnabled()) {
             return [];
         }

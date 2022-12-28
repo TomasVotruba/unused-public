@@ -40,8 +40,10 @@ final class UnusedPublicClassConstRule implements Rule
      * @param CollectedDataNode $node
      * @return RuleError[]
      */
-    public function processNode(Node $node, Scope $scope): array
-    {
+    public function processNode(
+        Node $node,
+        Scope $scope
+    ): array {
         if (! $this->configuration->isUnusedConstantsEnabled()) {
             return [];
         }
@@ -59,7 +61,11 @@ final class UnusedPublicClassConstRule implements Rule
                     }
 
                     /** @var string $constantName */
-                    $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $constantName);
+                    $errorMessage = sprintf(
+                        self::ERROR_MESSAGE,
+                        $className,
+                        $constantName
+                    );
 
                     $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                         ->file($filePath)
@@ -76,8 +82,11 @@ final class UnusedPublicClassConstRule implements Rule
     /**
      * @param mixed[] $usedConstFetches
      */
-    private function isClassConstantUsed(string $className, string $constantName, array $usedConstFetches): bool
-    {
+    private function isClassConstantUsed(
+        string $className,
+        string $constantName,
+        array $usedConstFetches
+    ): bool {
         $publicConstantReference = $className . '::' . $constantName;
 
         $usedConstFetches = Arrays::flatten($usedConstFetches);
