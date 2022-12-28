@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Twig;
 
+use RecursiveDirectoryIterator;
 use FilesystemIterator;
 use RecursiveIteratorIterator;
 use Nette\Utils\Strings;
@@ -80,7 +81,7 @@ final class PossibleTwigMethodCallsProvider
      */
     private function findTwigFiles(string $directory): array
     {
-        $it = new \RecursiveDirectoryIterator($directory, FilesystemIterator::CURRENT_AS_PATHNAME);
+        $it = new RecursiveDirectoryIterator($directory, FilesystemIterator::CURRENT_AS_PATHNAME);
 
         $files = [];
         foreach (new RecursiveIteratorIterator($it) as $filePath) {
