@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Twig;
 
-use GlobIterator;
+use RecursiveDirectoryIterator;
+use FilesystemIterator;
+use RecursiveIteratorIterator;
 use Nette\Utils\Strings;
-use SplFileInfo;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
 
@@ -80,20 +81,13 @@ final class PossibleTwigMethodCallsProvider
      */
     private function findTwigFiles(string $directory): array
     {
-        $it = new GlobIterator($directory . '/*.twig');
+        $it = new RecursiveDirectoryIterator($directory, FilesystemIterator::CURRENT_AS_PATHNAME);
 
         $files = [];
-        foreach ($it as $fileInfo) {
-            if (! $fileInfo instanceof SplFileInfo) {
-                continue;
+        foreach (new RecursiveIteratorIterator($it) as $filePath) {
+            if (str_ends_with((string) $filePath, '.twig')) {
+                $files[] = $filePath;
             }
-
-            $path = $fileInfo->getRealPath();
-            if ($path === false) {
-                continue;
-            }
-
-            $files[] = $path;
         }
 
         return $files;
