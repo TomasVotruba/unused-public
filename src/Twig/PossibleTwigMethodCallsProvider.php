@@ -6,9 +6,9 @@ namespace TomasVotruba\UnusedPublic\Twig;
 
 use GlobIterator;
 use Nette\Utils\Strings;
+use SplFileInfo;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
-use SplFileInfo;
 
 final class PossibleTwigMethodCallsProvider
 {
@@ -92,7 +92,7 @@ final class PossibleTwigMethodCallsProvider
             if ($path === false) {
                 continue;
             }
-            
+
             $files[] = $path;
         }
 
