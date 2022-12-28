@@ -24,10 +24,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorMessagesWithLines
      */
-    public function testRule(
-        array $filePaths,
-        array $expectedErrorMessagesWithLines
-    ): void {
+    public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
+    {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
