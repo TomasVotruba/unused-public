@@ -41,10 +41,8 @@ final class UnusedPublicPropertyRule implements Rule
      * @param CollectedDataNode $node
      * @return RuleError[]
      */
-    public function processNode(
-        Node $node,
-        Scope $scope
-    ): array {
+    public function processNode(Node $node, Scope $scope): array
+    {
         if (! $this->configuration->isUnusedPropertyEnabled()) {
             return [];
         }
@@ -65,11 +63,7 @@ final class UnusedPublicPropertyRule implements Rule
                     }
 
                     /** @var string $propertyName */
-                    $errorMessage = sprintf(
-                        self::ERROR_MESSAGE,
-                        $className,
-                        $propertyName
-                    );
+                    $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $propertyName);
 
                     $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
                         ->file($filePath)
@@ -86,11 +80,8 @@ final class UnusedPublicPropertyRule implements Rule
     /**
      * @param mixed[] $usedProperties
      */
-    private function isPropertyUsed(
-        string $className,
-        string $constantName,
-        array $usedProperties
-    ): bool {
+    private function isPropertyUsed(string $className, string $constantName, array $usedProperties): bool
+    {
         $publicPropertyReference = $className . '::' . $constantName;
         $usedProperties = Arrays::flatten($usedProperties);
 
