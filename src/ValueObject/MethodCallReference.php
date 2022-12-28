@@ -6,11 +6,26 @@ namespace TomasVotruba\UnusedPublic\ValueObject;
 
 final class MethodCallReference
 {
-    public function __construct(
-        private readonly string $class,
-        private readonly string $method,
-        private readonly bool $isLocal
-    ) {
+    /**
+     * @readonly
+     * @var string
+     */
+    private $class;
+    /**
+     * @readonly
+     * @var string
+     */
+    private $method;
+    /**
+     * @readonly
+     * @var bool
+     */
+    private $isLocal;
+    public function __construct(string $class, string $method, bool $isLocal)
+    {
+        $this->class = $class;
+        $this->method = $method;
+        $this->isLocal = $isLocal;
     }
 
     public function getClass(): string

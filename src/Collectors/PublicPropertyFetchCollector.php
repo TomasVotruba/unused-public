@@ -18,9 +18,14 @@ use TomasVotruba\UnusedPublic\Configuration;
  */
 final class PublicPropertyFetchCollector implements Collector
 {
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**

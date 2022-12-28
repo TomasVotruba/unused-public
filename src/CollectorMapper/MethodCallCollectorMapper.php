@@ -15,15 +15,12 @@ final class MethodCallCollectorMapper
      * @param array<string, mixed[]> $staticCallReferencesByFile
      * @return string[]
      */
-    public function mapToMethodCallReferences(
-        array $methodCallReferencesByFile,
-        array $staticCallReferencesByFile,
-    ): array {
+    public function mapToMethodCallReferences(array $methodCallReferencesByFile, array $staticCallReferencesByFile): array
+    {
         $methodCallReferences = $this->mergeAndFlatten($methodCallReferencesByFile, $staticCallReferencesByFile);
-
         // remove ReferenceMaker::LOCAL prefix
         return array_map(static function (string $methodCallReference): string {
-            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
+            if (strncmp($methodCallReference, ReferenceMarker::LOCAL, strlen(ReferenceMarker::LOCAL)) === 0) {
                 return substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
             }
 
@@ -45,7 +42,7 @@ final class MethodCallCollectorMapper
         $externalMethodCallReferences = [];
 
         foreach ($methodCallReferences as $methodCallReference) {
-            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
+            if (strncmp($methodCallReference, ReferenceMarker::LOCAL, strlen(ReferenceMarker::LOCAL)) === 0) {
                 $localMethodCallReferences[] = substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
             } else {
                 $externalMethodCallReferences[] = $methodCallReference;
@@ -62,9 +59,6 @@ final class MethodCallCollectorMapper
      */
     private function mergeAndFlatten(array $methodCallReferencesByFile, array $staticCallReferencesByFile): array
     {
-        return array_merge(
-            Arrays::flatten($methodCallReferencesByFile),
-            Arrays::flatten($staticCallReferencesByFile),
-        );
+        return array_merge(Arrays::flatten($methodCallReferencesByFile), Arrays::flatten($staticCallReferencesByFile));
     }
 }
