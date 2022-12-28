@@ -60,10 +60,8 @@ final class MethodCallCollectorMapper
      * @param array<string, mixed[]> $staticCallReferencesByFile
      * @return string[]
      */
-    private function mergeAndFlatten(
-        array $methodCallReferencesByFile,
-        array $staticCallReferencesByFile
-    ): array {
+    private function mergeAndFlatten(array $methodCallReferencesByFile, array $staticCallReferencesByFile): array
+    {
         return array_merge(
             Arrays::flatten($methodCallReferencesByFile),
             Arrays::flatten($staticCallReferencesByFile),
