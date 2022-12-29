@@ -13,4 +13,8 @@ final class SkipTwigEntityWithMethods
     public function getAnotherValue()
     {
     }
+
+    public function getConditionalValue()
+    {
+    }
 }
