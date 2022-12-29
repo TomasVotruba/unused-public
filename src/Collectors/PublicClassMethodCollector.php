@@ -27,11 +27,32 @@ final class PublicClassMethodCollector implements Collector
         'Symfony\Bundle\FrameworkBundle\Controller\Controller',
     ];
 
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+     */
+    private $publicClassMethodMatcher;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
     public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly Configuration $configuration,
+        ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        PublicClassMethodMatcher $publicClassMethodMatcher,
+        Configuration $configuration
     ) {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->publicClassMethodMatcher = $publicClassMethodMatcher;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -51,7 +72,7 @@ final class PublicClassMethodCollector implements Collector
 
         // skip test methods
         $classMethodName = $node->name->toString();
-        if (str_starts_with($classMethodName, 'test')) {
+        if (strncmp($classMethodName, 'test', strlen('test')) === 0) {
             return null;
         }
 
