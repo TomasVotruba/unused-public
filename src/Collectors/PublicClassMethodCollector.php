@@ -59,6 +59,11 @@ final class PublicClassMethodCollector implements Collector
 
         // skip
         if ($classReflection instanceof ClassReflection) {
+            // skip acceptance tests, codeception
+            if (str_ends_with($classReflection->getName(), 'Cest')) {
+                return null;
+            }
+
             foreach (self::SKIPPED_TYPES as $skippedType) {
                 if ($classReflection->isSubclassOf($skippedType)) {
                     return null;
