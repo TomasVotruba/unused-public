@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Twig;
 
-use RecursiveDirectoryIterator;
 use FilesystemIterator;
-use RecursiveIteratorIterator;
 use Nette\Utils\Strings;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use TomasVotruba\UnusedPublic\Configuration;
 use Webmozart\Assert\Assert;
 
@@ -28,11 +28,17 @@ final class PossibleTwigMethodCallsProvider
     /**
      * @var string[]
      */
-    private array $resolvedTwigMethodNames = [];
+    private $resolvedTwigMethodNames = [];
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**
@@ -85,7 +91,7 @@ final class PossibleTwigMethodCallsProvider
 
         $files = [];
         foreach (new RecursiveIteratorIterator($it) as $filePath) {
-            if (str_ends_with((string) $filePath, '.twig')) {
+            if (substr_compare((string) $filePath, '.twig', -strlen('.twig')) === 0) {
                 $files[] = $filePath;
             }
         }
