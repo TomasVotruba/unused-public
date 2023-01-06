@@ -8,6 +8,7 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
@@ -31,6 +32,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public function provideData(): Iterator
     {
+        yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
         $errorMessage = sprintf(
@@ -109,6 +111,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             self::getContainer()->getByType(PublicClassMethodCollector::class),
             self::getContainer()->getByType(MethodCallCollector::class),
             self::getContainer()->getByType(StaticMethodCallCollector::class),
+            self::getContainer()->getByType(AttributeCallableCollector::class),
         ];
     }
 

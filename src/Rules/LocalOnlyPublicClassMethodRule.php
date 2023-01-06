@@ -11,6 +11,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper;
+use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
@@ -57,7 +58,8 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         $localAndExternalMethodCallReferences = $this->methodCallCollectorMapper->mapToLocalAndExternal(
             $node->get(MethodCallCollector::class),
-            $node->get(StaticMethodCallCollector::class)
+            $node->get(StaticMethodCallCollector::class),
+            $node->get(AttributeCallableCollector::class)
         );
 
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);

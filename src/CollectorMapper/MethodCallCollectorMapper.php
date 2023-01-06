@@ -13,13 +13,19 @@ final class MethodCallCollectorMapper
     /**
      * @param array<string, mixed[]> $methodCallReferencesByFile
      * @param array<string, mixed[]> $staticCallReferencesByFile
+     * @param array<string, mixed[]> $attributeCallReferencesByFile
      * @return string[]
      */
     public function mapToMethodCallReferences(
         array $methodCallReferencesByFile,
         array $staticCallReferencesByFile,
+        array $attributeCallReferencesByFile,
     ): array {
-        $methodCallReferences = $this->mergeAndFlatten($methodCallReferencesByFile, $staticCallReferencesByFile);
+        $methodCallReferences = $this->mergeAndFlatten(
+            $methodCallReferencesByFile,
+            $staticCallReferencesByFile,
+            $attributeCallReferencesByFile
+        );
 
         // remove ReferenceMaker::LOCAL prefix
         return array_map(static function (string $methodCallReference): string {
@@ -34,12 +40,18 @@ final class MethodCallCollectorMapper
     /**
      * @param array<string, mixed[]> $methodCallReferencesByFile
      * @param array<string, mixed[]> $staticCallReferencesByFile
+     * @param array<string, mixed[]> $attributeCallReferencesByFile
      */
     public function mapToLocalAndExternal(
         array $methodCallReferencesByFile,
-        array $staticCallReferencesByFile
+        array $staticCallReferencesByFile,
+        array $attributeCallReferencesByFile
     ): LocalAndExternalMethodCallReferences {
-        $methodCallReferences = $this->mergeAndFlatten($methodCallReferencesByFile, $staticCallReferencesByFile);
+        $methodCallReferences = $this->mergeAndFlatten(
+            $methodCallReferencesByFile,
+            $staticCallReferencesByFile,
+            $attributeCallReferencesByFile
+        );
 
         $localMethodCallReferences = [];
         $externalMethodCallReferences = [];
@@ -58,13 +70,18 @@ final class MethodCallCollectorMapper
     /**
      * @param array<string, mixed[]> $methodCallReferencesByFile
      * @param array<string, mixed[]> $staticCallReferencesByFile
+     * @param array<string, mixed[]> $attributeCallReferencesByFile
      * @return string[]
      */
-    private function mergeAndFlatten(array $methodCallReferencesByFile, array $staticCallReferencesByFile): array
-    {
+    private function mergeAndFlatten(
+        array $methodCallReferencesByFile,
+        array $staticCallReferencesByFile,
+        array $attributeCallReferencesByFile
+    ): array {
         return array_merge(
             Arrays::flatten($methodCallReferencesByFile),
             Arrays::flatten($staticCallReferencesByFile),
+            Arrays::flatten($attributeCallReferencesByFile),
         );
     }
 }
