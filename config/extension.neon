@@ -70,6 +70,11 @@ services:
         tags:
             - phpstan.collector
 
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector
+        tags:
+            - phpstan.collector
+
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
