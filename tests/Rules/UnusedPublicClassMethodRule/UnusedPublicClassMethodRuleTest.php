@@ -69,6 +69,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/SkipUsedPublicMethod.php', __DIR__ . '/Source/ClassMethodCaller.php'], []];
 
+        yield [[__DIR__ . '/Source/CallbackMethodCaller.php', __DIR__ . '/Fixture/SkipPublicCallbackMethod.php'], []];
+
         yield [[
             __DIR__ . '/Fixture/SkipNullableUsedPublicMethod.php', __DIR__ . '/Source/NullableClassMethodCaller.php', ],
             [],
