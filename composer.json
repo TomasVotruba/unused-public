@@ -3,6 +3,7 @@
     "type": "phpstan-extension",
     "description": "Detect unused public properties, constants and methods in your code",
     "license": "MIT",
+    "keywords": ["dev"],
     "require": {
         "php": "^8.1",
         "phpstan/phpstan": "^1.9.3",
