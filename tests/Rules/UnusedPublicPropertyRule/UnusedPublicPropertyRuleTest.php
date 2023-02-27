@@ -59,6 +59,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
 
         // laravel
         yield [[__DIR__ . '/Fixture/SkipLaravelCommandSignatureProperty.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipLivewireComponent.php'], []];
 
         yield [
             [

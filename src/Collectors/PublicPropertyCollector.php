@@ -18,6 +18,11 @@ use TomasVotruba\UnusedPublic\Configuration;
  */
 final class PublicPropertyCollector implements Collector
 {
+    /**
+     * @var string[]
+     */
+    private const CLASSES_TO_SKIP = ['Livewire\Component'];
+
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
         private readonly Configuration $configuration
@@ -47,12 +52,12 @@ final class PublicPropertyCollector implements Collector
             return null;
         }
 
-        if ($this->apiDocStmtAnalyzer->isApiDoc($node, $classReflection)) {
+        $classLike = $node->getOriginalNode();
+        if (! $classLike instanceof Class_) {
             return null;
         }
 
-        $classLike = $node->getOriginalNode();
-        if (! $classLike instanceof Class_) {
+        if ($this->shouldSkipClass($classReflection, $classLike)) {
             return null;
         }
 
@@ -72,5 +77,20 @@ final class PublicPropertyCollector implements Collector
         }
 
         return $publicPropertyNames;
+    }
+
+    private function shouldSkipClass(ClassReflection $classReflection, Class_ $class): bool
+    {
+        foreach (self::CLASSES_TO_SKIP as $classToSkip) {
+            if ($classReflection->isSubclassOf($classToSkip)) {
+                return true;
+            }
+        }
+
+        if ($this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection)) {
+            return true;
+        }
+
+        return false;
     }
 }
