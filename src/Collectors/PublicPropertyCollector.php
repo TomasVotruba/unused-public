@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
+use Livewire\Component;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
@@ -18,6 +19,11 @@ use TomasVotruba\UnusedPublic\Configuration;
  */
 final class PublicPropertyCollector implements Collector
 {
+    /**
+     * @var array<class-string<Component>>
+     */
+    private const CLASSES_TO_SKIP = ['Livewire\Component'];
+
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
         private readonly Configuration $configuration
@@ -47,12 +53,12 @@ final class PublicPropertyCollector implements Collector
             return null;
         }
 
-        if ($this->apiDocStmtAnalyzer->isApiDoc($node, $classReflection)) {
+        $classLike = $node->getOriginalNode();
+        if (! $classLike instanceof Class_) {
             return null;
         }
 
-        $classLike = $node->getOriginalNode();
-        if (! $classLike instanceof Class_) {
+        if ($this->shouldSkipClass($classReflection, $classLike)) {
             return null;
         }
 
@@ -72,5 +78,16 @@ final class PublicPropertyCollector implements Collector
         }
 
         return $publicPropertyNames;
+    }
+
+    private function shouldSkipClass(ClassReflection $classReflection, Class_ $class): bool
+    {
+        foreach (self::CLASSES_TO_SKIP as $classToSkip) {
+            if ($classReflection->isSubclassOf($classToSkip)) {
+                return true;
+            }
+        }
+
+        return $this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection);
     }
 }
