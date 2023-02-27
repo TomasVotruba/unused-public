@@ -32,6 +32,7 @@ final class PublicClassMethodCollector implements Collector
         'Illuminate\Http\Request',
         'Illuminate\Contracts\Mail\Mailable',
         'Illuminate\Contracts\Queue\ShouldQueue',
+        'Illuminate\Support\ServiceProvider',
     ];
 
     public function __construct(
