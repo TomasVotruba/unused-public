@@ -86,11 +86,6 @@ final class PublicPropertyCollector implements Collector
                 return true;
             }
         }
-
-        if ($this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection)) {
-            return true;
-        }
-
-        return false;
+        return $this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection);
     }
 }
