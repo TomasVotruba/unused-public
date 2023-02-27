@@ -8,6 +8,7 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
@@ -19,16 +20,16 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\Local
 final class UnusedPublicPropertyRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideData()
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorMessagesWithLines
      */
+    #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, LocalyUsedPublicProperty::class, 'name');
         yield [[__DIR__ . '/Fixture/LocalyUsedPublicProperty.php'],

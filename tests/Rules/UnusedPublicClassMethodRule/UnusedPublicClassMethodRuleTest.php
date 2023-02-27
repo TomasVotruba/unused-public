@@ -8,6 +8,7 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
@@ -21,16 +22,16 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Us
 final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideData()
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorMessagesWithLines
      */
+    #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
@@ -92,6 +93,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Source/Repository/AbstractRepository.php',
             __DIR__ . '/Source/Repository/ChildRepository.php',
         ], []];
+
+        // laravel
+        yield [[__DIR__ . '/Fixture/Laravel/SkipCommandHandle.php'], []];
     }
 
     /**

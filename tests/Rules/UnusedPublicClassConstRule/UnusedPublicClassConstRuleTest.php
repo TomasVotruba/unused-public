@@ -8,6 +8,7 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
@@ -20,16 +21,16 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\Unu
 final class UnusedPublicClassConstRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideData()
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorMessagesWithLines
      */
+    #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, UnusedPublicConstant::class, 'UNUSED');
         yield [[__DIR__ . '/Fixture/UnusedPublicConstant.php'], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];

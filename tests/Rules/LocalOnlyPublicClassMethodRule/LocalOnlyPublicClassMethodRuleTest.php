@@ -8,6 +8,7 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
@@ -19,16 +20,16 @@ use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture
 final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideData()
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorMessagesWithLines
      */
+    #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         $errorMessage = sprintf(
             LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
