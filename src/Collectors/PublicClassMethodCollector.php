@@ -30,6 +30,7 @@ final class PublicClassMethodCollector implements Collector
         'Illuminate\Console\Command',
         'Livewire\Component',
         'Illuminate\Http\Request',
+        'Illuminate\Contracts\Mail\Mailable',
     ];
 
     public function __construct(
