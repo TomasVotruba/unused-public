@@ -10,11 +10,17 @@ namespace TomasVotruba\UnusedPublic;
 final class Configuration
 {
     /**
+     * @var array<string, mixed>
+     * @readonly
+     */
+    private $parameters;
+
+    /**
      * @param array<string, mixed> $parameters
      */
-    public function __construct(
-        private readonly array $parameters
-    ) {
+    public function __construct(array $parameters)
+    {
+        $this->parameters = $parameters;
     }
 
     public function isUnusedMethodEnabled(): bool
