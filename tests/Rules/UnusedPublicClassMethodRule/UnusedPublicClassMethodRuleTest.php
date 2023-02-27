@@ -93,6 +93,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Source/Repository/AbstractRepository.php',
             __DIR__ . '/Source/Repository/ChildRepository.php',
         ], []];
+
+        // laravel
+        yield [[__DIR__ . '/Fixture/Laravel/SkipCommandHandle.php'], []];
     }
 
     /**
