@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
+use Livewire\Component;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
@@ -19,7 +20,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class PublicPropertyCollector implements Collector
 {
     /**
-     * @var string[]
+     * @var array<class-string<Component>>
      */
     private const CLASSES_TO_SKIP = ['Livewire\Component'];
 
@@ -86,6 +87,7 @@ final class PublicPropertyCollector implements Collector
                 return true;
             }
         }
+
         return $this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection);
     }
 }
