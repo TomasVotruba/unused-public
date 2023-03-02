@@ -10,7 +10,6 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
-use TomasVotruba\UnusedPublic\Blade\PossibleBladeMethodCallsProvider;
 use TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
@@ -18,8 +17,8 @@ use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
-use TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider;
-use TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer;
+use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
+use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
@@ -33,8 +32,7 @@ final class UnusedPublicClassMethodRule implements Rule
 
     public function __construct(
         private readonly Configuration $configuration,
-        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
-        private readonly PossibleBladeMethodCallsProvider $possibleBladeMethodCallsProvider,
+        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
         private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
         private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
     ) {
@@ -55,8 +53,8 @@ final class UnusedPublicClassMethodRule implements Rule
             return [];
         }
 
-        $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
-        $bladeMethodNames = $this->possibleBladeMethodCallsProvider->provide();
+        $twigMethodNames = $this->templateMethodCallsProvider->provideTwigMethodCalls();
+        $bladeMethodNames = $this->templateMethodCallsProvider->provideBladeMethodCalls();
 
         $completeMethodCallReferences = $this->methodCallCollectorMapper->mapToMethodCallReferences(
             $node->get(MethodCallCollector::class),

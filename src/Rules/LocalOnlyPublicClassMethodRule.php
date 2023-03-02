@@ -17,8 +17,8 @@ use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
-use TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider;
-use TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer;
+use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
+use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
 use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
 
 /**
@@ -34,7 +34,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
     public function __construct(
         private readonly Configuration $configuration,
         private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
+        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
         private readonly MethodCallCollectorMapper $methodCallCollectorMapper
     ) {
     }
@@ -54,7 +54,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
             return [];
         }
 
-        $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
+        $twigMethodNames = $this->templateMethodCallsProvider->provideTwigMethodCalls();
 
         $localAndExternalMethodCallReferences = $this->methodCallCollectorMapper->mapToLocalAndExternal(
             $node->get(MethodCallCollector::class),
