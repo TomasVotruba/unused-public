@@ -12,7 +12,7 @@ final class TemplateMethodCallsProvider
 {
     public function __construct(
         private readonly Configuration $configuration,
-        private readonly TemplateRegexFinder $templateMethodCallsFinder,
+        private readonly TemplateRegexFinder $templateRegexFinder,
     ) {
     }
 
@@ -21,7 +21,7 @@ final class TemplateMethodCallsProvider
      */
     public function provideBladeMethodCalls(): array
     {
-        return $this->templateMethodCallsFinder->find(
+        return $this->templateRegexFinder->find(
             $this->configuration->getTemplatePaths(),
             'blade.php',
             [BladeRegex::INNER_REGEX, BladeRegex::TAG_REGEX],
@@ -34,11 +34,11 @@ final class TemplateMethodCallsProvider
      */
     public function provideTwigMethodCalls(): array
     {
-        return $this->templateMethodCallsFinder->find(
+        return $this->templateRegexFinder->find(
             $this->configuration->getTemplatePaths(),
             'twig',
-            [TwigRegex::TWIG_INNER_REGEX],
-            TwigRegex::TWIG_METHOD_CALL_REGEX
+            [TwigRegex::INNER_REGEX],
+            TwigRegex::METHOD_CALL_REGEX
         );
     }
 }

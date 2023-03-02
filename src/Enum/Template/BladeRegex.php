@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Enum\Template;
 
-class BladeRegex
+final class BladeRegex
 {
     /**
      * @see https://regex101.com/r/vDKvtE/1
