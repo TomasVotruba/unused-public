@@ -9,10 +9,10 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class TemplateMethodCallsProvider
 {
     /**
-     * @see https://regex101.com/r/3gLWCt/1
+     * @see https://regex101.com/r/vDKvtE/1
      * @var string
      */
-    private const BLADE_INNER_REGEX = '#\{(\{|%)(?<contents>.*?)(\}|%)\}#';
+    private const BLADE_INNER_REGEX = '#\{(\{|\!\!)(?<contents>.*?)(\!\!|\})\}#';
 
     /**
      * @see https://regex101.com/r/G7zAue/1
