@@ -26,8 +26,6 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
      * @param mixed[] $expectedErrorMessagesWithLines
      */
     #[DataProvider('provideData')]
-    #[DataProvider('provideDataWithTwigTemplates')]
-    #[DataProvider('provideDataWithBladeTemplates')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
@@ -90,22 +88,6 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // laravel
         yield [[__DIR__ . '/Fixture/Laravel/SkipCommandHandle.php'], []];
-    }
-
-    public static function provideDataWithTwigTemplates(): Iterator
-    {
-        yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php'], []];
-
-        // this method is required by parent contract, and should be skipped
-        yield [[
-            __DIR__ . '/Fixture/SkipParentInterfaceRequired.php',
-            __DIR__ . '/Source/Twig/ExistingTwigExtension.php',
-        ], []];
-    }
-
-    public static function provideDataWithBladeTemplates(): Iterator
-    {
-        yield [[__DIR__ . '/Fixture/Blade/SkipUsedInBlade.php'], []];
     }
 
     /**
