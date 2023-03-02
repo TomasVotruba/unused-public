@@ -25,9 +25,18 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
      * @param mixed[] $expectedErrorMessagesWithLines
      */
     #[DataProvider('provideData')]
+    #[DataProvider('provideDataFromBladeTemplates')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
+    }
+
+    public static function provideDataFromBladeTemplates(): Iterator
+    {
+        yield [
+            [__DIR__ . '/Fixture/Blade/RouteName.php'],
+            []
+        ];
     }
 
     public static function provideData(): Iterator
