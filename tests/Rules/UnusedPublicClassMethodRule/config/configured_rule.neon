@@ -5,5 +5,6 @@ parameters:
     unused_public:
         methods: true
 
+        # @todo rename to template_paths
         twig_template_paths:
             - tests/Rules/UnusedPublicClassMethodRule/templates

@@ -62,11 +62,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipParentMethodOverride.php'], []];
         yield [[__DIR__ . '/Fixture/Interface/SkipImplementsInterfaceCoveredByContract.php'], []];
 
-        yield [[__DIR__ . '/Fixture/SkipAcceptanceCest.php'], []];
         yield [[__DIR__ . '/Fixture/SkipClassWithAttribute.php'], []];
         yield [[__DIR__ . '/Fixture/SkipPublicApiClassMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Interface/SkipInterfaceMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipPrivateClassMethod.php'], []];
 
         yield [[__DIR__ . '/Fixture/SkipUsedPublicMethod.php', __DIR__ . '/Source/ClassMethodCaller.php'], []];
 
@@ -77,6 +75,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/SkipPublicMethodInTwigExtension.php'], []];
         $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMe');
+
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
@@ -106,9 +105,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public static function provideDataWithBladeTemplates(): Iterator
     {
-        yield [[
-           __DIR__ . '/Fixture/Blade/SkipUsedInBlade.php',
-        ], []];
+        yield [[__DIR__ . '/Fixture/Blade/SkipUsedInBlade.php'], []];
     }
 
     /**

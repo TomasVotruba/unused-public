@@ -3,11 +3,10 @@ name: Rector
 on:
     pull_request: null
 
-if: github.repository == 'tomasvotruba/unused-public'
-
 jobs:
     rector:
         runs-on: ubuntu-latest
+        if: github.repository == 'tomasvotruba/unused-public'
 
         steps:
             -

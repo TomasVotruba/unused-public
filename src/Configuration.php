@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic;
 
+use Webmozart\Assert\Assert;
+
 /**
  * @inspired by https://github.com/phpstan/phpstan-symfony/blob/1.2.x/src/Symfony/Configuration.php
  */
@@ -49,8 +51,13 @@ final class Configuration
     /**
      * @return string[]
      */
-    public function getTwigTemplatePaths(): array
+    public function getTemplatePaths(): array
     {
-        return $this->parameters['twig_template_paths'];
+        $templatePaths = $this->parameters['twig_template_paths'];
+
+        Assert::allDirectory($templatePaths);
+        Assert::allFileExists($templatePaths);
+
+        return $templatePaths;
     }
 }

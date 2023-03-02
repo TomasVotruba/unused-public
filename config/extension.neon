@@ -21,6 +21,7 @@ services:
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
     - TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
+    - TomasVotruba\UnusedPublic\Blade\PossibleBladeMethodCallsProvider
     - TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
 

@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Twig;
 
-use FilesystemIterator;
 use Nette\Utils\Strings;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use TomasVotruba\UnusedPublic\Configuration;
-use Webmozart\Assert\Assert;
 
 final class PossibleTwigMethodCallsProvider
 {
@@ -46,15 +42,13 @@ final class PossibleTwigMethodCallsProvider
 
         $twigMethodNames = [];
 
-        foreach ($this->configuration->getTwigTemplatePaths() as $twigTemplatePath) {
-            $absoluteTwigTemplatePath = getcwd() . '/' . $twigTemplatePath;
-            Assert::directory($absoluteTwigTemplatePath);
-            Assert::fileExists($absoluteTwigTemplatePath);
+        foreach ($this->configuration->getTemplatePaths() as $twigTemplatePath) {
+            // @see https://stackoverflow.com/a/36034646/1348344 for glob pattern
+            /** @var string[] $twigFilePaths */
+            $twigFilePaths = glob($twigTemplatePath . '/{**/*,*}/*.twig', GLOB_BRACE);
 
-            $twigFiles = $this->findTwigFiles($absoluteTwigTemplatePath);
-
-            foreach ($twigFiles as $twigFile) {
-                $templateContent = file_get_contents($twigFile);
+            foreach ($twigFilePaths as $twigFilePath) {
+                $templateContent = file_get_contents($twigFilePath);
                 if ($templateContent === false) {
                     continue;
                 }
@@ -74,25 +68,5 @@ final class PossibleTwigMethodCallsProvider
         $this->resolvedTwigMethodNames = $twigMethodNames;
 
         return $twigMethodNames;
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function findTwigFiles(string $directory): array
-    {
-        $recursiveDirectoryIterator = new RecursiveDirectoryIterator(
-            $directory,
-            FilesystemIterator::CURRENT_AS_PATHNAME
-        );
-
-        $files = [];
-        foreach (new RecursiveIteratorIterator($recursiveDirectoryIterator) as $filePath) {
-            if (str_ends_with((string) $filePath, '.twig')) {
-                $files[] = $filePath;
-            }
-        }
-
-        return $files;
     }
 }
