@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Twig;
+namespace TomasVotruba\UnusedPublic\Templates;
 
 final class UsedMethodAnalyzer
 {

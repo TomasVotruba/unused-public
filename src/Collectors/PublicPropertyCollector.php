@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
-use Livewire\Component;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
@@ -20,7 +19,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class PublicPropertyCollector implements Collector
 {
     /**
-     * @var array<class-string<Component>>
+     * @var string[]
      */
     private const CLASSES_TO_SKIP = ['Livewire\Component'];
 

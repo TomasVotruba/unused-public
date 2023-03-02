@@ -23,9 +23,9 @@ services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
-    - TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
-    - TomasVotruba\UnusedPublic\Blade\PossibleBladeMethodCallsProvider
-    - TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer
+    - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
+    - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsFinder
+    - TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
 
     -
