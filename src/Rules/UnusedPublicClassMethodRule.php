@@ -10,6 +10,7 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
+use TomasVotruba\UnusedPublic\Blade\PossibleBladeMethodCallsProvider;
 use TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
@@ -33,6 +34,7 @@ final class UnusedPublicClassMethodRule implements Rule
     public function __construct(
         private readonly Configuration $configuration,
         private readonly PossibleTwigMethodCallsProvider $possibleTwigMethodCallsProvider,
+        private readonly PossibleBladeMethodCallsProvider $possibleBladeMethodCallsProvider,
         private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
         private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
     ) {
@@ -54,6 +56,7 @@ final class UnusedPublicClassMethodRule implements Rule
         }
 
         $twigMethodNames = $this->possibleTwigMethodCallsProvider->provide();
+        $bladeMethodNames = $this->possibleBladeMethodCallsProvider->provide();
 
         $completeMethodCallReferences = $this->methodCallCollectorMapper->mapToMethodCallReferences(
             $node->get(MethodCallCollector::class),
@@ -71,7 +74,8 @@ final class UnusedPublicClassMethodRule implements Rule
                     $className,
                     $methodName,
                     $completeMethodCallReferences,
-                    $twigMethodNames
+                    $twigMethodNames,
+                    $bladeMethodNames
                 )) {
                     continue;
                 }
@@ -91,16 +95,22 @@ final class UnusedPublicClassMethodRule implements Rule
     }
 
     /**
-     * @param string[] $twigMethodNames
      * @param string[] $completeMethodCallReferences
+     * @param string[] $twigMethodNames
+     * @param string[] $bladeMethodNames
      */
     private function isUsedClassMethod(
         string $className,
         string $methodName,
         array $completeMethodCallReferences,
-        array $twigMethodNames
+        array $twigMethodNames,
+        array $bladeMethodNames
     ): bool {
         if ($this->usedMethodAnalyzer->isUsedInTwig($methodName, $twigMethodNames)) {
+            return true;
+        }
+
+        if (in_array($methodName, $bladeMethodNames, true)) {
             return true;
         }
 

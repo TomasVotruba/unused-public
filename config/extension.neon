@@ -4,6 +4,7 @@ parametersSchema:
         local_methods: bool()
         properties: bool()
         constants: bool()
+        template_paths: listOf(string())
         twig_template_paths: listOf(string())
     ])
 
@@ -14,6 +15,8 @@ parameters:
         local_methods: false
         properties: false
         constants: false
+        template_paths: []
+        # deprecated
         twig_template_paths: []
 
 services:
@@ -21,6 +24,7 @@ services:
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
     - TomasVotruba\UnusedPublic\Twig\PossibleTwigMethodCallsProvider
+    - TomasVotruba\UnusedPublic\Blade\PossibleBladeMethodCallsProvider
     - TomasVotruba\UnusedPublic\Twig\UsedMethodAnalyzer
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
 
