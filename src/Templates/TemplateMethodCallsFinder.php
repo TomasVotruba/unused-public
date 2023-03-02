@@ -11,7 +11,7 @@ final class TemplateMethodCallsFinder
     /**
      * @var array<string, string[]>
      */
-    private array $methodCallsByFileSuffix = [];
+    private $methodCallsByFileSuffix = [];
 
     /**
      * @param string[] $directories
@@ -28,7 +28,9 @@ final class TemplateMethodCallsFinder
 
         // convert to file contents
         $templateFilesContents = array_map(
-            static fn (string $templateFilePath): string => (string) file_get_contents($templateFilePath),
+            static function (string $templateFilePath): string {
+                return (string) file_get_contents($templateFilePath);
+            },
             $templateFilePaths
         );
 

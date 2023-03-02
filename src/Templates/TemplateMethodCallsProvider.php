@@ -38,10 +38,22 @@ final class TemplateMethodCallsProvider
      */
     private const TWIG_METHOD_CALL_REGEX = '#\w+\.(?<method_name>\w+)#';
 
-    public function __construct(
-        private readonly Configuration $configuration,
-        private readonly TemplateMethodCallsFinder $templateMethodCallsFinder,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsFinder
+     */
+    private $templateMethodCallsFinder;
+
+    public function __construct(Configuration $configuration, TemplateMethodCallsFinder $templateMethodCallsFinder)
+    {
+        $this->configuration = $configuration;
+        $this->templateMethodCallsFinder = $templateMethodCallsFinder;
     }
 
     /**
