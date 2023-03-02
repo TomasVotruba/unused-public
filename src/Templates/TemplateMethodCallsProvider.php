@@ -18,7 +18,7 @@ final class TemplateMethodCallsProvider
      * @see https://regex101.com/r/G7zAue/1
      * @var string
      */
-    private const BLADE_METHOD_CALL_REGEX = '#\w+\-\>(?<method_name>\w+)\(\)#';
+    private const BLADE_METHOD_CALL_REGEX = '#\w+(\-\>|::)(?<method_name>\w+)\(\)#';
 
     /**
      * @see https://regex101.com/r/3gLWCt/1
