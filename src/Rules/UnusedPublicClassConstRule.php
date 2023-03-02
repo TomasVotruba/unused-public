@@ -26,9 +26,15 @@ final class UnusedPublicClassConstRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public constant "%s::%s" is never used';
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
