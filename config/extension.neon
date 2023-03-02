@@ -23,10 +23,11 @@ services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
-    - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
-    - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsFinder
-    - TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+    # templates
+    - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
+    - TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder
+    - TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
 
     -
         factory: TomasVotruba\UnusedPublic\Configuration

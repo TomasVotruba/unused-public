@@ -5,42 +5,14 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Templates;
 
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\Enum\Template\BladeRegex;
+use TomasVotruba\UnusedPublic\Enum\Template\TwigRegex;
 
 final class TemplateMethodCallsProvider
 {
-    /**
-     * @see https://regex101.com/r/vDKvtE/1
-     * @var string
-     */
-    private const BLADE_INNER_REGEX = '#\{(\{|\!\!)(?<contents>.*?)(\!\!|\})\}#';
-
-    /**
-     * @see https://regex101.com/r/G7zAue/1
-     * @var string
-     */
-    private const BLADE_METHOD_CALL_REGEX = '#\w+(\-\>|::)(?<method_name>\w+)\(\)#';
-
-    /**
-     * @see https://regex101.com/r/3nbDDK/1
-     * @var string
-     */
-    private const BLADE_TAG_REGEX = '#@\w+(?<contents>.*?)\n#';
-
-    /**
-     * @see https://regex101.com/r/3gLWCt/1
-     * @var string
-     */
-    private const TWIG_INNER_REGEX = '#\{(\{|%)(?<contents>.*?)(\}|%)\}#';
-
-    /**
-     * @see https://regex101.com/r/G7zAue/1
-     * @var string
-     */
-    private const TWIG_METHOD_CALL_REGEX = '#\w+\.(?<method_name>\w+)#';
-
     public function __construct(
         private readonly Configuration $configuration,
-        private readonly TemplateMethodCallsFinder $templateMethodCallsFinder,
+        private readonly TemplateRegexFinder $templateRegexFinder,
     ) {
     }
 
@@ -49,11 +21,11 @@ final class TemplateMethodCallsProvider
      */
     public function provideBladeMethodCalls(): array
     {
-        return $this->templateMethodCallsFinder->find(
+        return $this->templateRegexFinder->find(
             $this->configuration->getTemplatePaths(),
             'blade.php',
-            [self::BLADE_INNER_REGEX, self::BLADE_TAG_REGEX],
-            self::BLADE_METHOD_CALL_REGEX
+            [BladeRegex::INNER_REGEX, BladeRegex::TAG_REGEX],
+            BladeRegex::METHOD_CALL_REGEX
         );
     }
 
@@ -62,11 +34,11 @@ final class TemplateMethodCallsProvider
      */
     public function provideTwigMethodCalls(): array
     {
-        return $this->templateMethodCallsFinder->find(
+        return $this->templateRegexFinder->find(
             $this->configuration->getTemplatePaths(),
             'twig',
-            [self::TWIG_INNER_REGEX],
-            self::TWIG_METHOD_CALL_REGEX
+            [TwigRegex::INNER_REGEX],
+            TwigRegex::METHOD_CALL_REGEX
         );
     }
 }
