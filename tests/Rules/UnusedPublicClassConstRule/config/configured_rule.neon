@@ -4,3 +4,5 @@ includes:
 parameters:
     unused_public:
         constants: true
+        template_paths:
+            - tests/Rules/UnusedPublicClassConstRule/templates

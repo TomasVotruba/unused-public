@@ -33,10 +33,7 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
 
     public static function provideDataFromBladeTemplates(): Iterator
     {
-        yield [
-            [__DIR__ . '/Fixture/Blade/RouteName.php'],
-            []
-        ];
+        yield [[__DIR__ . '/Fixture/Blade/RouteName.php'], []];
     }
 
     public static function provideData(): Iterator
