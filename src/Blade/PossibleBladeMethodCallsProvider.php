@@ -44,7 +44,7 @@ final class PossibleBladeMethodCallsProvider
 
         foreach ($this->configuration->getTemplatePaths() as $templatePath) {
             /** @var string[] $bladeFilePaths */
-            $bladeFilePaths = glob($templatePath . '/{**/*,*}/*.blade', GLOB_BRACE);
+            $bladeFilePaths = glob($templatePath . '/{**/*,*}/*.blade.php', GLOB_BRACE);
 
             foreach ($bladeFilePaths as $bladeFilePath) {
                 $templateContent = file_get_contents($bladeFilePath);
