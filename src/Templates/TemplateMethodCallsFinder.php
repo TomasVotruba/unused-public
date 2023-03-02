@@ -15,9 +15,10 @@ final class TemplateMethodCallsFinder
 
     /**
      * @param string[] $directories
+     * @param string[] $innerRegexes
      * @return string[]
      */
-    public function find(array $directories, string $fileSuffix, string $innerRegex, string $methodCallRegex): array
+    public function find(array $directories, string $fileSuffix, array $innerRegexes, string $methodCallRegex): array
     {
         if (isset($this->methodCallsByFileSuffix[$fileSuffix])) {
             return $this->methodCallsByFileSuffix[$fileSuffix];
@@ -33,17 +34,21 @@ final class TemplateMethodCallsFinder
 
         $methodCallNames = [];
         foreach ($templateFilesContents as $templateFileContent) {
-            $matches = Strings::matchAll($templateFileContent, $innerRegex);
+            foreach ($innerRegexes as $innerRegex) {
+                $matches = Strings::matchAll($templateFileContent, $innerRegex);
 
-            foreach ($matches as $match) {
-                $twigContents = $match['contents'];
+                foreach ($matches as $match) {
+                    $templateMarkupContents = $match['contents'];
 
-                $methodNamesMatches = Strings::matchAll($twigContents, $methodCallRegex);
-                foreach ($methodNamesMatches as $methodNameMatch) {
-                    $methodCallNames[] = $methodNameMatch['method_name'];
+                    $methodNamesMatches = Strings::matchAll($templateMarkupContents, $methodCallRegex);
+                    foreach ($methodNamesMatches as $methodNameMatch) {
+                        $methodCallNames[] = $methodNameMatch['method_name'];
+                    }
                 }
             }
         }
+
+        $methodCallNames = array_unique($methodCallNames);
 
         $this->methodCallsByFileSuffix[$fileSuffix] = $methodCallNames;
 

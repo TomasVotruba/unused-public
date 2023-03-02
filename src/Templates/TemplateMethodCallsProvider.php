@@ -21,6 +21,12 @@ final class TemplateMethodCallsProvider
     private const BLADE_METHOD_CALL_REGEX = '#\w+(\-\>|::)(?<method_name>\w+)\(\)#';
 
     /**
+     * @see https://regex101.com/r/3nbDDK/1
+     * @var string
+     */
+    private const BLADE_TAG_REGEX = '#@\w+(?<contents>.*?)\n#';
+
+    /**
      * @see https://regex101.com/r/3gLWCt/1
      * @var string
      */
@@ -46,7 +52,7 @@ final class TemplateMethodCallsProvider
         return $this->templateMethodCallsFinder->find(
             $this->configuration->getTemplatePaths(),
             'blade.php',
-            self::BLADE_INNER_REGEX,
+            [self::BLADE_INNER_REGEX, self::BLADE_TAG_REGEX],
             self::BLADE_METHOD_CALL_REGEX
         );
     }
@@ -59,7 +65,7 @@ final class TemplateMethodCallsProvider
         return $this->templateMethodCallsFinder->find(
             $this->configuration->getTemplatePaths(),
             'twig',
-            self::TWIG_INNER_REGEX,
+            [self::TWIG_INNER_REGEX],
             self::TWIG_METHOD_CALL_REGEX
         );
     }

@@ -43,6 +43,7 @@ final class TemplatePathsTest extends RuleTestCase
     {
         yield [[__DIR__ . '/Fixture/Blade/SkipUsedInBlade.php'], []];
         yield [[__DIR__ . '/Fixture/Blade/SkipStaticCallUsedInBlade.php'], []];
+        yield [[__DIR__ . '/Fixture/Blade/SkipTag.php'], []];
     }
 
     /**
