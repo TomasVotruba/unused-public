@@ -11,10 +11,10 @@ parametersSchema:
 # default parameters
 parameters:
     unused_public:
-        methods: false
+        methods: true
         local_methods: false
-        properties: false
-        constants: false
+        properties: true
+        constants: true
         template_paths: []
         # deprecated
         twig_template_paths: []
