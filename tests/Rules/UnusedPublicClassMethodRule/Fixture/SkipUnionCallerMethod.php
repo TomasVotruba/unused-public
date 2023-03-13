@@ -22,7 +22,10 @@ final class SkipUnionCallerMethod
         $this->caller = $caller;
     }
 
-    private function run(): void
+    /**
+     * @api
+     */
+    public function run(): void
     {
         $this->caller->callIt();
     }
