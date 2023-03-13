@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 final class ClassMethodCallReferenceResolver
 {
     /**
-     * @return iterator<MethodCallReference>
+     * @return iterable<MethodCallReference>
      */
     public function resolve(MethodCall $methodCall, Scope $scope): iterable
     {
