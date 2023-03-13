@@ -89,7 +89,11 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         // laravel
         yield [[__DIR__ . '/Fixture/Laravel/SkipCommandHandle.php'], []];
         // Union types
-        yield [[__DIR__ . '/Fixture/SkipUnionCallerMethod.php'], []];
+        yield [[
+            __DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php',
+            __DIR__ . '/Source/Caller1.php',
+            __DIR__ . '/Source/Caller2.php'
+        ], []];
     }
 
     /**
