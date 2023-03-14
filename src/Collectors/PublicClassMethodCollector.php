@@ -49,6 +49,12 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
+        // skip test methods
+        $classMethodName = $node->name->toString();
+        if (str_starts_with($classMethodName, 'test')) {
+            return null;
+        }
+
         $classReflection = $scope->getClassReflection();
 
         // skip
