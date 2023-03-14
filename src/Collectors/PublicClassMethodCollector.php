@@ -57,9 +57,7 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        // skip test methods
-        $classMethodName = $node->name->toString();
-        if (str_starts_with($classMethodName, 'test')) {
+        if ($this->isTestMethod($node, $scope)) {
             return null;
         }
 
@@ -105,5 +103,28 @@ final class PublicClassMethodCollector implements Collector
         }
 
         return [$classReflection->getName(), $methodName, $node->getLine()];
+    }
+
+    private function isTestMethod(ClassMethod $node, Scope $scope): bool
+    {
+        $classMethodName = $node->name->toString();
+        if (str_starts_with($classMethodName, 'test')) {
+            return true;
+        }
+
+        if ($scope->getClassReflection() === null) {
+            return false;
+        }
+
+        $methodReflection = $scope->getClassReflection()
+            ->getMethod($classMethodName, $scope);
+        if ($methodReflection !== null
+            && $methodReflection->getDocComment() !== null
+            && str_contains($methodReflection->getDocComment(), '@test')
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
