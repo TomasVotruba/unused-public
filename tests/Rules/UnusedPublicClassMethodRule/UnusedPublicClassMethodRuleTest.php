@@ -94,6 +94,11 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Source/Caller1.php',
             __DIR__ . '/Source/Caller2.php'
         ], []];
+        yield [[
+            __DIR__ . '/Fixture/SkipNativeUnionCallerMethod.php',
+            __DIR__ . '/Source/Caller1.php',
+            __DIR__ . '/Source/Caller2.php'
+        ], []];
     }
 
     /**
