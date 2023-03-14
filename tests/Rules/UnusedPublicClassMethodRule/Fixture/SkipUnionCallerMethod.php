@@ -10,23 +10,12 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Cal
 final class SkipUnionCallerMethod
 {
     /**
-     * @var Caller1|Caller2
-     */
-    private $caller;
-
-    /**
      * @param Caller1|Caller2 $caller
-     */
-    public function __construct($caller)
-    {
-        $this->caller = $caller;
-    }
-
-    /**
+     *
      * @api
      */
-    public function run(): void
+    public function run($caller): void
     {
-        $this->caller->callIt();
+        $caller->callIt();
     }
 }
