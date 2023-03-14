@@ -105,7 +105,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Fixture/SkipMixedUnionCallerMethod.php',
             __DIR__ . '/Source/Caller1.php',
             __DIR__ . '/Source/Caller2.php',
-        ], [[$errorMessage, 8, RuleTips::SOLUTION_MESSAGE]]];
+        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
     }
 
     /**
