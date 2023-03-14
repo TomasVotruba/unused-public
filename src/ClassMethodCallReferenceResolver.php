@@ -9,7 +9,6 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Type\ThisType;
 use PHPStan\Type\TypeCombinator;
-use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 final class ClassMethodCallReferenceResolver
@@ -38,7 +37,7 @@ final class ClassMethodCallReferenceResolver
             $isLocal = true;
         }
 
-        foreach($callerType->getReferencedClasses() as $className) {
+        foreach ($callerType->getReferencedClasses() as $className) {
             yield new MethodCallReference($className, $methodCall->name->toString(), $isLocal);
         }
     }

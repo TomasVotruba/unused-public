@@ -14,7 +14,6 @@ use PHPStan\Reflection\ReflectionProvider;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
-use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
  * @implements Collector<MethodCall, array<string>|null>
@@ -59,7 +58,7 @@ final class MethodCallCollector implements Collector
         $classMethodReferences = [];
 
         $classMethodCallReferences = $this->classMethodCallReferenceResolver->resolve($node, $scope);
-        foreach($classMethodCallReferences as $classMethodCallReference) {
+        foreach ($classMethodCallReferences as $classMethodCallReference) {
             $className = $classMethodCallReference->getClass();
             $methodName = $classMethodCallReference->getMethod();
 
@@ -70,11 +69,10 @@ final class MethodCallCollector implements Collector
 
             $classMethodReferences[] = $classMethodReference;
 
-            foreach($this->findParentClassMethodReferences($className, $methodName) as $parentClassMethodReference) {
+            foreach ($this->findParentClassMethodReferences($className, $methodName) as $parentClassMethodReference) {
                 $classMethodReferences[] = $parentClassMethodReference;
             }
         }
-
 
         return $classMethodReferences;
     }

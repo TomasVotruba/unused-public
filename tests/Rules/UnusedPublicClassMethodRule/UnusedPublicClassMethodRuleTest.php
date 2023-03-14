@@ -93,12 +93,12 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[
             __DIR__ . '/Fixture/SkipUnionCallerMethod.php',
             __DIR__ . '/Source/Caller1.php',
-            __DIR__ . '/Source/Caller2.php'
+            __DIR__ . '/Source/Caller2.php',
         ], []];
         yield [[
             __DIR__ . '/Fixture/SkipNativeUnionCallerMethod.php',
             __DIR__ . '/Source/Caller1.php',
-            __DIR__ . '/Source/Caller2.php'
+            __DIR__ . '/Source/Caller2.php',
         ], []];
         $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, Caller2::class, 'callIt');
         yield [[
