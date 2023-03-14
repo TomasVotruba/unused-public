@@ -8,7 +8,10 @@ use PHPUnit\Framework\TestCase;
 
 final class SkipTestAnnotationMethod // not extending TestCase
 {
-    public function testSomeMethodAnnotatedTest()
+    /**
+     * @test
+     */
+    public function someMethodAnnotatedTest()
     {
     }
 }
