@@ -6,7 +6,7 @@ namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixt
 
 use PHPUnit\Framework\TestCase;
 
-final class SkipTestAnnotationMethod extends TestCase
+final class SkipTestAnnotationMethod
 {
     public function testSomeMethodAnnotatedTest()
     {
