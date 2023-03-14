@@ -83,6 +83,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Source/TestCaseUser.php',
         ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
+        yield [[__DIR__ . '/Fixture/SkipTestAnnotationMethod.php'], []];
+
         // parent abstract method used by child call
         yield [[
             __DIR__ . '/Fixture/SkipChildUsedPublicMethod.php',
