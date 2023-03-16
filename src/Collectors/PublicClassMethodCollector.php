@@ -9,6 +9,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
+use PHPStan\Reflection\ExtendedMethodReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
@@ -112,14 +113,20 @@ final class PublicClassMethodCollector implements Collector
             return true;
         }
 
-        if ($scope->getClassReflection() === null) {
+        $classReflection = $scope->getClassReflection();
+        if (! $classReflection instanceof ClassReflection) {
             return false;
         }
 
-        $extendedMethodReflection = $scope->getClassReflection()
-            ->getMethod($classMethodName, $scope);
-        return $extendedMethodReflection !== null
-            && $extendedMethodReflection->getDocComment() !== null
-            && str_contains($extendedMethodReflection->getDocComment(), '@test');
+        $extendedMethodReflection = $classReflection->getMethod($classMethodName, $scope);
+        if (! $extendedMethodReflection instanceof ExtendedMethodReflection) {
+            return false;
+        }
+
+        if ($extendedMethodReflection->getDocComment() === null) {
+            return false;
+        }
+
+        return str_contains($extendedMethodReflection->getDocComment(), '@test');
     }
 }
