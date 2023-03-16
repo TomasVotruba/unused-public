@@ -105,9 +105,9 @@ final class PublicClassMethodCollector implements Collector
         return [$classReflection->getName(), $methodName, $node->getLine()];
     }
 
-    private function isTestMethod(ClassMethod $node, Scope $scope): bool
+    private function isTestMethod(ClassMethod $classMethod, Scope $scope): bool
     {
-        $classMethodName = $node->name->toString();
+        $classMethodName = $classMethod->name->toString();
         if (str_starts_with($classMethodName, 'test')) {
             return true;
         }
@@ -116,15 +116,10 @@ final class PublicClassMethodCollector implements Collector
             return false;
         }
 
-        $methodReflection = $scope->getClassReflection()
+        $extendedMethodReflection = $scope->getClassReflection()
             ->getMethod($classMethodName, $scope);
-        if ($methodReflection !== null
-            && $methodReflection->getDocComment() !== null
-            && str_contains($methodReflection->getDocComment(), '@test')
-        ) {
-            return true;
-        }
-
-        return false;
+        return $extendedMethodReflection !== null
+            && $extendedMethodReflection->getDocComment() !== null
+            && str_contains($extendedMethodReflection->getDocComment(), '@test');
     }
 }
