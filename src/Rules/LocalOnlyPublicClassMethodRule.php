@@ -31,12 +31,40 @@ final class LocalOnlyPublicClassMethodRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should turned protected/private';
 
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
+     */
+    private $usedMethodAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
+     */
+    private $templateMethodCallsProvider;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+     */
+    private $methodCallCollectorMapper;
+
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private readonly MethodCallCollectorMapper $methodCallCollectorMapper
+        Configuration $configuration,
+        UsedMethodAnalyzer $usedMethodAnalyzer,
+        TemplateMethodCallsProvider $templateMethodCallsProvider,
+        MethodCallCollectorMapper $methodCallCollectorMapper
     ) {
+        $this->configuration = $configuration;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
+        $this->templateMethodCallsProvider = $templateMethodCallsProvider;
+        $this->methodCallCollectorMapper = $methodCallCollectorMapper;
     }
 
     public function getNodeType(): string
