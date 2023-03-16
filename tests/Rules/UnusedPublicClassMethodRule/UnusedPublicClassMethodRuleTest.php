@@ -18,6 +18,7 @@ use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Interface\InterfaceWithExtraMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller2;
 
 final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 {
@@ -73,8 +74,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ];
 
         yield [[__DIR__ . '/Fixture/SkipPublicMethodInTwigExtension.php'], []];
-        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMe');
 
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMe');
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
@@ -92,6 +93,24 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // laravel
         yield [[__DIR__ . '/Fixture/Laravel/SkipCommandHandle.php'], []];
+        
+        // Union types
+        yield [[
+            __DIR__ . '/Fixture/SkipUnionCallerMethod.php',
+            __DIR__ . '/Source/Caller1.php',
+            __DIR__ . '/Source/Caller2.php',
+        ], []];
+        yield [[
+            __DIR__ . '/Fixture/SkipNativeUnionCallerMethod.php',
+            __DIR__ . '/Source/Caller1.php',
+            __DIR__ . '/Source/Caller2.php',
+        ], []];
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, Caller2::class, 'callIt');
+        yield [[
+            __DIR__ . '/Fixture/SkipMixedUnionCallerMethod.php',
+            __DIR__ . '/Source/Caller1.php',
+            __DIR__ . '/Source/Caller2.php',
+        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
     }
 
     /**

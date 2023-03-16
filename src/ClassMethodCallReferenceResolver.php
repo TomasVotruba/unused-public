@@ -9,15 +9,17 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Type\ThisType;
 use PHPStan\Type\TypeCombinator;
-use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 final class ClassMethodCallReferenceResolver
 {
-    public function resolve(MethodCall $methodCall, Scope $scope): ?MethodCallReference
+    /**
+     * @return iterable<MethodCallReference>
+     */
+    public function resolve(MethodCall $methodCall, Scope $scope): iterable
     {
         if ($methodCall->name instanceof Expr) {
-            return null;
+            return;
         }
 
         $callerType = $scope->getType($methodCall->var);
@@ -35,14 +37,8 @@ final class ClassMethodCallReferenceResolver
             $isLocal = true;
         }
 
-        if (! $callerType instanceof TypeWithClassName) {
-            return null;
+        foreach ($callerType->getReferencedClasses() as $className) {
+            yield new MethodCallReference($className, $methodCall->name->toString(), $isLocal);
         }
-
-        // move to the class where method is defined, e.g. parent class defines the method, so it should be checked there
-        $className = $callerType->getClassName();
-        $methodName = $methodCall->name->toString();
-
-        return new MethodCallReference($className, $methodName, $isLocal);
     }
 }

@@ -14,7 +14,6 @@ use PHPStan\Reflection\ReflectionProvider;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
-use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
  * @implements Collector<MethodCall, array<string>|null>
@@ -56,22 +55,24 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
-        $classMethodCallReference = $this->classMethodCallReferenceResolver->resolve($node, $scope);
-        if (! $classMethodCallReference instanceof MethodCallReference) {
-            return null;
+        $classMethodReferences = [];
+
+        $classMethodCallReferences = $this->classMethodCallReferenceResolver->resolve($node, $scope);
+        foreach ($classMethodCallReferences as $classMethodCallReference) {
+            $className = $classMethodCallReference->getClass();
+            $methodName = $classMethodCallReference->getMethod();
+
+            $classMethodReference = $className . '::' . $methodName;
+            if ($classMethodCallReference->isLocal()) {
+                $classMethodReference = ReferenceMarker::LOCAL . $classMethodReference;
+            }
+
+            $classMethodReferences[] = $classMethodReference;
+
+            foreach ($this->findParentClassMethodReferences($className, $methodName) as $parentClassMethodReference) {
+                $classMethodReferences[] = $parentClassMethodReference;
+            }
         }
-
-        $className = $classMethodCallReference->getClass();
-        $methodName = $classMethodCallReference->getMethod();
-
-        $classMethodReferences = $this->findParentClassMethodReferences($className, $methodName);
-
-        $classMethodReference = $className . '::' . $methodName;
-        if ($classMethodCallReference->isLocal()) {
-            $classMethodReference = ReferenceMarker::LOCAL . $classMethodReference;
-        }
-
-        $classMethodReferences[] = $classMethodReference;
 
         return $classMethodReferences;
     }
