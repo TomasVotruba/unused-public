@@ -129,6 +129,12 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             [$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE],
             [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE],
         ]];
+
+        yield [[
+            __DIR__ . '/Fixture/CaseInsensitiveMethodName.php',
+            __DIR__ . '/Source/Caller1.php',
+        ], []];
+
     }
 
     /**
