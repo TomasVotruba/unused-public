@@ -78,6 +78,7 @@ final class UnusedPublicClassMethodRule implements Rule
                     continue;
                 }
 
+                /** @var string $methodName */
                 $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $methodName);
 
                 $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
