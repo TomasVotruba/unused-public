@@ -7,7 +7,9 @@ namespace TomasVotruba\UnusedPublic\Rules;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
+use PHPStan\Reflection\Php\PhpMethodReflection;
 use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Reflection\ResolvedMethodReflection;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -133,9 +135,12 @@ final class UnusedPublicClassMethodRule implements Rule
             return false;
         }
 
-        $methodReflection = $classReflection->getMethod($methodName, $scope);
+        $extendedMethodReflection = $classReflection->getMethod($methodName, $scope);
+        if ($extendedMethodReflection instanceof PhpMethodReflection || $extendedMethodReflection instanceof ResolvedMethodReflection) {
+            return $extendedMethodReflection->getDeclaringTrait() !== null;
+        }
 
-        return $methodReflection->getDeclaringTrait() !== null;
+        return false;
     }
 
 }
