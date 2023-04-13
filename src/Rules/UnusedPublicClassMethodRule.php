@@ -7,6 +7,7 @@ namespace TomasVotruba\UnusedPublic\Rules;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
+use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -35,6 +36,7 @@ final class UnusedPublicClassMethodRule implements Rule
         private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
         private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
         private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
+        private readonly ReflectionProvider $reflectionProvider,
     ) {
     }
 
@@ -68,6 +70,18 @@ final class UnusedPublicClassMethodRule implements Rule
 
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
             foreach ($declarations as [$className, $methodName, $line]) {
+                if ($this->reflectionProvider->hasClass($className)) {
+                    $classReflection = $this->reflectionProvider->getClass($className);
+
+                    if ($classReflection->hasMethod($methodName)) {
+                        $methodReflection = $classReflection->getMethod($methodName, $scope);
+
+                        if ($methodReflection->getDeclaringTrait() !== null) {
+                            continue;
+                        }
+                    }
+                }
+
                 if ($this->isUsedClassMethod(
                     $className,
                     $methodName,
