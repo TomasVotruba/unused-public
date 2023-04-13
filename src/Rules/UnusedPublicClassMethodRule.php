@@ -62,9 +62,6 @@ final class UnusedPublicClassMethodRule implements Rule
             $node->get(AttributeCallableCollector::class)
         );
 
-        // php method calls are case-insensitive
-        $completeMethodCallReferences = array_map(fn($item) => strtolower($item), $completeMethodCallReferences);
-
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
 
         $ruleErrors = [];
@@ -113,6 +110,9 @@ final class UnusedPublicClassMethodRule implements Rule
         if (in_array($methodName, $bladeMethodNames, true)) {
             return true;
         }
+
+        // php method calls are case-insensitive
+        $completeMethodCallReferences = array_map(fn($item) => strtolower($item), $completeMethodCallReferences);
 
         $methodReference = $className . '::' . $methodName;
         return in_array(strtolower($methodReference), $completeMethodCallReferences, true);
