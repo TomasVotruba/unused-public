@@ -21,7 +21,7 @@ final class PublicClassMethodMatcher
     public function shouldSkipClassReflection(ClassReflection $classReflection): bool
     {
         // skip interface as required, traits as unable to detect for sure
-        if (! $classReflection->isClass()) {
+        if ($classReflection->isInterface() || $classReflection->isTrait()) {
             return true;
         }
 

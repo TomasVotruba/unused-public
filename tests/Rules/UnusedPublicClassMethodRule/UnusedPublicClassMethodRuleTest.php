@@ -19,6 +19,7 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\In
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller2;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\SomeEnum;
 
 final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 {
@@ -117,6 +118,17 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Fixture/SkipTraitMethod.php',
             __DIR__ . '/Source/SomeTrait.php',
         ], []];
+
+        // enums
+        $errorMessage1 = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, SomeEnum::class, 'unused');
+        $errorMessage2 = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, SomeEnum::class, 'unusedStatic');
+        yield [[
+            __DIR__ . '/Fixture/EnumMethod.php',
+            __DIR__ . '/Source/SomeEnum.php',
+        ], [
+            [$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE],
+            [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE],
+        ]];
     }
 
     /**
