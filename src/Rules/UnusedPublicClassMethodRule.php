@@ -7,9 +7,6 @@ namespace TomasVotruba\UnusedPublic\Rules;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
-use PHPStan\Reflection\Php\PhpMethodReflection;
-use PHPStan\Reflection\ReflectionProvider;
-use PHPStan\Reflection\ResolvedMethodReflection;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -38,7 +35,6 @@ final class UnusedPublicClassMethodRule implements Rule
         private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
         private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
         private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
-        private readonly ReflectionProvider $reflectionProvider,
     ) {
     }
 
@@ -119,6 +115,4 @@ final class UnusedPublicClassMethodRule implements Rule
         $methodReference = $className . '::' . $methodName;
         return in_array($methodReference, $completeMethodCallReferences, true);
     }
-
 }
-
