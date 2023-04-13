@@ -16,5 +16,6 @@ final class CallbackMethodCaller
     private function goAgain(SkipPublicCallbackMethod $callbackMethod)
     {
         call_user_func([$callbackMethod, 'useMe']);
+        call_user_func([$this, 'go']);
     }
 }
