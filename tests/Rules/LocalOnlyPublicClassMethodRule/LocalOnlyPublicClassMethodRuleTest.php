@@ -16,6 +16,7 @@ use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\LocalOnlyPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\CaseInsensitiveMethodName;
+use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\LocallyUsedEnumMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\LocallyUsedPublicMethod;
 
 final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
@@ -41,10 +42,12 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
 
         $errorMessage = sprintf(
             LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
-            CaseInsensitiveMethodName::class,
+            LocallyUsedEnumMethod::class,
             'runHere'
         );
-        yield [[__DIR__ . '/Fixture/CaseInsensitiveMethodName.php'], [[$errorMessage, 9, RuleTips::NARROW_SCOPE]]];
+
+        yield [[__DIR__ . '/Fixture/LocallyUsedEnumMethod.php'], [[$errorMessage, 12, RuleTips::NARROW_SCOPE]]];
+        yield [[__DIR__ . '/Fixture/EnumMethod.php.php'], [[$errorMessage, 9, RuleTips::NARROW_SCOPE]]];
     }
 
     /**
