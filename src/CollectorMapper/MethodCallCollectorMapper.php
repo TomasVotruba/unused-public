@@ -44,17 +44,19 @@ final class MethodCallCollectorMapper
      * @param array<string, mixed[]> $methodCallReferencesByFile
      * @param array<string, mixed[]> $staticCallReferencesByFile
      * @param array<string, mixed[]> $attributeCallReferencesByFile
+     * @param array<string, mixed[]> $callbackReferencesByFile
      */
     public function mapToLocalAndExternal(
         array $methodCallReferencesByFile,
         array $staticCallReferencesByFile,
-        array $attributeCallReferencesByFile
+        array $attributeCallReferencesByFile,
+        array $callbackReferencesByFile
     ): LocalAndExternalMethodCallReferences {
         $methodCallReferences = $this->mergeAndFlatten(
             $methodCallReferencesByFile,
             $staticCallReferencesByFile,
             $attributeCallReferencesByFile,
-            []
+            $callbackReferencesByFile
         );
 
         $localMethodCallReferences = [];
