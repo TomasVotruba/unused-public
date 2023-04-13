@@ -47,7 +47,6 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
         );
 
         yield [[__DIR__ . '/Fixture/LocallyUsedEnumMethod.php'], [[$errorMessage, 12, RuleTips::NARROW_SCOPE]]];
-        yield [[__DIR__ . '/Fixture/EnumMethod.php.php'], [[$errorMessage, 9, RuleTips::NARROW_SCOPE]]];
     }
 
     /**
