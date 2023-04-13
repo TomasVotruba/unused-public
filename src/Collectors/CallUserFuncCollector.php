@@ -67,6 +67,9 @@ final class CallUserFuncCollector implements Collector
         }
 
         $callableType = $scope->getType($args[0]->value);
+        if (!$callableType instanceof ConstantArrayType) {
+            return null;
+        }
 
         $typeAndMethodNames = $callableType->findTypeAndMethodNames();
         if ($typeAndMethodNames === []) {
