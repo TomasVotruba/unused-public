@@ -72,10 +72,6 @@ final class UnusedPublicClassMethodRule implements Rule
 
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
             foreach ($declarations as [$className, $methodName, $line]) {
-                if ($this->isTraitMethod($className, $methodName, $scope)) {
-                    continue;
-                }
-
                 if ($this->isUsedClassMethod(
                     $className,
                     $methodName,
@@ -122,25 +118,6 @@ final class UnusedPublicClassMethodRule implements Rule
 
         $methodReference = $className . '::' . $methodName;
         return in_array($methodReference, $completeMethodCallReferences, true);
-    }
-
-    private function isTraitMethod(string $className, string $methodName, Scope $scope): bool
-    {
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return false;
-        }
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        if (!$classReflection->hasMethod($methodName)) {
-            return false;
-        }
-
-        $extendedMethodReflection = $classReflection->getMethod($methodName, $scope);
-        if ($extendedMethodReflection instanceof PhpMethodReflection || $extendedMethodReflection instanceof ResolvedMethodReflection) {
-            return $extendedMethodReflection->getDeclaringTrait() !== null;
-        }
-
-        return false;
     }
 
 }
