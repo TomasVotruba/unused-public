@@ -111,6 +111,12 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Source/Caller1.php',
             __DIR__ . '/Source/Caller2.php',
         ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
+
+        // traits
+        yield [[
+            __DIR__ . '/Fixture/SkipTraitMethod.php',
+            __DIR__ . '/Source/SomeTrait.php',
+        ], []];
     }
 
     /**
