@@ -80,6 +80,11 @@ services:
         tags:
             - phpstan.collector
 
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector
+        tags:
+            - phpstan.collector
+
 rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
