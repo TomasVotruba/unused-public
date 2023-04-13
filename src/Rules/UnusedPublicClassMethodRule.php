@@ -62,6 +62,9 @@ final class UnusedPublicClassMethodRule implements Rule
             $node->get(AttributeCallableCollector::class)
         );
 
+        // php method calls are case-insensitive
+        $completeMethodCallReferences = array_map(fn($item) => strtolower($item), $completeMethodCallReferences);
+
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
 
         $ruleErrors = [];
@@ -78,7 +81,6 @@ final class UnusedPublicClassMethodRule implements Rule
                     continue;
                 }
 
-                /** @var string $methodName */
                 $errorMessage = sprintf(self::ERROR_MESSAGE, $className, $methodName);
 
                 $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
@@ -113,6 +115,6 @@ final class UnusedPublicClassMethodRule implements Rule
         }
 
         $methodReference = $className . '::' . $methodName;
-        return in_array($methodReference, $completeMethodCallReferences, true);
+        return in_array(strtolower($methodReference), $completeMethodCallReferences, true);
     }
 }
