@@ -22,6 +22,13 @@ enum SomeEnum
     {
     }
 
+    protected function unusedProtected()
+    {
+    }
+
+    private function unusedPrivate()
+    {
+    }
 }
 
 
