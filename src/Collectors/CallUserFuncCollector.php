@@ -24,7 +24,6 @@ use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 final class CallUserFuncCollector implements Collector
 {
     public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
         private readonly Configuration $configuration,
     ) {
     }
@@ -78,30 +77,13 @@ final class CallUserFuncCollector implements Collector
 
         $classMethodReferences = [];
         foreach($typeAndMethodNames as $typeAndMethodName) {
-            $classMethodReferences[] = $typeAndMethodName->getType()->getClassName() . '::' . $typeAndMethodName->getMethod();
-        }
-
-        return $classMethodReferences;
-    }
-
-    /**
-     * @return string[]
-     */
-    private function findParentClassMethodReferences(string $className, string $methodName): array
-    {
-        if (! $this->reflectionProvider->hasClass($className)) {
-            return [];
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        $classMethodReferences = [];
-        foreach ($classReflection->getParents() as $parentClassReflection) {
-            if ($parentClassReflection->hasNativeMethod($methodName)) {
-                $classMethodReferences[] = $parentClassReflection->getName() . '::' . $methodName;
+            $objectClassNames = $typeAndMethodName->getType()->getObjectClassNames();
+            foreach($objectClassNames as $objectClassName) {
+                $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
             }
         }
 
         return $classMethodReferences;
     }
+
 }
