@@ -10,6 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
+use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
@@ -38,6 +39,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
             LocallyUsedPublicMethod::class,
             'runHere'
         );
+
         yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'], [[$errorMessage, 9, RuleTips::NARROW_SCOPE]]];
 
         $errorMessage = sprintf(
@@ -53,6 +55,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
             'runHere'
         );
         yield [[__DIR__ . '/Fixture/LocallyUsedEnumMethod.php'], [[$errorMessage, 12, RuleTips::NARROW_SCOPE]]];
+        yield [[__DIR__ . '/Fixture/SkipPublicCallbackMethod.php'], []];
     }
 
     /**
@@ -73,6 +76,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
             self::getContainer()->getByType(MethodCallCollector::class),
             self::getContainer()->getByType(StaticMethodCallCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
+            self::getContainer()->getByType(CallUserFuncCollector::class),
         ];
     }
 

@@ -10,6 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
+use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
@@ -68,6 +69,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/Interface/SkipInterfaceMethod.php'], []];
 
         yield [[__DIR__ . '/Fixture/SkipUsedPublicMethod.php', __DIR__ . '/Source/ClassMethodCaller.php'], []];
+
+        yield [[__DIR__ . '/Source/CallbackMethodCaller.php', __DIR__ . '/Fixture/SkipPublicCallbackMethod.php'], []];
 
         yield [[
             __DIR__ . '/Fixture/SkipNullableUsedPublicMethod.php', __DIR__ . '/Source/NullableClassMethodCaller.php', ],
@@ -155,6 +158,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             self::getContainer()->getByType(MethodCallCollector::class),
             self::getContainer()->getByType(StaticMethodCallCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
+            self::getContainer()->getByType(CallUserFuncCollector::class),
         ];
     }
 
