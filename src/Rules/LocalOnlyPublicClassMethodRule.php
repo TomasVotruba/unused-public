@@ -106,8 +106,14 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         // php method calls are case-insensitive
         $publicMethodReference = strtolower($className . '::' . $methodName);
-        $lowerExternalRefs = array_map(fn(string $item) => strtolower($item), $localAndExternalMethodCallReferences->getExternalMethodCallReferences());
-        $lowerLocalRefs = array_map(fn(string $item) => strtolower($item), $localAndExternalMethodCallReferences->getLocalMethodCallReferences());
+        $lowerExternalRefs = array_map(
+            fn(string $item): string => strtolower($item),
+            $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
+        );
+        $lowerLocalRefs = array_map(
+            fn(string $item): string => strtolower($item),
+            $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
+        );
 
         if (in_array(
             $publicMethodReference,

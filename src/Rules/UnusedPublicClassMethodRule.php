@@ -113,7 +113,10 @@ final class UnusedPublicClassMethodRule implements Rule
         }
 
         // php method calls are case-insensitive
-        $lowerCompleteMethodCallReferences = array_map(fn(string $item) => strtolower($item), $completeMethodCallReferences);
+        $lowerCompleteMethodCallReferences = array_map(
+            fn(string $item): string => strtolower($item),
+            $completeMethodCallReferences
+        );
 
         $methodReference = $className . '::' . $methodName;
         return in_array(strtolower($methodReference), $lowerCompleteMethodCallReferences, true);
