@@ -65,6 +65,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
         );
 
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
+        // php method calls are case-insensitive
         $lowerExternalRefs = array_map(
             fn(string $item): string => strtolower($item),
             $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
@@ -118,7 +119,6 @@ final class LocalOnlyPublicClassMethodRule implements Rule
             return true;
         }
 
-        // php method calls are case-insensitive
         $publicMethodReference = strtolower($className . '::' . $methodName);
 
         if (in_array(
