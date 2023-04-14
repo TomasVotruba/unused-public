@@ -9,5 +9,5 @@ final class SkipPublicApiProperty
     /**
      * @api
      */
-    public $property = 'overridden!';
+    public $property = 'default';
 }
