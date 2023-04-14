@@ -12,6 +12,6 @@ final class CaseInsensitiveMethodName
 
     private function run()
     {
-        $this->RUNHERE();
+        $this->RUNHERE(); // intentional wrong case
     }
 }
