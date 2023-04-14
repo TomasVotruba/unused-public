@@ -68,10 +68,12 @@ final class PublicPropertyCollector implements Collector
                 continue;
             }
 
+            if ($this->apiDocStmtAnalyzer->isApiDoc($property, $classReflection)) {
+                continue;
+            }
+
             foreach ($property->props as $propertyProperty) {
-                if ($this->apiDocStmtAnalyzer->isApiDoc($propertyProperty, $classReflection)) {
-                    continue;
-                }
+
 
                 $publicPropertyNames[] = [
                     $classReflection->getName(),
