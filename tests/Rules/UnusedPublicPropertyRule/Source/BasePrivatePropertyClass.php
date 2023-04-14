@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Source;
 
-class BasePropertyClass {
+class BasePrivatePropertyClass {
     /**
      * @api
      */
-    public $property = 'paths';
+    private $property = 'private';
 }
