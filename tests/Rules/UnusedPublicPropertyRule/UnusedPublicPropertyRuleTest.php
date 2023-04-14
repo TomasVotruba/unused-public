@@ -69,6 +69,9 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             ],
             [],
         ];
+
+        yield [[__DIR__ . '/Fixture/SkipInheritedPublicApiProperty.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipPublicApiProperty.php'], []];
     }
 
     /**
