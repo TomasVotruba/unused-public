@@ -109,7 +109,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         if (in_array(
             $publicMethodReference,
-            array_map(fn($item) => strtolower($item), $localAndExternalMethodCallReferences->getExternalMethodCallReferences()),
+            array_map(fn(string $item) => strtolower($item), $localAndExternalMethodCallReferences->getExternalMethodCallReferences()),
             true
         )) {
             return false;
@@ -117,7 +117,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         return in_array(
             $publicMethodReference,
-            array_map(fn($item) => strtolower($item), $localAndExternalMethodCallReferences->getLocalMethodCallReferences()),
+            array_map(fn(string $item) => strtolower($item), $localAndExternalMethodCallReferences->getLocalMethodCallReferences()),
             true
         );
     }
