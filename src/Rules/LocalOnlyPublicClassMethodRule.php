@@ -104,11 +104,20 @@ final class LocalOnlyPublicClassMethodRule implements Rule
             return true;
         }
 
-        $publicMethodReference = $className . '::' . $methodName;
+        // php method calls are case-insensitive
+        $publicMethodReference = strtolower($className . '::' . $methodName);
+        $lowerExternalRefs = array_map(
+            fn(string $item): string => strtolower($item),
+            $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
+        );
+        $lowerLocalRefs = array_map(
+            fn(string $item): string => strtolower($item),
+            $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
+        );
 
         if (in_array(
             $publicMethodReference,
-            $localAndExternalMethodCallReferences->getExternalMethodCallReferences(),
+            $lowerExternalRefs,
             true
         )) {
             return false;
@@ -116,7 +125,7 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         return in_array(
             $publicMethodReference,
-            $localAndExternalMethodCallReferences->getLocalMethodCallReferences(),
+            $lowerLocalRefs,
             true
         );
     }

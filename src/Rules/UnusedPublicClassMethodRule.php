@@ -112,7 +112,13 @@ final class UnusedPublicClassMethodRule implements Rule
             return true;
         }
 
+        // php method calls are case-insensitive
+        $lowerCompleteMethodCallReferences = array_map(
+            fn(string $item): string => strtolower($item),
+            $completeMethodCallReferences
+        );
+
         $methodReference = $className . '::' . $methodName;
-        return in_array($methodReference, $completeMethodCallReferences, true);
+        return in_array(strtolower($methodReference), $lowerCompleteMethodCallReferences, true);
     }
 }

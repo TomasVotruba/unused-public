@@ -12,6 +12,7 @@ parameters:
         return_type: 99
         param_type: 99
         property_type: 99
+        # print_suggestions: true
 
     level: 8
 
