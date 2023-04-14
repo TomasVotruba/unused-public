@@ -100,7 +100,7 @@ final class UnusedPublicClassMethodRule implements Rule
     }
 
     /**
-     * @param string[] $completeMethodCallReferences
+     * @param string[] $lowerCompleteMethodCallReferences
      * @param string[] $twigMethodNames
      * @param string[] $bladeMethodNames
      */
