@@ -35,6 +35,13 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
     {
         $errorMessage = sprintf(
             LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
+            CaseInsensitiveMethodName::class,
+            'runHere'
+        );
+        yield [[__DIR__ . '/Fixture/CaseInsensitiveMethodName.php'], [[$errorMessage, 9, RuleTips::NARROW_SCOPE]]];
+
+        $errorMessage = sprintf(
+            LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
             LocallyUsedPublicMethod::class,
             'runHere'
         );
@@ -45,7 +52,6 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
             LocallyUsedEnumMethod::class,
             'runHere'
         );
-
         yield [[__DIR__ . '/Fixture/LocallyUsedEnumMethod.php'], [[$errorMessage, 12, RuleTips::NARROW_SCOPE]]];
     }
 
