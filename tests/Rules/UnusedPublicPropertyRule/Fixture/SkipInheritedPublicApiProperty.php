@@ -6,9 +6,6 @@ namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixtu
 
 final class SkipInheritedApiPublicProperty extends BasePropertyClass
 {
-    /**
-     * @api
-     */
     public $property = 'overridden!';
 }
 
