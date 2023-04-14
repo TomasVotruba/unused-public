@@ -52,13 +52,14 @@ final class UnusedPublicPropertyRule implements Rule
         $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
 
         $publicPropertyFetchCollector = [...$publicPropertyFetchCollector, ...$publicStaticPropertyFetchCollector];
+        $usedProperties = Arrays::flatten($publicPropertyFetchCollector);
 
         $ruleErrors = [];
 
         foreach ($publicPropertyCollector as $filePath => $declarationsGroups) {
             foreach ($declarationsGroups as $declarationGroup) {
                 foreach ($declarationGroup as [$className, $propertyName, $line]) {
-                    if ($this->isPropertyUsed($className, $propertyName, $publicPropertyFetchCollector)) {
+                    if ($this->isPropertyUsed($className, $propertyName, $usedProperties)) {
                         continue;
                     }
 
@@ -83,7 +84,6 @@ final class UnusedPublicPropertyRule implements Rule
     private function isPropertyUsed(string $className, string $constantName, array $usedProperties): bool
     {
         $publicPropertyReference = $className . '::' . $constantName;
-        $usedProperties = Arrays::flatten($usedProperties);
 
         return in_array($publicPropertyReference, $usedProperties, true);
     }

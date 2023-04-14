@@ -59,6 +59,8 @@ final class UnusedPublicClassConstRule implements Rule
         $classConstFetchCollector = $node->get(ClassConstFetchCollector::class);
         $publicClassLikeConstCollector = $node->get(PublicClassLikeConstCollector::class);
 
+        $usedConstFetches = Arrays::flatten($classConstFetchCollector);
+
         $ruleErrors = [];
 
         foreach ($publicClassLikeConstCollector as $filePath => $declarationsGroups) {
@@ -67,7 +69,7 @@ final class UnusedPublicClassConstRule implements Rule
                     if ($this->isClassConstantUsed(
                         $className,
                         $constantName,
-                        $classConstFetchCollector,
+                        $usedConstFetches,
                         $bladeConstFetchNames
                     )) {
                         continue;
@@ -105,7 +107,6 @@ final class UnusedPublicClassConstRule implements Rule
 
         $publicConstantReference = $className . '::' . $constantName;
 
-        $usedConstFetches = Arrays::flatten($usedConstFetches);
         return in_array($publicConstantReference, $usedConstFetches, true);
     }
 }
