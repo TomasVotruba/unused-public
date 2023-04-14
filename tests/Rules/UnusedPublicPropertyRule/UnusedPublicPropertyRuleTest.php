@@ -14,6 +14,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\IgnoresPrivateApiProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 
@@ -68,6 +69,20 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
                 __DIR__ . '/Fixture/Provider.php',
             ],
             [],
+        ];
+
+        yield [[__DIR__ . '/Fixture/SkipInheritedPublicApiProperty.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipInheritedProtectedApiProperty.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipPublicApiProperty.php'], []];
+
+        $errorMessage = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            IgnoresPrivateApiProperty::class,
+            'property'
+        );
+        yield [
+            [__DIR__ . '/Fixture/IgnoresPrivateApiProperty.php'],
+            [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]],
         ];
     }
 
