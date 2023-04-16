@@ -24,10 +24,22 @@ final class PublicPropertyCollector implements Collector
      */
     private const CLASSES_TO_SKIP = ['Livewire\Component'];
 
-    public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(ApiDocStmtAnalyzer $apiDocStmtAnalyzer, Configuration $configuration)
+    {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -75,19 +87,16 @@ final class PublicPropertyCollector implements Collector
                     continue;
                 }
 
-                $publicPropertyNames[] = [
-                    $classReflection->getName(),
-                    $propertyName,
-                    $node->getLine(),
-                ];
+                $publicPropertyNames[] = [$classReflection->getName(), $propertyName, $node->getLine()];
             }
         }
 
         return $publicPropertyNames;
     }
 
-    private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope):bool {
-        if (!$classReflection->hasProperty($propertyName)) {
+    private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope): bool
+    {
+        if (! $classReflection->hasProperty($propertyName)) {
             return false;
         }
 

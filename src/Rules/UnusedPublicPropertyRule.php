@@ -27,9 +27,15 @@ final class UnusedPublicPropertyRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public property "%s::$%s" is never used';
 
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -51,7 +57,7 @@ final class UnusedPublicPropertyRule implements Rule
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
         $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
 
-        $publicPropertyFetchCollector = [...$publicPropertyFetchCollector, ...$publicStaticPropertyFetchCollector];
+        $publicPropertyFetchCollector = array_merge($publicPropertyFetchCollector, $publicStaticPropertyFetchCollector);
         $usedProperties = Arrays::flatten($publicPropertyFetchCollector);
 
         $ruleErrors = [];

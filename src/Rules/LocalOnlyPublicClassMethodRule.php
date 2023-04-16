@@ -20,7 +20,6 @@ use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
 use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
-use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
@@ -32,12 +31,40 @@ final class LocalOnlyPublicClassMethodRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should turned protected/private';
 
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
+     */
+    private $usedMethodAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
+     */
+    private $templateMethodCallsProvider;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+     */
+    private $methodCallCollectorMapper;
+
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private readonly MethodCallCollectorMapper $methodCallCollectorMapper
+        Configuration $configuration,
+        UsedMethodAnalyzer $usedMethodAnalyzer,
+        TemplateMethodCallsProvider $templateMethodCallsProvider,
+        MethodCallCollectorMapper $methodCallCollectorMapper
     ) {
+        $this->configuration = $configuration;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
+        $this->templateMethodCallsProvider = $templateMethodCallsProvider;
+        $this->methodCallCollectorMapper = $methodCallCollectorMapper;
     }
 
     public function getNodeType(): string
@@ -67,11 +94,15 @@ final class LocalOnlyPublicClassMethodRule implements Rule
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
         $lowerExternalRefs = array_map(
-            fn(string $item): string => strtolower($item),
+            function (string $item): string {
+                return strtolower($item);
+            },
             $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
         );
         $lowerLocalRefs = array_map(
-            fn(string $item): string => strtolower($item),
+            function (string $item): string {
+                return strtolower($item);
+            },
             $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
         );
 
@@ -121,18 +152,10 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         $publicMethodReference = strtolower($className . '::' . $methodName);
 
-        if (in_array(
-            $publicMethodReference,
-            $lowerExternalRefs,
-            true
-        )) {
+        if (in_array($publicMethodReference, $lowerExternalRefs, true)) {
             return false;
         }
 
-        return in_array(
-            $publicMethodReference,
-            $lowerLocalRefs,
-            true
-        );
+        return in_array($publicMethodReference, $lowerLocalRefs, true);
     }
 }
