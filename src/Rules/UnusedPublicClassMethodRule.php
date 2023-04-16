@@ -65,6 +65,11 @@ final class UnusedPublicClassMethodRule implements Rule
         );
 
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
+        // php method calls are case-insensitive
+        $lowerCompleteMethodCallReferences = array_map(
+            fn(string $item): string => strtolower($item),
+            $completeMethodCallReferences
+        );
 
         $ruleErrors = [];
 
@@ -73,7 +78,7 @@ final class UnusedPublicClassMethodRule implements Rule
                 if ($this->isUsedClassMethod(
                     $className,
                     $methodName,
-                    $completeMethodCallReferences,
+                    $lowerCompleteMethodCallReferences,
                     $twigMethodNames,
                     $bladeMethodNames
                 )) {
@@ -95,14 +100,14 @@ final class UnusedPublicClassMethodRule implements Rule
     }
 
     /**
-     * @param string[] $completeMethodCallReferences
+     * @param string[] $lowerCompleteMethodCallReferences
      * @param string[] $twigMethodNames
      * @param string[] $bladeMethodNames
      */
     private function isUsedClassMethod(
         string $className,
         string $methodName,
-        array $completeMethodCallReferences,
+        array $lowerCompleteMethodCallReferences,
         array $twigMethodNames,
         array $bladeMethodNames
     ): bool {
@@ -113,12 +118,6 @@ final class UnusedPublicClassMethodRule implements Rule
         if (in_array($methodName, $bladeMethodNames, true)) {
             return true;
         }
-
-        // php method calls are case-insensitive
-        $lowerCompleteMethodCallReferences = array_map(
-            fn(string $item): string => strtolower($item),
-            $completeMethodCallReferences
-        );
 
         $methodReference = $className . '::' . $methodName;
         return in_array(strtolower($methodReference), $lowerCompleteMethodCallReferences, true);

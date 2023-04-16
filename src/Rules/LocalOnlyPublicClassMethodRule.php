@@ -65,6 +65,15 @@ final class LocalOnlyPublicClassMethodRule implements Rule
         );
 
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
+        // php method calls are case-insensitive
+        $lowerExternalRefs = array_map(
+            fn(string $item): string => strtolower($item),
+            $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
+        );
+        $lowerLocalRefs = array_map(
+            fn(string $item): string => strtolower($item),
+            $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
+        );
 
         $ruleErrors = [];
 
@@ -73,7 +82,8 @@ final class LocalOnlyPublicClassMethodRule implements Rule
                 if (! $this->isUsedOnlyLocally(
                     $className,
                     $methodName,
-                    $localAndExternalMethodCallReferences,
+                    $lowerExternalRefs,
+                    $lowerLocalRefs,
                     $twigMethodNames
                 )) {
                     continue;
@@ -94,28 +104,22 @@ final class LocalOnlyPublicClassMethodRule implements Rule
     }
 
     /**
+     * @param string[] $lowerExternalRefs
+     * @param string[] $lowerLocalRefs
      * @param string[] $twigMethodNames
      */
     private function isUsedOnlyLocally(
         string $className,
         string $methodName,
-        LocalAndExternalMethodCallReferences $localAndExternalMethodCallReferences,
+        array $lowerExternalRefs,
+        array $lowerLocalRefs,
         array $twigMethodNames
     ): bool {
         if ($this->usedMethodAnalyzer->isUsedInTwig($methodName, $twigMethodNames)) {
             return true;
         }
 
-        // php method calls are case-insensitive
         $publicMethodReference = strtolower($className . '::' . $methodName);
-        $lowerExternalRefs = array_map(
-            fn(string $item): string => strtolower($item),
-            $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
-        );
-        $lowerLocalRefs = array_map(
-            fn(string $item): string => strtolower($item),
-            $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
-        );
 
         if (in_array(
             $publicMethodReference,
