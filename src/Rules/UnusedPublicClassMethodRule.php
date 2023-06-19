@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Rules;
 
+use Nette\Utils\Arrays;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
@@ -13,6 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
+use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
@@ -64,6 +66,8 @@ final class UnusedPublicClassMethodRule implements Rule
             $node->get(CallUserFuncCollector::class)
         );
 
+        $formTypeClasses = Arrays::flatten($node->get(FormTypeClassCollector::class));
+
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
         $lowerCompleteMethodCallReferences = array_map(
@@ -75,6 +79,10 @@ final class UnusedPublicClassMethodRule implements Rule
 
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
             foreach ($declarations as [$className, $methodName, $line]) {
+                if (in_array($className, $formTypeClasses, true)) {
+                    continue;
+                }
+
                 if ($this->isUsedClassMethod(
                     $className,
                     $methodName,
