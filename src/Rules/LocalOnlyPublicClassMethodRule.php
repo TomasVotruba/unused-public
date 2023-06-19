@@ -20,7 +20,6 @@ use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
 use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
-use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
@@ -67,11 +66,11 @@ final class LocalOnlyPublicClassMethodRule implements Rule
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
         $lowerExternalRefs = array_map(
-            fn(string $item): string => strtolower($item),
+            static fn(string $item): string => strtolower($item),
             $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
         );
         $lowerLocalRefs = array_map(
-            fn(string $item): string => strtolower($item),
+            static fn(string $item): string => strtolower($item),
             $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
         );
 
@@ -121,18 +120,10 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         $publicMethodReference = strtolower($className . '::' . $methodName);
 
-        if (in_array(
-            $publicMethodReference,
-            $lowerExternalRefs,
-            true
-        )) {
+        if (in_array($publicMethodReference, $lowerExternalRefs, true)) {
             return false;
         }
 
-        return in_array(
-            $publicMethodReference,
-            $lowerLocalRefs,
-            true
-        );
+        return in_array($publicMethodReference, $lowerLocalRefs, true);
     }
 }

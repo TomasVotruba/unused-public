@@ -14,9 +14,9 @@ final class SkipPublicCallbackMethod
     {
         $this->runHere();
     }
-
 }
 
-function doFoo() {
+function doFoo()
+{
     call_user_func([SkipPublicCallbackMethod::class, 'runHere']);
 }

@@ -26,10 +26,10 @@ final class ApiDocStmtAnalyzer
         }
 
         return $this->isApiDocComment($docComment->getText());
-
     }
 
-    public function isApiDocComment(string $docComment) :bool {
+    public function isApiDocComment(string $docComment): bool
+    {
         return str_contains($docComment, '@api');
     }
 }

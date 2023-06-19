@@ -70,6 +70,14 @@ final class PublicClassMethodMatcher
         $doc = $classMethod->getDocComment();
 
         // skip symfony controller action
-        return $doc instanceof Doc && str_contains($doc->getText(), '@Route');
+        if (! $doc instanceof Doc) {
+            return false;
+        }
+
+        if (str_contains($doc->getText(), '@Route')) {
+            return true;
+        }
+
+        return str_contains($doc->getText(), '@Required');
     }
 }

@@ -36,6 +36,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public static function provideData(): Iterator
     {
+        yield [[__DIR__ . '/Fixture/Symfony/SkipRequiredMethodCall.php'], []];
         yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
@@ -117,10 +118,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
         // traits
-        yield [[
-            __DIR__ . '/Fixture/SkipTraitMethod.php',
-            __DIR__ . '/Source/SomeTrait.php',
-        ], []];
+        yield [[__DIR__ . '/Fixture/SkipTraitMethod.php', __DIR__ . '/Source/SomeTrait.php'], []];
 
         // enums
         $errorMessage1 = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, SomeEnum::class, 'unused');
@@ -128,20 +126,10 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[
             __DIR__ . '/Fixture/EnumMethod.php',
             __DIR__ . '/Source/SomeEnum.php',
-        ], [
-            [$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE],
-            [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE],
-        ]];
+        ], [[$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE], [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE]]];
 
-        yield [[
-            __DIR__ . '/Fixture/CaseInsensitiveMethodName.php',
-            __DIR__ . '/Source/Caller1.php',
-        ], []];
-        yield [[
-            __DIR__ . '/Fixture/CaseInsensitiveClassName.php',
-            __DIR__ . '/Source/Caller1.php',
-        ], []];
-
+        yield [[__DIR__ . '/Fixture/CaseInsensitiveMethodName.php', __DIR__ . '/Source/Caller1.php'], []];
+        yield [[__DIR__ . '/Fixture/CaseInsensitiveClassName.php', __DIR__ . '/Source/Caller1.php'], []];
     }
 
     /**

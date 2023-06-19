@@ -67,7 +67,7 @@ final class UnusedPublicClassMethodRule implements Rule
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
         $lowerCompleteMethodCallReferences = array_map(
-            fn(string $item): string => strtolower($item),
+            static fn(string $item): string => strtolower($item),
             $completeMethodCallReferences
         );
 

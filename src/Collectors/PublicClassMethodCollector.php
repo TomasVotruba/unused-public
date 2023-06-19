@@ -125,9 +125,6 @@ final class PublicClassMethodCollector implements Collector
         }
 
         $extendedMethodReflection = $classReflection->getMethod($classMethodName, $scope);
-        if (! $extendedMethodReflection instanceof ExtendedMethodReflection) {
-            return false;
-        }
 
         if ($extendedMethodReflection->getDocComment() === null) {
             return false;
@@ -145,10 +142,9 @@ final class PublicClassMethodCollector implements Collector
 
         $extendedMethodReflection = $classReflection->getMethod($classMethod->name->toString(), $scope);
         if ($extendedMethodReflection instanceof PhpMethodReflection || $extendedMethodReflection instanceof ResolvedMethodReflection) {
-            return $extendedMethodReflection->getDeclaringTrait() !== null;
+            return $extendedMethodReflection->getDeclaringTrait() instanceof ClassReflection;
         }
 
         return false;
     }
-
 }

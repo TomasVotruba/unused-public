@@ -75,19 +75,16 @@ final class PublicPropertyCollector implements Collector
                     continue;
                 }
 
-                $publicPropertyNames[] = [
-                    $classReflection->getName(),
-                    $propertyName,
-                    $node->getLine(),
-                ];
+                $publicPropertyNames[] = [$classReflection->getName(), $propertyName, $node->getLine()];
             }
         }
 
         return $publicPropertyNames;
     }
 
-    private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope):bool {
-        if (!$classReflection->hasProperty($propertyName)) {
+    private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope): bool
+    {
+        if (! $classReflection->hasProperty($propertyName)) {
             return false;
         }
 
@@ -97,15 +94,16 @@ final class PublicPropertyCollector implements Collector
             return false;
         }
 
-        $doc = $propertyReflection->getDocComment();
-        if ($doc !== null && $this->apiDocStmtAnalyzer->isApiDocComment($doc)) {
+        $docComment = $propertyReflection->getDocComment();
+        if ($docComment !== null && $this->apiDocStmtAnalyzer->isApiDocComment($docComment)) {
             return true;
         }
 
         $parentClassReflection = $classReflection->getParentClass();
-        if ($parentClassReflection === null) {
+        if (!$parentClassReflection instanceof ClassReflection) {
             return false;
         }
+
         return $this->shouldSkipProperty($parentClassReflection, $propertyName, $scope);
     }
 

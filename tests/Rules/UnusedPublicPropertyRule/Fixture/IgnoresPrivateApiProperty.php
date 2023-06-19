@@ -10,5 +10,3 @@ final class IgnoresPrivateApiProperty extends BasePrivatePropertyClass
 {
     public $property = 'overridden!';
 }
-
-

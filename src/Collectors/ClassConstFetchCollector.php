@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
+use PHPStan\Reflection\ClassReflection;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
@@ -49,7 +50,7 @@ final class ClassConstFetchCollector implements Collector
         $constantName = $node->name->toString();
 
         $classReflection = $scope->getClassReflection();
-        if ($classReflection !== null && $classReflection->hasConstant($constantName)) {
+        if ($classReflection instanceof ClassReflection && $classReflection->hasConstant($constantName)) {
             $constantReflection = $classReflection->getConstant($constantName);
             $declaringClass = $constantReflection->getDeclaringClass();
             if ($declaringClass->getFileName() !== $classReflection->getFileName()) {

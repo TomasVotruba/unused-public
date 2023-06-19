@@ -10,5 +10,3 @@ final class SkipInheritedApiPublicPublicProperty extends BaseProtectedPropertyCl
 {
     public $property = 'overridden!';
 }
-
-
