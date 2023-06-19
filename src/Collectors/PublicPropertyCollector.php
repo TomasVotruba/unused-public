@@ -100,7 +100,7 @@ final class PublicPropertyCollector implements Collector
         }
 
         $parentClassReflection = $classReflection->getParentClass();
-        if (!$parentClassReflection instanceof ClassReflection) {
+        if (! $parentClassReflection instanceof ClassReflection) {
             return false;
         }
 

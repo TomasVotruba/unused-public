@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
-use PHPStan\Reflection\ClassReflection;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
