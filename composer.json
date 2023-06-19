@@ -6,7 +6,7 @@
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
         "php": "^8.1",
-        "phpstan/phpstan": "^1.10.0",
+        "phpstan/phpstan": "^1.10.19",
         "nette/utils": "^3.2",
         "webmozart/assert": "^1.11"
     },
