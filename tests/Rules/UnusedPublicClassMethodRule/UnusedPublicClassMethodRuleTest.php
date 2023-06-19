@@ -37,6 +37,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Symfony/SkipRequiredMethodCall.php'], []];
+
+
         yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
