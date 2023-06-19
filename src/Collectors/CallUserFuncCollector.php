@@ -7,16 +7,11 @@ namespace TomasVotruba\UnusedPublic\Collectors;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\FuncCall;
-use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\Constant\ConstantArrayType;
-use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
 use TomasVotruba\UnusedPublic\Configuration;
-use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
-use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
  * @implements Collector<FuncCall, array<string>|null>
@@ -66,7 +61,7 @@ final class CallUserFuncCollector implements Collector
         }
 
         $callableType = $scope->getType($args[0]->value);
-        if (!$callableType instanceof ConstantArrayType) {
+        if (! $callableType instanceof ConstantArrayType) {
             return null;
         }
 
@@ -76,14 +71,14 @@ final class CallUserFuncCollector implements Collector
         }
 
         $classMethodReferences = [];
-        foreach($typeAndMethodNames as $typeAndMethodName) {
-            $objectClassNames = $typeAndMethodName->getType()->getObjectClassNames();
-            foreach($objectClassNames as $objectClassName) {
+        foreach ($typeAndMethodNames as $typeAndMethodName) {
+            $objectClassNames = $typeAndMethodName->getType()
+                ->getObjectClassNames();
+            foreach ($objectClassNames as $objectClassName) {
                 $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
             }
         }
 
         return $classMethodReferences;
     }
-
 }

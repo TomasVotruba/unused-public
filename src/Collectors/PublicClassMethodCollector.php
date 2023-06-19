@@ -150,5 +150,4 @@ final class PublicClassMethodCollector implements Collector
 
         return false;
     }
-
 }

@@ -10,7 +10,7 @@ enum SomeEnum
     {
     }
 
-    static public function unusedStatic()
+    public static function unusedStatic()
     {
     }
 
@@ -18,11 +18,11 @@ enum SomeEnum
     {
     }
 
-    static public function useMeStatic()
+    public static function useMeStatic()
     {
     }
 
-    protected function unusedProtected()
+    private function unusedProtected()
     {
     }
 
@@ -30,5 +30,3 @@ enum SomeEnum
     {
     }
 }
-
-

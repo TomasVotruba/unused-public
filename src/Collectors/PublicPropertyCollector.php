@@ -75,19 +75,16 @@ final class PublicPropertyCollector implements Collector
                     continue;
                 }
 
-                $publicPropertyNames[] = [
-                    $classReflection->getName(),
-                    $propertyName,
-                    $node->getLine(),
-                ];
+                $publicPropertyNames[] = [$classReflection->getName(), $propertyName, $node->getLine()];
             }
         }
 
         return $publicPropertyNames;
     }
 
-    private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope):bool {
-        if (!$classReflection->hasProperty($propertyName)) {
+    private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope): bool
+    {
+        if (! $classReflection->hasProperty($propertyName)) {
             return false;
         }
 

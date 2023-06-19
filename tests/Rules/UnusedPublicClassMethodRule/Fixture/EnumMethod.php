@@ -13,7 +13,4 @@ final class EnumMethod
         $e->useMe();
         SomeEnum::useMeStatic();
     }
-
 }
-
-
