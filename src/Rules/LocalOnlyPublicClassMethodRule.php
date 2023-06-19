@@ -66,11 +66,11 @@ final class LocalOnlyPublicClassMethodRule implements Rule
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
         $lowerExternalRefs = array_map(
-            static fn(string $item): string => strtolower($item),
+            static fn (string $item): string => strtolower($item),
             $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
         );
         $lowerLocalRefs = array_map(
-            static fn(string $item): string => strtolower($item),
+            static fn (string $item): string => strtolower($item),
             $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
         );
 
