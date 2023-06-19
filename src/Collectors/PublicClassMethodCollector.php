@@ -9,7 +9,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Reflection\ExtendedMethodReflection;
 use PHPStan\Reflection\Php\PhpMethodReflection;
 use PHPStan\Reflection\ResolvedMethodReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
@@ -38,11 +37,32 @@ final class PublicClassMethodCollector implements Collector
         'Illuminate\Support\ServiceProvider',
     ];
 
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+     */
+    private $publicClassMethodMatcher;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
     public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly Configuration $configuration,
+        ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        PublicClassMethodMatcher $publicClassMethodMatcher,
+        Configuration $configuration
     ) {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->publicClassMethodMatcher = $publicClassMethodMatcher;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -73,7 +93,7 @@ final class PublicClassMethodCollector implements Collector
         // skip
         if ($classReflection instanceof ClassReflection) {
             // skip acceptance tests, codeception
-            if (str_ends_with($classReflection->getName(), 'Cest')) {
+            if (substr_compare($classReflection->getName(), 'Cest', -strlen('Cest')) === 0) {
                 return null;
             }
 
@@ -115,7 +135,7 @@ final class PublicClassMethodCollector implements Collector
     private function isTestMethod(ClassMethod $classMethod, Scope $scope): bool
     {
         $classMethodName = $classMethod->name->toString();
-        if (str_starts_with($classMethodName, 'test')) {
+        if (strncmp($classMethodName, 'test', strlen('test')) === 0) {
             return true;
         }
 
@@ -130,7 +150,7 @@ final class PublicClassMethodCollector implements Collector
             return false;
         }
 
-        return str_contains($extendedMethodReflection->getDocComment(), '@test');
+        return strpos($extendedMethodReflection->getDocComment(), '@test') !== false;
     }
 
     private function isTraitMethod(ClassMethod $classMethod, Scope $scope): bool

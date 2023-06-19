@@ -24,10 +24,22 @@ final class PublicPropertyCollector implements Collector
      */
     private const CLASSES_TO_SKIP = ['Livewire\Component'];
 
-    public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(ApiDocStmtAnalyzer $apiDocStmtAnalyzer, Configuration $configuration)
+    {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -100,7 +112,7 @@ final class PublicPropertyCollector implements Collector
         }
 
         $parentClassReflection = $classReflection->getParentClass();
-        if (!$parentClassReflection instanceof ClassReflection) {
+        if (! $parentClassReflection instanceof ClassReflection) {
             return false;
         }
 

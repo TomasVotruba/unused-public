@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
-use PHPStan\Reflection\ClassReflection;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -18,9 +18,15 @@ use TomasVotruba\UnusedPublic\Configuration;
  */
 final class ClassConstFetchCollector implements Collector
 {
-    public function __construct(
-        private readonly Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string

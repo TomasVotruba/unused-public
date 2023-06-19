@@ -74,10 +74,10 @@ final class PublicClassMethodMatcher
             return false;
         }
 
-        if (str_contains($doc->getText(), '@Route')) {
+        if (strpos($doc->getText(), '@Route') !== false) {
             return true;
         }
 
-        return str_contains($doc->getText(), '@Required');
+        return strpos($doc->getText(), '@Required') !== false;
     }
 }
