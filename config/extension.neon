@@ -51,6 +51,11 @@ services:
             - phpstan.collector
 
     -
+        class: TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector
+        tags:
+            - phpstan.collector
+
+    -
         class: TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector
         tags:
             - phpstan.collector

@@ -11,6 +11,7 @@ use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
+use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
@@ -37,6 +38,12 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Symfony/SkipRequiredMethodCall.php'], []];
+
+        yield [[
+            __DIR__ . '/Fixture/Symfony/SomeFormType.php',
+            __DIR__ . '/Fixture/Symfony/SkipEntityGetterSetters.php',
+        ], []];
+
         yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
@@ -151,6 +158,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             self::getContainer()->getByType(StaticMethodCallCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
             self::getContainer()->getByType(CallUserFuncCollector::class),
+            self::getContainer()->getByType(FormTypeClassCollector::class),
         ];
     }
 
