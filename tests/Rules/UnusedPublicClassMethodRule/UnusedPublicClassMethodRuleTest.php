@@ -38,6 +38,10 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     {
         yield [[__DIR__ . '/Fixture/Symfony/SkipRequiredMethodCall.php'], []];
 
+        yield [[
+            __DIR__ . '/Fixture/Symfony/SomeFormType.php',
+            __DIR__ . '/Fixture/Symfony/SkipEntityGetterSetters.php',
+        ], []];
 
         yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
