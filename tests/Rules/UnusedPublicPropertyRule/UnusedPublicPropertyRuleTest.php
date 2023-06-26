@@ -16,6 +16,7 @@ use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\IgnoresPrivateApiProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticPropertyViaStatic;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 
 final class UnusedPublicPropertyRuleTest extends RuleTestCase
@@ -48,6 +49,16 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         );
         yield [
             [__DIR__ . '/Fixture/LocallyUsedStaticProperty.php'],
+            [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            LocallyUsedStaticPropertyViaStatic::class,
+            'somePublicStaticProperty'
+        );
+        yield [
+            [__DIR__ . '/Fixture/LocallyUsedStaticPropertyViaStatic.php'],
             [[$errorMessage, 7, RuleTips::SOLUTION_MESSAGE]],
         ];
 
