@@ -13,6 +13,7 @@ use PHPStan\Reflection\Php\PhpMethodReflection;
 use PHPStan\Reflection\ResolvedMethodReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\MethodTypeDetector;
 use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 
 /**
@@ -38,9 +39,10 @@ final class PublicClassMethodCollector implements Collector
     ];
 
     public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private readonly ApiDocStmtAnalyzer       $apiDocStmtAnalyzer,
         private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly Configuration $configuration,
+        private readonly MethodTypeDetector       $methodMatcher,
+        private readonly Configuration            $configuration,
     ) {
     }
 
@@ -59,11 +61,11 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        if ($this->isTestMethod($node, $scope)) {
+        if ($this->methodMatcher->isTestMethod($node, $scope)) {
             return null;
         }
 
-        if ($this->isTraitMethod($node, $scope)) {
+        if ($this->methodMatcher->isTraitMethod($node, $scope)) {
             return null;
         }
 
@@ -111,39 +113,5 @@ final class PublicClassMethodCollector implements Collector
         return [$classReflection->getName(), $methodName, $node->getLine()];
     }
 
-    private function isTestMethod(ClassMethod $classMethod, Scope $scope): bool
-    {
-        $classMethodName = $classMethod->name->toString();
-        if (str_starts_with($classMethodName, 'test')) {
-            return true;
-        }
 
-        $classReflection = $scope->getClassReflection();
-        if (! $classReflection instanceof ClassReflection) {
-            return false;
-        }
-
-        $extendedMethodReflection = $classReflection->getMethod($classMethodName, $scope);
-
-        if ($extendedMethodReflection->getDocComment() === null) {
-            return false;
-        }
-
-        return str_contains($extendedMethodReflection->getDocComment(), '@test');
-    }
-
-    private function isTraitMethod(ClassMethod $classMethod, Scope $scope): bool
-    {
-        $classReflection = $scope->getClassReflection();
-        if (! $classReflection instanceof ClassReflection) {
-            return false;
-        }
-
-        $extendedMethodReflection = $classReflection->getMethod($classMethod->name->toString(), $scope);
-        if ($extendedMethodReflection instanceof PhpMethodReflection || $extendedMethodReflection instanceof ResolvedMethodReflection) {
-            return $extendedMethodReflection->getDeclaringTrait() instanceof ClassReflection;
-        }
-
-        return false;
-    }
 }
