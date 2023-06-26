@@ -68,28 +68,22 @@ final class PublicClassMethodCollector implements Collector
         }
 
         $classReflection = $scope->getClassReflection();
+        if (! $classReflection instanceof ClassReflection) {
+            return null;
+        }
+        
+        // skip acceptance tests, codeception
+        if (str_ends_with($classReflection->getName(), 'Cest')) {
+            return null;
+        }
 
-        // skip
-        if ($classReflection instanceof ClassReflection) {
-            // skip acceptance tests, codeception
-            if (str_ends_with($classReflection->getName(), 'Cest')) {
+        foreach (self::SKIPPED_TYPES as $skippedType) {
+            if ($classReflection->isSubclassOf($skippedType)) {
                 return null;
-            }
-
-            foreach (self::SKIPPED_TYPES as $skippedType) {
-                if ($classReflection->isSubclassOf($skippedType)) {
-                    return null;
-                }
             }
         }
 
         if ($this->publicClassMethodMatcher->shouldSkipClassMethod($node)) {
-            return null;
-        }
-
-        // only if the class has no parents/implementers, to avoid class method required by contracts
-        $classReflection = $scope->getClassReflection();
-        if (! $classReflection instanceof ClassReflection) {
             return null;
         }
 
