@@ -9,8 +9,10 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
+use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
 
@@ -23,6 +25,7 @@ final class MethodCallCollector implements Collector
         private readonly ReflectionProvider $reflectionProvider,
         private readonly ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
         private readonly Configuration $configuration,
+        private readonly ClassTypeDetector $classTypeDetector,
     ) {
     }
 
@@ -41,8 +44,13 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
+        $classReflection = $scope->getClassReflection();
+        if (!$classReflection instanceof ClassReflection) {
+            return null;
+        }
+
         // skip calls in tests, as they are not used in production
-        if ($this->isPHPUnitTestCase($scope)) {
+        if ($this->classTypeDetector->isTestClass($classReflection)) {
             return null;
         }
 
@@ -95,15 +103,5 @@ final class MethodCallCollector implements Collector
         return $classMethodReferences;
     }
 
-    private function isPHPUnitTestCase(Scope $scope): bool
-    {
-        if (! $scope->isInClass()) {
-            return false;
-        }
 
-        $classReflection = $scope->getClassReflection();
-        return $classReflection->isSubclassOf('PHPUnit\Framework\TestCase') || $classReflection->isSubclassOf(
-            'PHPUnit_Framework_TestCase'
-        );
-    }
 }
