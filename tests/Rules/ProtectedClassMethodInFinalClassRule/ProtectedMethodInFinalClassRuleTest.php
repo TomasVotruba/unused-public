@@ -31,8 +31,8 @@ final class ProtectedMethodInFinalClassRuleTest extends RuleTestCase
         yield [
             [__DIR__ . '/Fixture/ProtectedMethodInFinalClass.php'],
             [
-                [sprintf(ProtectedMethodInFinalClassRule::ERROR_MESSAGE, 'protectedMethod'), 13],
-                [sprintf(ProtectedMethodInFinalClassRule::ERROR_MESSAGE, 'staticProtectedMethod'), 25],
+                [sprintf(ProtectedMethodInFinalClassRule::ERROR_MESSAGE, 'protectedMethod'), 17],
+                [sprintf(ProtectedMethodInFinalClassRule::ERROR_MESSAGE, 'staticProtectedMethod'), 21],
             ],
         ];
     }

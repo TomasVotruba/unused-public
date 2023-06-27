@@ -14,15 +14,15 @@ final class ProtectedMethodInFinalClass
     {
     }
 
-    private function protectedMethod()
+    protected function protectedMethod()
+    {
+    }
+
+    protected static function staticProtectedMethod()
     {
     }
 
     private function privateMethod()
-    {
-    }
-
-    private static function staticProtectedMethod()
     {
     }
 
