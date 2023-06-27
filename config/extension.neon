@@ -97,3 +97,4 @@ rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule
     - TomasVotruba\UnusedPublic\Rules\LocalOnlyPublicClassMethodRule
+    - TomasVotruba\UnusedPublic\Rules\ProtectedMethodInFinalClassRule
