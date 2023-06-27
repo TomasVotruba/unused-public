@@ -71,12 +71,6 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        foreach (self::SKIPPED_TYPES as $skippedType) {
-            if ($classReflection->isSubclassOf($skippedType)) {
-                return null;
-            }
-        }
-
         if ($this->methodMatcher->isTestMethod($node, $scope)) {
             return null;
         }
@@ -91,6 +85,12 @@ final class PublicClassMethodCollector implements Collector
 
         if ($this->apiDocStmtAnalyzer->isApiDoc($node, $classReflection)) {
             return null;
+        }
+
+        foreach (self::SKIPPED_TYPES as $skippedType) {
+            if ($classReflection->isSubclassOf($skippedType)) {
+                return null;
+            }
         }
 
         if ($this->publicClassMethodMatcher->shouldSkipClassReflection($classReflection)) {
