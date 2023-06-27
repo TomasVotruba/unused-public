@@ -40,14 +40,6 @@ final class CallUserFuncCollector implements Collector
             return null;
         }
 
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection) {
-            // skip calls in tests, as they are not used in production
-            if ($this->classTypeDetector->isTestClass($classReflection)) {
-                return null;
-            }
-        }
-
         // unable to resolve method name
         if ($node->name instanceof Expr) {
             return null;
@@ -60,6 +52,14 @@ final class CallUserFuncCollector implements Collector
         $args = $node->getArgs();
         if (count($args) < 1) {
             return null;
+        }
+
+        $classReflection = $scope->getClassReflection();
+        if ($classReflection instanceof ClassReflection) {
+            // skip calls in tests, as they are not used in production
+            if ($this->classTypeDetector->isTestClass($classReflection)) {
+                return null;
+            }
         }
 
         $callableType = $scope->getType($args[0]->value);

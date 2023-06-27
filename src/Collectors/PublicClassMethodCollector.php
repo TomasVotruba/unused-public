@@ -61,6 +61,16 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
+        $classReflection = $scope->getClassReflection();
+        if (! $classReflection instanceof ClassReflection) {
+            return null;
+        }
+
+        // skip acceptance tests, codeception
+        if (str_ends_with($classReflection->getName(), 'Cest')) {
+            return null;
+        }
+
         if ($this->methodMatcher->isTestMethod($node, $scope)) {
             return null;
         }
@@ -69,13 +79,11 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        $classReflection = $scope->getClassReflection();
-        if (! $classReflection instanceof ClassReflection) {
+        if ($this->publicClassMethodMatcher->shouldSkipClassMethod($node)) {
             return null;
         }
-        
-        // skip acceptance tests, codeception
-        if (str_ends_with($classReflection->getName(), 'Cest')) {
+
+        if ($this->apiDocStmtAnalyzer->isApiDoc($node, $classReflection)) {
             return null;
         }
 
@@ -83,14 +91,6 @@ final class PublicClassMethodCollector implements Collector
             if ($classReflection->isSubclassOf($skippedType)) {
                 return null;
             }
-        }
-
-        if ($this->publicClassMethodMatcher->shouldSkipClassMethod($node)) {
-            return null;
-        }
-
-        if ($this->apiDocStmtAnalyzer->isApiDoc($node, $classReflection)) {
-            return null;
         }
 
         if ($this->publicClassMethodMatcher->shouldSkipClassReflection($classReflection)) {
