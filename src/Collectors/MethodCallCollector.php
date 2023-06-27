@@ -44,6 +44,11 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
+        // unable to resolve method name
+        if ($node->name instanceof Expr) {
+            return null;
+        }
+
         $classReflection = $scope->getClassReflection();
         if (!$classReflection instanceof ClassReflection) {
             return null;
@@ -54,13 +59,7 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
-        // unable to resolve method name
-        if ($node->name instanceof Expr) {
-            return null;
-        }
-
         $classMethodReferences = [];
-
         $classMethodCallReferences = $this->classMethodCallReferenceResolver->resolve($node, $scope);
 
         foreach ($classMethodCallReferences as $classMethodCallReference) {

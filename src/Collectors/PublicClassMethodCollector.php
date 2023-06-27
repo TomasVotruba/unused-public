@@ -61,19 +61,11 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        if ($this->methodMatcher->isTestMethod($node, $scope)) {
-            return null;
-        }
-
-        if ($this->methodMatcher->isTraitMethod($node, $scope)) {
-            return null;
-        }
-
         $classReflection = $scope->getClassReflection();
         if (! $classReflection instanceof ClassReflection) {
             return null;
         }
-        
+
         // skip acceptance tests, codeception
         if (str_ends_with($classReflection->getName(), 'Cest')) {
             return null;
@@ -83,6 +75,14 @@ final class PublicClassMethodCollector implements Collector
             if ($classReflection->isSubclassOf($skippedType)) {
                 return null;
             }
+        }
+
+        if ($this->methodMatcher->isTestMethod($node, $scope)) {
+            return null;
+        }
+
+        if ($this->methodMatcher->isTraitMethod($node, $scope)) {
+            return null;
         }
 
         if ($this->publicClassMethodMatcher->shouldSkipClassMethod($node)) {
