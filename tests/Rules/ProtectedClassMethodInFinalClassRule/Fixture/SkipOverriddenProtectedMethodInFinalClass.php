@@ -10,7 +10,15 @@ final class SkipOverriddenProtectedMethodInFinalClass extends MiddleClass
     {
     }
 
+    public static function staticPublicMethod()
+    {
+    }
+
     protected function protectedMethod()
+    {
+    }
+
+    protected static function staticProtectedMethod()
     {
     }
 
@@ -18,28 +26,21 @@ final class SkipOverriddenProtectedMethodInFinalClass extends MiddleClass
     {
     }
 
-    static public function staticPublicMethod()
-    {
-    }
-
-    static protected function staticProtectedMethod()
-    {
-    }
-
-    static private function staticPrivateMethod()
+    private static function staticPrivateMethod()
     {
     }
 }
 
-class MiddleClass extends BaseClass {
-
-    static protected function staticProtectedMethod()
+class MiddleClass extends BaseClass
+{
+    protected static function staticProtectedMethod()
     {
     }
 }
 
 
-class BaseClass {
+class BaseClass
+{
     protected function protectedMethod()
     {
     }

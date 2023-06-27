@@ -10,7 +10,11 @@ final class ProtectedMethodInFinalClass
     {
     }
 
-    protected function protectedMethod()
+    public static function staticPublicMethod()
+    {
+    }
+
+    private function protectedMethod()
     {
     }
 
@@ -18,15 +22,11 @@ final class ProtectedMethodInFinalClass
     {
     }
 
-    static public function staticPublicMethod()
+    private static function staticProtectedMethod()
     {
     }
 
-    static protected function staticProtectedMethod()
-    {
-    }
-
-    static private function staticPrivateMethod()
+    private static function staticPrivateMethod()
     {
     }
 }

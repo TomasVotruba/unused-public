@@ -10,7 +10,15 @@ class SkipNonFinalClass
     {
     }
 
+    public static function staticPublicMethod()
+    {
+    }
+
     protected function protectedMethod()
+    {
+    }
+
+    protected static function staticProtectedMethod()
     {
     }
 
@@ -18,15 +26,7 @@ class SkipNonFinalClass
     {
     }
 
-    static public function staticPublicMethod()
-    {
-    }
-
-    static protected function staticProtectedMethod()
-    {
-    }
-
-    static private function staticPrivateMethod()
+    private static function staticPrivateMethod()
     {
     }
 }

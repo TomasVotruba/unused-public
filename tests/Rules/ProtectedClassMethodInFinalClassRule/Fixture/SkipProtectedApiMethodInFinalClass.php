@@ -10,10 +10,14 @@ final class SkipProtectedApiMethodInFinalClass
     {
     }
 
+    public static function staticPublicMethod()
+    {
+    }
+
     /**
      * @api
      */
-    protected function protectedMethod()
+    private function protectedMethod()
     {
     }
 
@@ -21,18 +25,14 @@ final class SkipProtectedApiMethodInFinalClass
     {
     }
 
-    static public function staticPublicMethod()
-    {
-    }
-
     /**
      * @api
      */
-    static protected function staticProtectedMethod()
+    private static function staticProtectedMethod()
     {
     }
 
-    static private function staticPrivateMethod()
+    private static function staticPrivateMethod()
     {
     }
 }
