@@ -17,7 +17,7 @@ final class SkipProtectedApiMethodInFinalClass
     /**
      * @api
      */
-    private function protectedMethod()
+    protected function protectedMethod()
     {
     }
 
@@ -28,7 +28,7 @@ final class SkipProtectedApiMethodInFinalClass
     /**
      * @api
      */
-    private static function staticProtectedMethod()
+    protected static function staticProtectedMethod()
     {
     }
 
