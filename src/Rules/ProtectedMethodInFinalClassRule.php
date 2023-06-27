@@ -36,7 +36,6 @@ final class ProtectedMethodInFinalClassRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $methodReflection = $node->getMethodReflection();
         $method = $node->getOriginalNode();
 
         if (! $method->isProtected()) {
@@ -52,6 +51,7 @@ final class ProtectedMethodInFinalClassRule implements Rule
             return [];
         }
 
+        $methodReflection = $node->getMethodReflection();
         $docComment = $methodReflection->getDocComment();
         if ($docComment !== null && $this->apiDocStmtAnalyzer->isApiDocComment($docComment)) {
             return [];
