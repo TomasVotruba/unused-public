@@ -9,8 +9,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Reflection\Php\PhpMethodReflection;
-use PHPStan\Reflection\ResolvedMethodReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\MethodTypeDetector;
@@ -39,10 +37,10 @@ final class PublicClassMethodCollector implements Collector
     ];
 
     public function __construct(
-        private readonly ApiDocStmtAnalyzer       $apiDocStmtAnalyzer,
+        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
         private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly MethodTypeDetector       $methodMatcher,
-        private readonly Configuration            $configuration,
+        private readonly MethodTypeDetector $methodMatcher,
+        private readonly Configuration $configuration,
     ) {
     }
 
@@ -106,6 +104,4 @@ final class PublicClassMethodCollector implements Collector
 
         return [$classReflection->getName(), $methodName, $node->getLine()];
     }
-
-
 }

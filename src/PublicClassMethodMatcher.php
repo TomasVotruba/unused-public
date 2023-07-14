@@ -19,7 +19,8 @@ final class PublicClassMethodMatcher
 
     public function __construct(
         private readonly ClassTypeDetector $classTypeDetector,
-    ) {}
+    ) {
+    }
 
     public function shouldSkipClassReflection(ClassReflection $classReflection): bool
     {
