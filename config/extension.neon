@@ -43,7 +43,12 @@ services:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
+        class: TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector
         tags:
             - phpstan.collector
 

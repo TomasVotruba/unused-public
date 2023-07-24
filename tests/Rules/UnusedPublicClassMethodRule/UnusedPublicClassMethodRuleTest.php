@@ -12,7 +12,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
 use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
-use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
+use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector;
+use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector;
@@ -161,12 +162,16 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     {
         return [
             self::getContainer()->getByType(PublicClassMethodCollector::class),
+            self::getContainer()->getByType(FormTypeClassCollector::class),
+            // method call
             self::getContainer()->getByType(MethodCallCollector::class),
+            self::getContainer()->getByType(MethodCallableCollector::class),
+            // static call
             self::getContainer()->getByType(StaticMethodCallCollector::class),
+            // callables
             self::getContainer()->getByType(StaticMethodCallableCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
             self::getContainer()->getByType(CallUserFuncCollector::class),
-            self::getContainer()->getByType(FormTypeClassCollector::class),
         ];
     }
 
