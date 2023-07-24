@@ -36,9 +36,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         '*/Fixture/*',
         '*/Source/*',
-
-        VarConstantCommentRector::class => [
-            __DIR__ . '/src/PublicClassMethodMatcher.php',
-        ],
+        // only for issue test
+        __DIR__ . '/tests/Simpod',
     ]);
 };

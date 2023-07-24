@@ -22,6 +22,8 @@ parameters:
 
     checkGenericClassInNonGenericObjectType: false
 
+    reportUnmatchedIgnoredErrors: false
+
     excludePaths:
         - "*/Fixture/*"
         - "*/Source/*"

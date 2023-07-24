@@ -40,6 +40,10 @@ jobs:
                         name: 'Check Active Classes'
                         run: vendor/bin/class-leak check src --ansi
 
+                    -
+                        name: 'Test call in tests'
+                        run: vendor/bin/phpstan a tests/Simpod --ansi
+
         name: ${{ matrix.actions.name }}
         runs-on: ubuntu-latest
 
