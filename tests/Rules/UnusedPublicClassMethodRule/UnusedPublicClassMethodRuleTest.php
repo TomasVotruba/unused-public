@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule;
 
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
 use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
@@ -46,10 +47,16 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/Tests/SkipTestPublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Tests/SkipTestCasePublicMethod.php'], []];
 
+        // report only the non-called static call
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            MethodForTests::class,
+            'notCalledStaticCall'
+        );
         yield [[
             __DIR__ . '/Fixture/Tests/MethodForTests.php',
             __DIR__ . '/Fixture/Tests/SkipCalledInTests.php',
-        ], []];
+        ], [[$errorMessage, 13, RuleTips::SOLUTION_MESSAGE]]];
     }
 
     public static function provideDataSymfony(): Iterator
