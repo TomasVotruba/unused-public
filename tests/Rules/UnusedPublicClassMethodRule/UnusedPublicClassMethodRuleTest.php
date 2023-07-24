@@ -84,7 +84,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // static call
         yield [[
-            __DIR__ . '/Source/DeserializeArrayToObjectCaller.php', __DIR__ . '/Fixture/SkipDeserializeArrayToObject.php'],
+            __DIR__ . '/Fixture/FirstClassCallable/DeserializeArrayToObjectCaller.php', __DIR__ . '/Fixture/FirstClassCallable/SkipDeserializeArrayToObject.php'],
             [],
         ];
 
@@ -147,7 +147,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/CaseInsensitiveClassName.php', __DIR__ . '/Source/Caller1.php'], []];
 
         // first class callables
-        yield [[__DIR__ . '/Fixture/SkipFirstClassCallableMethodCall.php'], []];
+        yield [[__DIR__ . '/Fixture/FirstClassCallable/SkipFirstClassCallableMethodCall.php'], []];
     }
 
     /**
