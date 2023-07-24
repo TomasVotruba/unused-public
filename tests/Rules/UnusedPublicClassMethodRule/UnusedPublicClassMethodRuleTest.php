@@ -145,6 +145,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/CaseInsensitiveMethodName.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/CaseInsensitiveClassName.php', __DIR__ . '/Source/Caller1.php'], []];
+
+        // first class callables
+        yield [[__DIR__ . '/Fixture/SkipFirstClassCallableMethodCall.php'], []];
     }
 
     /**
