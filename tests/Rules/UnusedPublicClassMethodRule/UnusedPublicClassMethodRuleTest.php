@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule;
 
-use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
 use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
@@ -22,6 +21,7 @@ use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Interface\InterfaceWithExtraMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller2;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\SomeEnum;
