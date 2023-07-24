@@ -48,12 +48,12 @@ services:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector
+        class: TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\StaticMethodCallableCollector
+        class: TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallableCollector
         tags:
             - phpstan.collector
 
