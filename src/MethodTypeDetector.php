@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic;
 
-use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;

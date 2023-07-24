@@ -50,7 +50,7 @@ final class MethodCallCollector implements Collector
         }
 
         $classReflection = $scope->getClassReflection();
-        if (!$classReflection instanceof ClassReflection) {
+        if (! $classReflection instanceof ClassReflection) {
             return null;
         }
 
@@ -101,6 +101,4 @@ final class MethodCallCollector implements Collector
 
         return $classMethodReferences;
     }
-
-
 }
