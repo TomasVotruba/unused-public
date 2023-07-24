@@ -21,6 +21,8 @@ parameters:
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+    - TomasVotruba\UnusedPublic\CallReferece\ParentCallReferenceResolver
+    - TomasVotruba\UnusedPublic\CallReferece\CallReferencesFlatter
     - TomasVotruba\UnusedPublic\MethodTypeDetector
     - TomasVotruba\UnusedPublic\ClassTypeDetector
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
@@ -43,17 +45,22 @@ services:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\MethodCallCollector
+        class: TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector
+        class: TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\StaticMethodCallableCollector
+        class: TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallableCollector
         tags:
             - phpstan.collector
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\UnusedPublic\Collectors;
+namespace TomasVotruba\UnusedPublic\Collectors\StaticCall;
 
 use PhpParser\Node;
 use PhpParser\Node\Identifier;

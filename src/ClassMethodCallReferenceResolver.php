@@ -14,12 +14,12 @@ use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 final class ClassMethodCallReferenceResolver
 {
     /**
-     * @return iterable<MethodCallReference>
+     * @return MethodCallReference[]
      */
-    public function resolve(MethodCall $methodCall, Scope $scope): iterable
+    public function resolve(MethodCall $methodCall, Scope $scope): array
     {
         if ($methodCall->name instanceof Expr) {
-            return;
+            return [];
         }
 
         $callerType = $scope->getType($methodCall->var);
@@ -37,8 +37,11 @@ final class ClassMethodCallReferenceResolver
             $isLocal = true;
         }
 
+        $methodCallReferences = [];
         foreach ($callerType->getReferencedClasses() as $className) {
-            yield new MethodCallReference($className, $methodCall->name->toString(), $isLocal);
+            $methodCallReferences[] = new MethodCallReference($className, $methodCall->name->toString(), $isLocal);
         }
+
+        return $methodCallReferences;
     }
 }
