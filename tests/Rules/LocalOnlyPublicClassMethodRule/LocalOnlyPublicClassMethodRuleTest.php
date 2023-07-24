@@ -19,6 +19,7 @@ use TomasVotruba\UnusedPublic\Rules\LocalOnlyPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\CaseInsensitiveMethodName;
 use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\LocallyUsedEnumMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\LocallyUsedPublicMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture\SkipInterfaceMethod;
 
 final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
 {
@@ -34,6 +35,13 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
 
     public static function provideData(): Iterator
     {
+        $errorMessage = sprintf(
+            LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
+            SkipInterfaceMethod::class,
+            'publicFormatUrl'
+        );
+        yield [[__DIR__ . '/Fixture/SkipInterfaceMethod.php'], [[$errorMessage, 20, RuleTips::NARROW_SCOPE]]];
+
         $errorMessage = sprintf(
             LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
             LocallyUsedPublicMethod::class,
