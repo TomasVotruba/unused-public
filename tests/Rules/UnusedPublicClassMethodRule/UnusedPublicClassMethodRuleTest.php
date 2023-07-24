@@ -32,21 +32,34 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
      * @param mixed[] $expectedErrorMessagesWithLines
      */
     #[DataProvider('provideData')]
+    #[DataProvider('provideDataTests')]
+    #[DataProvider('provideDataSymfony')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
-    public static function provideData(): Iterator
+    public static function provideDataTests(): Iterator
+    {
+        yield [[__DIR__ . '/Fixture/Tests/SkipTestCaseAnnotationMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/Tests/SkipTestAnnotationMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/Tests/SkipTestPublicMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/Tests/SkipTestCasePublicMethod.php'], []];
+    }
+
+    public static function provideDataSymfony(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Symfony/SkipRequiredMethodCall.php'], []];
+        yield [[__DIR__ . '/Fixture/Symfony/SkipSymfonyValidatorMethod.php'], []];
 
         yield [[
             __DIR__ . '/Fixture/Symfony/SomeFormType.php',
             __DIR__ . '/Fixture/Symfony/SkipEntityGetterSetters.php',
         ], []];
+    }
 
-        yield [[__DIR__ . '/Fixture/SkipSymfonyValidatorMethod.php'], []];
+    public static function provideData(): Iterator
+    {
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
 
         $errorMessage = sprintf(
@@ -65,8 +78,6 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
 
         // public methods expected
-        yield [[__DIR__ . '/Fixture/SkipTestPublicMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipTestCasePublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Controller/SkipControllerMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Controller/SkipNoRoutingControllerMethod.php'], []];
 
@@ -84,7 +95,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // static call
         yield [[
-            __DIR__ . '/Source/DeserializeArrayToObjectCaller.php', __DIR__ . '/Fixture/SkipDeserializeArrayToObject.php'],
+            __DIR__ . '/Fixture/FirstClassCallable/DeserializeArrayToObjectCaller.php', __DIR__ . '/Fixture/FirstClassCallable/SkipDeserializeArrayToObject.php'],
             [],
         ];
 
@@ -100,9 +111,6 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
         ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
-
-        yield [[__DIR__ . '/Fixture/SkipTestAnnotationMethod.php'], []];
-        yield [[__DIR__ . '/Fixture/SkipTestCaseAnnotationMethod.php'], []];
 
         // parent abstract method used by child call
         yield [[
@@ -147,7 +155,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/CaseInsensitiveClassName.php', __DIR__ . '/Source/Caller1.php'], []];
 
         // first class callables
-        yield [[__DIR__ . '/Fixture/SkipFirstClassCallableMethodCall.php'], []];
+        yield [[__DIR__ . '/Fixture/FirstClassCallable/SkipFirstClassCallableMethodCall.php'], []];
     }
 
     /**
