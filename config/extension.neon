@@ -53,6 +53,11 @@ services:
             - phpstan.collector
 
     -
+        class: TomasVotruba\UnusedPublic\Collectors\StaticMethodCallableCollector
+        tags:
+            - phpstan.collector
+
+    -
         class: TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector
         tags:
             - phpstan.collector

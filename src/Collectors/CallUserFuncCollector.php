@@ -55,11 +55,9 @@ final class CallUserFuncCollector implements Collector
         }
 
         $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection) {
-            // skip calls in tests, as they are not used in production
-            if ($this->classTypeDetector->isTestClass($classReflection)) {
-                return null;
-            }
+        // skip calls in tests, as they are not used in production
+        if ($classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection)) {
+            return null;
         }
 
         $callableType = $scope->getType($args[0]->value);

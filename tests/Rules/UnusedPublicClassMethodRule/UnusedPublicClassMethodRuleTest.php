@@ -14,6 +14,7 @@ use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
 use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
+use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
@@ -162,6 +163,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             self::getContainer()->getByType(PublicClassMethodCollector::class),
             self::getContainer()->getByType(MethodCallCollector::class),
             self::getContainer()->getByType(StaticMethodCallCollector::class),
+            self::getContainer()->getByType(StaticMethodCallableCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
             self::getContainer()->getByType(CallUserFuncCollector::class),
             self::getContainer()->getByType(FormTypeClassCollector::class),

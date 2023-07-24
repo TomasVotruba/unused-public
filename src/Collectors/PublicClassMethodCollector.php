@@ -39,7 +39,7 @@ final class PublicClassMethodCollector implements Collector
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
         private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly MethodTypeDetector $methodMatcher,
+        private readonly MethodTypeDetector $methodTypeDetector,
         private readonly Configuration $configuration,
     ) {
     }
@@ -69,11 +69,11 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        if ($this->methodMatcher->isTestMethod($node, $scope)) {
+        if ($this->methodTypeDetector->isTestMethod($node, $scope)) {
             return null;
         }
 
-        if ($this->methodMatcher->isTraitMethod($node, $scope)) {
+        if ($this->methodTypeDetector->isTraitMethod($node, $scope)) {
             return null;
         }
 

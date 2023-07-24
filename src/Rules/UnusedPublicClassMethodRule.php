@@ -17,6 +17,7 @@ use TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector;
 use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
+use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
@@ -62,6 +63,7 @@ final class UnusedPublicClassMethodRule implements Rule
         $completeMethodCallReferences = $this->methodCallCollectorMapper->mapToMethodCallReferences(
             $node->get(MethodCallCollector::class),
             $node->get(StaticMethodCallCollector::class),
+            $node->get(StaticMethodCallableCollector::class),
             $node->get(AttributeCallableCollector::class),
             $node->get(CallUserFuncCollector::class)
         );
