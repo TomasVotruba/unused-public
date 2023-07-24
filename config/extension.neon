@@ -95,12 +95,12 @@ services:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\AttributeCallableCollector
+        class: TomasVotruba\UnusedPublic\Collectors\Callable_\AttributeCallableCollector
         tags:
             - phpstan.collector
 
     -
-        class: TomasVotruba\UnusedPublic\Collectors\CallUserFuncCollector
+        class: TomasVotruba\UnusedPublic\Collectors\Callable_\CallUserFuncCollector
         tags:
             - phpstan.collector
 
