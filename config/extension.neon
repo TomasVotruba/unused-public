@@ -21,6 +21,8 @@ parameters:
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+    - TomasVotruba\UnusedPublic\CallReferece\ParentCallReferenceResolver
+    - TomasVotruba\UnusedPublic\CallReferece\CallReferencesFlatter
     - TomasVotruba\UnusedPublic\MethodTypeDetector
     - TomasVotruba\UnusedPublic\ClassTypeDetector
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
