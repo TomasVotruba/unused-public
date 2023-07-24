@@ -19,10 +19,22 @@ use TomasVotruba\UnusedPublic\Configuration;
  */
 final class CallUserFuncCollector implements Collector
 {
-    public function __construct(
-        private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    public function __construct(Configuration $configuration, ClassTypeDetector $classTypeDetector)
+    {
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function getNodeType(): string
