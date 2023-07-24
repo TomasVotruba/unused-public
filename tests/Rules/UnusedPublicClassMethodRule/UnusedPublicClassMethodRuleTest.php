@@ -45,6 +45,11 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/Tests/SkipTestAnnotationMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Tests/SkipTestPublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Tests/SkipTestCasePublicMethod.php'], []];
+
+        yield [[
+            __DIR__ . '/Fixture/Tests/MethodForTests.php',
+            __DIR__ . '/Fixture/Tests/SkipCalledInTests.php',
+        ], []];
     }
 
     public static function provideDataSymfony(): Iterator
