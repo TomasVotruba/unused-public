@@ -20,12 +20,40 @@ use TomasVotruba\UnusedPublic\Configuration;
  */
 final class MethodCallableCollector implements Collector
 {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
+     */
+    private $classMethodCallReferenceResolver;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\CallReferece\CallReferencesFlatter
+     */
+    private $callReferencesFlatter;
+
     public function __construct(
-        private readonly ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
-        private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
-        private readonly CallReferencesFlatter $callReferencesFlatter,
+        ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
+        Configuration $configuration,
+        ClassTypeDetector $classTypeDetector,
+        CallReferencesFlatter $callReferencesFlatter
     ) {
+        $this->classMethodCallReferenceResolver = $classMethodCallReferenceResolver;
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
+        $this->callReferencesFlatter = $callReferencesFlatter;
     }
 
     public function getNodeType(): string
