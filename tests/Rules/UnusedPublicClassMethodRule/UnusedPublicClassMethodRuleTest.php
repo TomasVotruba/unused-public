@@ -48,16 +48,23 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/Tests/SkipTestPublicMethod.php'], []];
         yield [[__DIR__ . '/Fixture/Tests/SkipTestCasePublicMethod.php'], []];
 
-        // report only the non-called static call
-        $errorMessage = sprintf(
+        $errorMessage1 = sprintf(
             UnusedPublicClassMethodRule::ERROR_MESSAGE,
             MethodForTests::class,
             'notCalledStaticCall'
         );
+        $errorMessage2 = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            MethodForTests::class,
+            'calledStaticCall'
+        );
         yield [[
             __DIR__ . '/Fixture/Tests/MethodForTests.php',
             __DIR__ . '/Fixture/Tests/SkipCalledInTests.php',
-        ], [[$errorMessage, 13, RuleTips::SOLUTION_MESSAGE]]];
+        ], [
+            [$errorMessage2, 9, RuleTips::SOLUTION_MESSAGE],
+            [$errorMessage1, 13, RuleTips::SOLUTION_MESSAGE]
+        ]];
     }
 
     public static function provideDataSymfony(): Iterator
@@ -119,11 +126,15 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/SkipPublicMethodInTwigExtension.php'], []];
 
-        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMe');
+        $errorMessage1 = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMe');
+        $errorMessage2 = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'useMeStatic');
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
-        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
+        ], [
+            [$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE],
+            [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE],
+        ]];
 
         // parent abstract method used by child call
         yield [[

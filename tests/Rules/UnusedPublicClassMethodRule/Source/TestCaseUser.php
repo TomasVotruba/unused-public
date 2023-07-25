@@ -12,5 +12,7 @@ final class TestCaseUser extends TestCase
     private function go(UsedInTestCaseOnly $usedInTestCaseOnly)
     {
         $usedInTestCaseOnly->useMe();
+
+        UsedInTestCaseOnly::useMeStatic();
     }
 }
