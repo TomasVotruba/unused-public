@@ -58,7 +58,7 @@ final class PublicPropertyFetchCollector implements Collector
             return null;
         }
 
-        $classReflection = $propertyFetcherType->getClassReflection();
+        $classReflection = $scope->getClassReflection();
         if ($classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection)) {
             return null;
         }
