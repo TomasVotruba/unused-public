@@ -30,6 +30,8 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 {
     /**
      * @var string
+     *
+     * @api
      */
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should be turned protected/private';
 

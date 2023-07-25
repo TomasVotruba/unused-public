@@ -24,6 +24,8 @@ final class UnusedPublicPropertyRule implements Rule
 {
     /**
      * @var string
+     *
+     * @api
      */
     public const ERROR_MESSAGE = 'Public property "%s::$%s" is never used';
 
