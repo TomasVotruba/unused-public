@@ -23,6 +23,7 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\In
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller1;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller2;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\SomeEnum;
 
@@ -168,6 +169,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         // first class callables
         yield [[__DIR__ . '/Fixture/FirstClassCallable/SkipFirstClassCallableMethodCall.php'], []];
+        
+        yield [[__DIR__ . '/Fixture/plain.php', __DIR__ . '/Source/Caller1.php'], []];
     }
 
     /**
