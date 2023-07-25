@@ -107,6 +107,8 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             [__DIR__ . '/Fixture/UsedInTestCaseOnly.php', __DIR__ . '/Source/TestCaseUser.php'],
             [[$errorMessage1, 7, RuleTips::SOLUTION_MESSAGE]],
         ];
+
+        yield [[__DIR__ . '/Fixture/plain.php', __DIR__ .'/Source/PublicPropertyClass.php'], []];
     }
 
     /**
