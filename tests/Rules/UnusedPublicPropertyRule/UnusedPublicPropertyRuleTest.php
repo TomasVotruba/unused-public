@@ -95,6 +95,16 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             [__DIR__ . '/Fixture/IgnoresPrivateApiProperty.php'],
             [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]],
         ];
+
+        $errorMessage1 = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            IgnoresPrivateApiProperty::class,
+            'property'
+        );
+        yield [
+            [__DIR__ . '/Fixture/UsedInTestCaseOnly.php', __DIR__ . '/Source/TestCaseUser.php'],
+            [[$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE]],
+        ];
     }
 
     /**
