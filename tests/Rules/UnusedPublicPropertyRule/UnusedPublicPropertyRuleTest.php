@@ -18,6 +18,8 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\Ignor
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticPropertyViaStatic;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UsedInTestCaseOnly;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Source\TestCaseUser;
 
 final class UnusedPublicPropertyRuleTest extends RuleTestCase
 {
@@ -98,12 +100,12 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
 
         $errorMessage1 = sprintf(
             UnusedPublicPropertyRule::ERROR_MESSAGE,
-            IgnoresPrivateApiProperty::class,
+            UsedInTestCaseOnly::class,
             'property'
         );
         yield [
             [__DIR__ . '/Fixture/UsedInTestCaseOnly.php', __DIR__ . '/Source/TestCaseUser.php'],
-            [[$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE]],
+            [[$errorMessage1, 7, RuleTips::SOLUTION_MESSAGE]],
         ];
     }
 
