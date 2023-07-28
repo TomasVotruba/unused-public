@@ -13,10 +13,12 @@ use TomasVotruba\UnusedPublic\Collectors\ClassConstFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassLikeConstCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule;
+use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstantByName;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstantFromInterface;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 
 final class UnusedPublicClassConstRuleTest extends RuleTestCase
 {
@@ -74,6 +76,13 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
         ];
 
         yield [[__DIR__ . '/Fixture/SkipInterfaceConstantUsed.php', __DIR__ . '/Source/InterfaceConstantUser.php'], []];
+
+        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, Fixture\UsedInTestCaseOnly::class, 'USE_ME');
+        yield [[
+            __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
+            __DIR__ . '/Source/TestCaseUser.php',
+        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
+
     }
 
     /**
