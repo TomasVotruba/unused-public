@@ -10,10 +10,22 @@ use TomasVotruba\UnusedPublic\Enum\Template\TwigRegex;
 
 final class TemplateMethodCallsProvider
 {
-    public function __construct(
-        private readonly Configuration $configuration,
-        private readonly TemplateRegexFinder $templateRegexFinder,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder
+     */
+    private $templateRegexFinder;
+
+    public function __construct(Configuration $configuration, TemplateRegexFinder $templateRegexFinder)
+    {
+        $this->configuration = $configuration;
+        $this->templateRegexFinder = $templateRegexFinder;
     }
 
     /**
