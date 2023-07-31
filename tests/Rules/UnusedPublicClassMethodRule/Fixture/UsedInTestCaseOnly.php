@@ -10,7 +10,7 @@ final class UsedInTestCaseOnly
     {
     }
 
-    static public function useMeStatic()
+    public static function useMeStatic()
     {
     }
 }

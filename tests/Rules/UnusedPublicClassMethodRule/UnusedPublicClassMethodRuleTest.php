@@ -23,7 +23,6 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\In
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
-use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller1;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller2;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\SomeEnum;
 
@@ -61,10 +60,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[
             __DIR__ . '/Fixture/Tests/MethodForTests.php',
             __DIR__ . '/Fixture/Tests/SkipCalledInTests.php',
-        ], [
-            [$errorMessage2, 9, RuleTips::SOLUTION_MESSAGE],
-            [$errorMessage1, 13, RuleTips::SOLUTION_MESSAGE]
-        ]];
+        ], [[$errorMessage2, 9, RuleTips::SOLUTION_MESSAGE], [$errorMessage1, 13, RuleTips::SOLUTION_MESSAGE]]];
     }
 
     public static function provideDataSymfony(): Iterator
@@ -131,10 +127,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
-        ], [
-            [$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE],
-            [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE],
-        ]];
+        ], [[$errorMessage1, 9, RuleTips::SOLUTION_MESSAGE], [$errorMessage2, 13, RuleTips::SOLUTION_MESSAGE]]];
 
         // parent abstract method used by child call
         yield [[
