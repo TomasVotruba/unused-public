@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Templates;
 
 use TomasVotruba\UnusedPublic\Finder\TemplateFilesFinder;
+use TomasVotruba\UnusedPublic\Utils\Strings;
 
 final class TemplateRegexFinder
 {
@@ -37,13 +38,12 @@ final class TemplateRegexFinder
         $methodCallNames = [];
         foreach ($templateFilesContents as $templateFileContent) {
             foreach ($innerRegexes as $innerRegex) {
-                preg_match_all($innerRegex, $templateFileContent, $matches);
+                $matches = Strings::matchAll($templateFileContent, $innerRegex);
 
                 foreach ($matches as $match) {
                     $templateMarkupContents = $match['contents'];
 
-                    preg_match_all($targetRegex, $templateMarkupContents, $methodNamesMatches);
-
+                    $methodNamesMatches = Strings::matchAll($templateMarkupContents, $targetRegex);
                     foreach ($methodNamesMatches as $methodNameMatch) {
                         $methodCallNames[] = $methodNameMatch['desired_name'];
                     }
