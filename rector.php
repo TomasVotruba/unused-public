@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector;
 use Rector\Config\RectorConfig;
+use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
+use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
@@ -14,9 +15,10 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->importNames();
+    $rectorConfig->removeUnusedImports();
 
     $rectorConfig->sets([
-        \Rector\PHPUnit\Set\PHPUnitSetList::PHPUNIT_100,
+        PHPUnitSetList::PHPUNIT_100,
         LevelSetList::UP_TO_PHP_81,
         SetList::TYPE_DECLARATION,
         SetList::PRIVATIZATION,
@@ -26,7 +28,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODING_STYLE,
     ]);
 
-    $rectorConfig->ruleWithConfiguration(\Rector\Php55\Rector\String_\StringClassNameToClassConstantRector::class, [
+    $rectorConfig->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [
         'Twig\Extension\ExtensionInterface',
         'PHPUnit\Framework\TestCase',
         'Symfony\Bundle\FrameworkBundle\Controller\Controller',
@@ -36,9 +38,5 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         '*/Fixture/*',
         '*/Source/*',
-
-        VarConstantCommentRector::class => [
-            __DIR__ . '/src/PublicClassMethodMatcher.php',
-        ],
     ]);
 };

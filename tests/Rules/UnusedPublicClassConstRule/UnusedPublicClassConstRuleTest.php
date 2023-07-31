@@ -17,6 +17,7 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\Loc
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstantByName;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstantFromInterface;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UsedInTestCaseOnly;
 
 final class UnusedPublicClassConstRuleTest extends RuleTestCase
 {
@@ -75,7 +76,7 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/SkipInterfaceConstantUsed.php', __DIR__ . '/Source/InterfaceConstantUser.php'], []];
 
-        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, Fixture\UsedInTestCaseOnly::class, 'USE_ME');
+        $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'USE_ME');
         yield [[
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Templates;
 
-use Nette\Utils\Strings;
 use TomasVotruba\UnusedPublic\Finder\TemplateFilesFinder;
+use TomasVotruba\UnusedPublic\Utils\Strings;
 
 final class TemplateRegexFinder
 {
