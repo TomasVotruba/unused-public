@@ -37,12 +37,40 @@ final class UnusedPublicClassMethodRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
 
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
+     */
+    private $templateMethodCallsProvider;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
+     */
+    private $usedMethodAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+     */
+    private $methodCallCollectorMapper;
+
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
+        Configuration $configuration,
+        TemplateMethodCallsProvider $templateMethodCallsProvider,
+        UsedMethodAnalyzer $usedMethodAnalyzer,
+        MethodCallCollectorMapper $methodCallCollectorMapper
     ) {
+        $this->configuration = $configuration;
+        $this->templateMethodCallsProvider = $templateMethodCallsProvider;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
+        $this->methodCallCollectorMapper = $methodCallCollectorMapper;
     }
 
     public function getNodeType(): string
@@ -77,7 +105,9 @@ final class UnusedPublicClassMethodRule implements Rule
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
         $lowerCompleteMethodCallReferences = array_map(
-            static fn (string $item): string => strtolower($item),
+            static function (string $item): string {
+                return strtolower($item);
+            },
             $completeMethodCallReferences
         );
 

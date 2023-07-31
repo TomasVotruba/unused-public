@@ -20,7 +20,7 @@ final class MethodCallCollectorMapper
 
         // remove ReferenceMaker::LOCAL prefix
         return array_map(static function (string $methodCallReference): string {
-            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
+            if (strncmp($methodCallReference, ReferenceMarker::LOCAL, strlen(ReferenceMarker::LOCAL)) === 0) {
                 return substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
             }
 
@@ -39,7 +39,7 @@ final class MethodCallCollectorMapper
         $externalMethodCallReferences = [];
 
         foreach ($methodCallReferences as $methodCallReference) {
-            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
+            if (strncmp($methodCallReference, ReferenceMarker::LOCAL, strlen(ReferenceMarker::LOCAL)) === 0) {
                 $localMethodCallReferences[] = substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
             } else {
                 $externalMethodCallReferences[] = $methodCallReference;
