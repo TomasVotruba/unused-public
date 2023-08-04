@@ -1,6 +1,0 @@
-includes:
-    - ../../../../config/extension.neon
-
-parameters:
-    unused_public:
-        local_methods: true
