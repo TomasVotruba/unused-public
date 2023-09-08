@@ -8,10 +8,22 @@ use PhpParser\Node\Expr;
 
 final class ClassAndMethodArrayExprs
 {
-    public function __construct(
-        private readonly Expr $classExpr,
-        private readonly Expr $methodExpr
-    ) {
+    /**
+     * @readonly
+     * @var \PhpParser\Node\Expr
+     */
+    private $classExpr;
+
+    /**
+     * @readonly
+     * @var \PhpParser\Node\Expr
+     */
+    private $methodExpr;
+
+    public function __construct(Expr $classExpr, Expr $methodExpr)
+    {
+        $this->classExpr = $classExpr;
+        $this->methodExpr = $methodExpr;
     }
 
     public function getClassExpr(): Expr
