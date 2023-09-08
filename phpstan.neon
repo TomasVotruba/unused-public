@@ -2,17 +2,14 @@ includes:
     - config/extension.neon
 
 parameters:
-    # parameters of this extension
-    unused_public:
-        methods: true
-        properties: true
-        constants: true
-
     type_coverage:
         return_type: 99
         param_type: 99
         property_type: 99
         # print_suggestions: true
+
+    cognitive_complexity:
+        function: 11
 
     level: 8
 
