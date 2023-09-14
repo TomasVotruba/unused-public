@@ -40,18 +40,13 @@ final class CallUserFuncCollector implements Collector
             return null;
         }
 
-        // unable to resolve method name
-        if ($node->name instanceof Expr) {
-            return null;
-        }
-
-        if (strtolower($node->name->toString()) !== 'call_user_func') {
+        if ($this->shouldSkipNode($node)) {
             return null;
         }
 
         $args = $node->getArgs();
         if (count($args) < 1) {
-            return null;
+            return true;
         }
 
         // skip calls in tests, as they are not used in production
@@ -73,6 +68,10 @@ final class CallUserFuncCollector implements Collector
 
         $classMethodReferences = [];
         foreach ($typeAndMethodNames as $typeAndMethodName) {
+            if ($typeAndMethodName->isUnknown()) {
+                continue;
+            }
+
             $objectClassNames = $typeAndMethodName->getType()
                 ->getObjectClassNames();
             foreach ($objectClassNames as $objectClassName) {
@@ -81,5 +80,21 @@ final class CallUserFuncCollector implements Collector
         }
 
         return $classMethodReferences;
+    }
+
+    /**
+     * @param FuncCall $node
+     */
+    private function shouldSkipNode(Node $node): bool {
+        // unable to resolve method name
+        if ($node->name instanceof Expr) {
+            return true;
+        }
+
+        if (strtolower($node->name->toString()) !== 'call_user_func') {
+            return true;
+        }
+
+        return false;
     }
 }
