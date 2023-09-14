@@ -6,6 +6,9 @@ namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixt
 
 final class SkipStringVariable
 {
+    /**
+     * @api
+     */
     public function run()
     {
         $classname = 'some';
