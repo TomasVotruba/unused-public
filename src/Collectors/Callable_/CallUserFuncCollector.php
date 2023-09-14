@@ -82,7 +82,7 @@ final class CallUserFuncCollector implements Collector
         return $classMethodReferences;
     }
 
-    private function shouldSkipNode(FuncCall $node): bool {
+    private function shouldSkipNode(Node $node): bool {
         // unable to resolve method name
         if ($node->name instanceof Expr) {
             return true;
