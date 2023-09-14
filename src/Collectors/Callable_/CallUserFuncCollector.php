@@ -73,6 +73,10 @@ final class CallUserFuncCollector implements Collector
 
         $classMethodReferences = [];
         foreach ($typeAndMethodNames as $typeAndMethodName) {
+            if ($typeAndMethodName->isUnknown()) {
+                continue;
+            }
+
             $objectClassNames = $typeAndMethodName->getType()
                 ->getObjectClassNames();
             foreach ($objectClassNames as $objectClassName) {
