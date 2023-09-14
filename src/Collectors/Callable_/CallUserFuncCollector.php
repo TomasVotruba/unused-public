@@ -44,6 +44,11 @@ final class CallUserFuncCollector implements Collector
             return null;
         }
 
+        $args = $node->getArgs();
+        if (count($args) < 1) {
+            return true;
+        }
+
         // skip calls in tests, as they are not used in production
         $classReflection = $scope->getClassReflection();
         if ($classReflection instanceof ClassReflection
@@ -84,11 +89,6 @@ final class CallUserFuncCollector implements Collector
         }
 
         if (strtolower($node->name->toString()) !== 'call_user_func') {
-            return true;
-        }
-
-        $args = $node->getArgs();
-        if (count($args) < 1) {
             return true;
         }
 
