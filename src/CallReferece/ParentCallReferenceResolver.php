@@ -8,9 +8,15 @@ use PHPStan\Reflection\ReflectionProvider;
 
 final class ParentCallReferenceResolver
 {
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-    ) {
+    /**
+     * @readonly
+     * @var \PHPStan\Reflection\ReflectionProvider
+     */
+    private $reflectionProvider;
+
+    public function __construct(ReflectionProvider $reflectionProvider)
+    {
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     /**

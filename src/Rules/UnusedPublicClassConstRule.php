@@ -30,10 +30,22 @@ final class UnusedPublicClassConstRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public constant "%s::%s" is never used';
 
-    public function __construct(
-        private readonly Configuration $configuration,
-        private readonly TemplateRegexFinder $templateRegexFinder,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder
+     */
+    private $templateRegexFinder;
+
+    public function __construct(Configuration $configuration, TemplateRegexFinder $templateRegexFinder)
+    {
+        $this->configuration = $configuration;
+        $this->templateRegexFinder = $templateRegexFinder;
     }
 
     public function getNodeType(): string
