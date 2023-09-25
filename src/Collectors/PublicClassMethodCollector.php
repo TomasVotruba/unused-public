@@ -64,16 +64,7 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        // skip acceptance tests, codeception
-        if (str_ends_with($classReflection->getName(), 'Cest')) {
-            return null;
-        }
-
-        if ($this->methodTypeDetector->isTestMethod($node, $scope)) {
-            return null;
-        }
-
-        if ($this->methodTypeDetector->isTraitMethod($node, $scope)) {
+        if ($this->shouldSkip($classReflection, $node, $scope)) {
             return null;
         }
 
@@ -103,5 +94,19 @@ final class PublicClassMethodCollector implements Collector
         }
 
         return [$classReflection->getName(), $methodName, $node->getLine()];
+    }
+
+    private function shouldSkip(ClassReflection $classReflection, ClassMethod $classMethod, Scope $scope): bool
+    {
+        // skip acceptance tests, codeception
+        if (str_ends_with($classReflection->getName(), 'Cest')) {
+            return true;
+        }
+
+        if ($this->methodTypeDetector->isTestMethod($classMethod, $scope)) {
+            return true;
+        }
+
+        return $this->methodTypeDetector->isTraitMethod($classMethod, $scope);
     }
 }

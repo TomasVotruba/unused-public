@@ -16,7 +16,13 @@ final class TemplateFilesFinder
 
         foreach ($directories as $directory) {
             /** @var string[] $currentTemplateFilePaths */
-            $currentTemplateFilePaths = glob($directory . '/{**/*,*}/*.' . $suffix, GLOB_BRACE);
+            $currentTemplateFilePathsL1 = glob($directory . '/*/*.' . $suffix);
+            $currentTemplateFilePathsL2 = glob($directory . '/**/*/*.' . $suffix);
+
+            $currentTemplateFilePaths = array_merge(
+                $currentTemplateFilePathsL1 === false ? [] : $currentTemplateFilePathsL1,
+                $currentTemplateFilePathsL2 === false ? [] : $currentTemplateFilePathsL2
+            );
 
             $templateFilePaths = array_merge($templateFilePaths, $currentTemplateFilePaths);
         }

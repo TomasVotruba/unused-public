@@ -9,4 +9,8 @@ final class UsedInTestCaseOnly
     public function useMe()
     {
     }
+
+    public static function useMeStatic()
+    {
+    }
 }

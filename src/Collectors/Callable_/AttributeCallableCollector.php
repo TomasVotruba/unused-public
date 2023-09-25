@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Collectors\Callable_;
 
 use PhpParser\Node;
+use PhpParser\Node\Attribute;
 use PhpParser\Node\AttributeGroup;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -13,6 +14,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Type\Constant\ConstantStringType;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\ValueObject\ClassAndMethodArrayExprs;
 
 /**
  * @implements Collector<AttributeGroup, array<string>|null>
@@ -45,36 +47,21 @@ final class AttributeCallableCollector implements Collector
                 continue;
             }
 
-            $firstArg = $attr->args[0];
-            if (! $firstArg->value instanceof Array_) {
+            $classAndMethodArrayExprs = $this->matchClassAndMethodExprs($attr);
+            if (! $classAndMethodArrayExprs instanceof ClassAndMethodArrayExprs) {
                 continue;
             }
 
-            $array = $firstArg->value;
-            if (count($array->items) !== 2) {
-                continue;
-            }
-
-            if (! $array->items[0] instanceof ArrayItem) {
-                continue;
-            }
-
-            if (! $array->items[1] instanceof ArrayItem) {
-                continue;
-            }
-
-            $classArrayItem = $array->items[0]->value;
-            $methodArrayItem = $array->items[1]->value;
-
-            $classType = $scope->getType($classArrayItem);
+            $classType = $scope->getType($classAndMethodArrayExprs->getClassExpr());
             if ($classType instanceof ConstantStringType) {
                 $className = $classType->getValue();
             } else {
                 continue;
             }
 
-            if ($methodArrayItem instanceof String_) {
-                $methodName = $methodArrayItem->value;
+            $methodExpr = $classAndMethodArrayExprs->getMethodExpr();
+            if ($methodExpr instanceof String_) {
+                $methodName = $methodExpr->value;
             } else {
                 continue;
             }
@@ -83,5 +70,31 @@ final class AttributeCallableCollector implements Collector
         }
 
         return null;
+    }
+
+    private function matchClassAndMethodExprs(Attribute $attribute): ?ClassAndMethodArrayExprs
+    {
+        $firstArg = $attribute->args[0];
+        if (! $firstArg->value instanceof Array_) {
+            return null;
+        }
+
+        $array = $firstArg->value;
+        if (count($array->items) !== 2) {
+            return null;
+        }
+
+        if (! $array->items[0] instanceof ArrayItem) {
+            return null;
+        }
+
+        if (! $array->items[1] instanceof ArrayItem) {
+            return null;
+        }
+
+        $classArrayItem = $array->items[0]->value;
+        $methodArrayItem = $array->items[1]->value;
+
+        return new ClassAndMethodArrayExprs($classArrayItem, $methodArrayItem);
     }
 }

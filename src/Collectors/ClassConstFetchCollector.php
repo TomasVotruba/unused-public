@@ -11,6 +11,7 @@ use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
+use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -19,7 +20,8 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class ClassConstFetchCollector implements Collector
 {
     public function __construct(
-        private readonly Configuration $configuration
+        private readonly Configuration $configuration,
+        private readonly ClassTypeDetector $classTypeDetector,
     ) {
     }
 
@@ -50,14 +52,20 @@ final class ClassConstFetchCollector implements Collector
         $constantName = $node->name->toString();
 
         $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection && $classReflection->hasConstant($constantName)) {
-            $constantReflection = $classReflection->getConstant($constantName);
-            $declaringClass = $constantReflection->getDeclaringClass();
-            if ($declaringClass->getFileName() !== $classReflection->getFileName()) {
-                return [$declaringClass->getName() . '::' . $constantName];
+        if ($classReflection instanceof ClassReflection) {
+            if ($this->classTypeDetector->isTestClass($classReflection)) {
+                return null;
             }
 
-            return null;
+            if ($classReflection->hasConstant($constantName)) {
+                $constantReflection = $classReflection->getConstant($constantName);
+                $declaringClass = $constantReflection->getDeclaringClass();
+                if ($declaringClass->getFileName() !== $classReflection->getFileName()) {
+                    return [$declaringClass->getName() . '::' . $constantName];
+                }
+
+                return null;
+            }
         }
 
         return [$className . '::' . $constantName];

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\CollectorMapper;
 
-use Nette\Utils\Arrays;
 use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
+use TomasVotruba\UnusedPublic\Utils\Arrays;
 use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
 
 final class MethodCallCollectorMapper

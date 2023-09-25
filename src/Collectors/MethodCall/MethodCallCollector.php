@@ -50,13 +50,10 @@ final class MethodCallCollector implements Collector
             return null;
         }
 
-        $classReflection = $scope->getClassReflection();
-        if (! $classReflection instanceof ClassReflection) {
-            return null;
-        }
-
         // skip calls in tests, as they are not used in production
-        if ($this->classTypeDetector->isTestClass($classReflection)) {
+        $classReflection = $scope->getClassReflection();
+        if ($classReflection instanceof ClassReflection
+            && $this->classTypeDetector->isTestClass($classReflection)) {
             return null;
         }
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Templates;
 
-use Nette\Utils\Strings;
 use TomasVotruba\UnusedPublic\Finder\TemplateFilesFinder;
+use TomasVotruba\UnusedPublic\Utils\Strings;
 
 final class TemplateRegexFinder
 {
@@ -35,7 +35,22 @@ final class TemplateRegexFinder
             $templateFilePaths
         );
 
+        $methodCallNames = $this->matchMethodCallNames($templateFilesContents, $innerRegexes, $targetRegex);
+
+        $this->resultsByCacheKey[$fileSuffix] = $methodCallNames;
+
+        return $methodCallNames;
+    }
+
+    /**
+     * @param string[] $templateFilesContents
+     * @param string[] $innerRegexes
+     * @return string[]
+     */
+    private function matchMethodCallNames(array $templateFilesContents, array $innerRegexes, string $targetRegex): array
+    {
         $methodCallNames = [];
+
         foreach ($templateFilesContents as $templateFileContent) {
             foreach ($innerRegexes as $innerRegex) {
                 $matches = Strings::matchAll($templateFileContent, $innerRegex);
@@ -51,10 +66,6 @@ final class TemplateRegexFinder
             }
         }
 
-        $methodCallNames = array_unique($methodCallNames);
-
-        $this->resultsByCacheKey[$fileSuffix] = $methodCallNames;
-
-        return $methodCallNames;
+        return array_unique($methodCallNames);
     }
 }
