@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Tests\Simpod;
 
-final class SomeCaller
+use PHPUnit\Framework\TestCase;
+
+final class SomeCaller extends TestCase
 {
     public function test(): void
     {
