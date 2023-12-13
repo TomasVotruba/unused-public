@@ -51,7 +51,7 @@ final class PublicClassMethodCollector implements Collector
 
     /**
      * @param ClassMethod $node
-     * @return array<array{class-string, string, int}>|null
+     * @return array{class-string, string, int}|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
