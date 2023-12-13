@@ -39,6 +39,7 @@ final class PublicPropertyCollector implements Collector
     }
 
     /**
+     * @param InClassNode $node
      * @return array<array{string, string, int}>|null
      */
     public function processNode(Node $node, Scope $scope): ?array
