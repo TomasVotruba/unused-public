@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<Class_, array<array{class-string, string, int}>>
+ * @implements Collector<InClassNode, array<array{class-string, string, int}>>
  */
 final class PublicPropertyCollector implements Collector
 {
