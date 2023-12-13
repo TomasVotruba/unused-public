@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<Class_, array<array{class-string, string, int}>>
+ * @implements Collector<InClassNode, array<array{class-string, string, int}>>
  */
 final class PublicPropertyCollector implements Collector
 {
@@ -39,7 +39,6 @@ final class PublicPropertyCollector implements Collector
     }
 
     /**
-     * @param InClassNode $node
      * @return array<array{string, string, int}>|null
      */
     public function processNode(Node $node, Scope $scope): ?array
