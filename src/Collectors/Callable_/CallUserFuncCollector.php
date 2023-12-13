@@ -46,7 +46,7 @@ final class CallUserFuncCollector implements Collector
 
         $args = $node->getArgs();
         if (count($args) < 1) {
-            return true;
+            return null;
         }
 
         // skip calls in tests, as they are not used in production

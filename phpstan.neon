@@ -25,4 +25,3 @@ parameters:
 
     ignoreErrors:
         # collectors generics
-        - '#Method (.*?)Collector::processNode\(\) should return#'
