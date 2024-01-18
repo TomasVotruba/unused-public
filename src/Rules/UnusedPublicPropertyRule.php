@@ -53,8 +53,10 @@ final class UnusedPublicPropertyRule implements Rule
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
         $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
 
-        $publicPropertyFetchCollector = [...$publicPropertyFetchCollector, ...$publicStaticPropertyFetchCollector];
-        $usedProperties = Arrays::flatten($publicPropertyFetchCollector);
+        $usedProperties = [
+            ...Arrays::flatten($publicPropertyFetchCollector),
+            ...Arrays::flatten($publicStaticPropertyFetchCollector),
+        ];
 
         $ruleErrors = [];
 

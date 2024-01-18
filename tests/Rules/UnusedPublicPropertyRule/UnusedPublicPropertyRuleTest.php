@@ -104,6 +104,15 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         ];
 
         yield [[__DIR__ . '/Fixture/plain.php', __DIR__ . '/Source/PublicPropertyClass.php'], []];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/plain-static-and-nonstatic.php',
+                __DIR__ . '/Source/PublicPropertyClass.php',
+                __DIR__ . '/Source/PublicStaticPropertyClass.php',
+            ],
+            [],
+        ];
     }
 
     /**
