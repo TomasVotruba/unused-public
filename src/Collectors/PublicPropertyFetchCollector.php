@@ -15,6 +15,7 @@ use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\PropertyReference\ParentPropertyReferenceResolver;
+use TomasVotruba\UnusedPublic\ValueObject\PropertyReference;
 
 /**
  * @implements Collector<PropertyFetch, string[]>
@@ -60,18 +61,16 @@ final class PublicPropertyFetchCollector implements Collector
             return null;
         }
 
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection)) {
-            return null;
-        }
-
         $className = $propertyFetcherType->getClassName();
         $propertyName = $node->name->toString();
 
-        $propertyReferences = [$className . '::' . $propertyName];
-        $parentPropertyReferences = $this->parentPropertyReferenceResolver->findParentPropertyReferences($className, $propertyName);
-        $propertyReferences = [...$propertyReferences, ...$parentPropertyReferences];
+        $classReflection = $scope->getClassReflection();
+        $isTest = $classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection);
 
-        return $propertyReferences;
+        $propertyReference = new PropertyReference($className, $propertyName, $isTest);
+        $propertyReferences = [(string) $propertyReference];
+        $parentPropertyReferences = $this->parentPropertyReferenceResolver->findParentPropertyReferences($className, $propertyName);
+
+        return [...$propertyReferences, ...$parentPropertyReferences];
     }
 }

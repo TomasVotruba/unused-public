@@ -7,24 +7,20 @@ namespace TomasVotruba\UnusedPublic\CollectorMapper;
 use TomasVotruba\UnusedPublic\Enum\ReferenceMarker;
 use TomasVotruba\UnusedPublic\Utils\Arrays;
 use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
+use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 final class MethodCallCollectorMapper
 {
     /**
      * @param array<array<string, mixed[]>> $nestedReferencesByFiles
-     * @return string[]
+     * @return MethodCallReference[]
      */
     public function mapToMethodCallReferences(array $nestedReferencesByFiles): array
     {
         $methodCallReferences = $this->mergeAndFlatten($nestedReferencesByFiles);
 
-        // remove ReferenceMaker::LOCAL prefix
-        return array_map(static function (string $methodCallReference): string {
-            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
-                return substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
-            }
-
-            return $methodCallReference;
+        return array_map(static function (string $methodCallReference): MethodCallReference {
+            return MethodCallReference::fromString($methodCallReference);
         }, $methodCallReferences);
     }
 
@@ -39,8 +35,8 @@ final class MethodCallCollectorMapper
         $externalMethodCallReferences = [];
 
         foreach ($methodCallReferences as $methodCallReference) {
-            if (str_starts_with($methodCallReference, ReferenceMarker::LOCAL)) {
-                $localMethodCallReferences[] = substr($methodCallReference, strlen(ReferenceMarker::LOCAL));
+            if (str_contains($methodCallReference, ReferenceMarker::LOCAL)) {
+                $localMethodCallReferences[] = str_replace(ReferenceMarker::LOCAL, '', $methodCallReference);
             } else {
                 $externalMethodCallReferences[] = $methodCallReference;
             }

@@ -22,6 +22,8 @@ use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Interface\InterfaceWithExtraMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UnusedInternalClassPublicClassMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UnusedPublicInternalClassMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Caller2;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\SomeEnum;
@@ -177,6 +179,51 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/plain.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/plain-call-user-func.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/SkipCrashBug89.php.inc'], []];
+
+        // internal
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedPublicInternalClassMethodInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalMethodUser.php',
+            ],
+            [],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            UnusedPublicInternalClassMethod::class,
+            'freeForAll',
+        );
+        yield [
+            [
+                __DIR__ . '/Fixture/UnusedPublicInternalClassMethod.php',
+            ],
+            [
+                [$errorMessage, 12, RuleTips::SOLUTION_MESSAGE],
+            ],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedInternalClassPublicClassMethodInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalMethodUser.php',
+            ],
+            [],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            UnusedInternalClassPublicClassMethod::class,
+            'freeForAll',
+        );
+        yield [
+            [
+                __DIR__ . '/Fixture/UnusedInternalClassPublicClassMethod.php',
+            ],
+            [
+                [$errorMessage, 12, RuleTips::SOLUTION_MESSAGE],
+            ],
+        ];
     }
 
     /**

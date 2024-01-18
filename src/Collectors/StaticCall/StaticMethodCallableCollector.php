@@ -13,6 +13,7 @@ use PHPStan\Node\StaticMethodCallableNode;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
  * @implements Collector<StaticMethodCallableNode, array<string>|null>
@@ -48,13 +49,16 @@ final class StaticMethodCallableCollector implements Collector
             return null;
         }
 
-        // skip calls in tests, as they are not used in production
         $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection
-            && $this->classTypeDetector->isTestClass($classReflection)) {
-            return null;
-        }
+        $isTest = $classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection);
 
-        return [$node->getClass()->toString() . '::' . $node->getName()->toString()];
+        $classMethodCallReference = new MethodCallReference(
+            $node->getClass()->toString(),
+            $node->getName()->toString(),
+            false,
+            $isTest,
+        );
+
+        return [(string) $classMethodCallReference];
     }
 }

@@ -14,6 +14,7 @@ use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\ConstantReference\ParentConstantReferenceResolver;
+use TomasVotruba\UnusedPublic\ValueObject\ConstantReference;
 
 /**
  * @implements Collector<ClassConstFetch, string[]>
@@ -55,31 +56,30 @@ final class ClassConstFetchCollector implements Collector
 
         $classReflection = $scope->getClassReflection();
         if ($classReflection instanceof ClassReflection) {
-            if ($this->classTypeDetector->isTestClass($classReflection)) {
-                return null;
-            }
-
             if ($classReflection->hasConstant($constantName)) {
                 $constantReflection = $classReflection->getConstant($constantName);
                 $declaringClass = $constantReflection->getDeclaringClass();
                 if ($declaringClass->getFileName() !== $classReflection->getFileName()) {
                     $declaringClassName = $declaringClass->getName();
+                    $isTest = $this->classTypeDetector->isTestClass($classReflection);
 
-                    $constantReferences = [$declaringClassName . '::' . $constantName];
+                    $constantReference = new ConstantReference($declaringClassName, $constantName, $isTest);
+                    $constantReferences = [(string) $constantReference];
                     $parentConstantReferences = $this->parentConstantReferenceResolver->findParentConstantReferences($declaringClassName, $constantName);
-                    $constantReferences = [...$constantReferences, ...$parentConstantReferences];
 
-                    return $constantReferences;
+                    return [...$constantReferences, ...$parentConstantReferences];
                 }
 
                 return null;
             }
         }
 
-        $constantReferences = [$className . '::' . $constantName];
-        $parentConstantReferences = $this->parentConstantReferenceResolver->findParentConstantReferences($className, $constantName);
-        $constantReferences = [...$constantReferences, ...$parentConstantReferences];
+        $isTest = $classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection);
 
-        return $constantReferences;
+        $constantReference = new ConstantReference($className, $constantName, $isTest);
+        $constantReferences = [(string) $constantReference];
+        $parentConstantReferences = $this->parentConstantReferenceResolver->findParentConstantReferences($className, $constantName);
+
+        return [...$constantReferences, ...$parentConstantReferences];
     }
 }

@@ -22,14 +22,14 @@ final class PublicClassMethodMatcher
     ) {
     }
 
-    public function shouldSkipClassReflection(ClassReflection $classReflection): bool
+    public function shouldSkipClassReflection(ClassReflection $classReflection, bool $isInternal = false): bool
     {
         // skip interface as required, traits as unable to detect for sure
         if ($classReflection->isInterface() || $classReflection->isTrait()) {
             return true;
         }
 
-        if ($this->classTypeDetector->isTestClass($classReflection)) {
+        if (! $isInternal && $this->classTypeDetector->isTestClass($classReflection)) {
             return true;
         }
 

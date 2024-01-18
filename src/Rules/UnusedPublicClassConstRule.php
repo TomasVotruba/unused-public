@@ -17,6 +17,7 @@ use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Enum\Template\BladeRegex;
 use TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder;
 use TomasVotruba\UnusedPublic\Utils\Arrays;
+use TomasVotruba\UnusedPublic\ValueObject\ConstantReference;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest
@@ -61,18 +62,21 @@ final class UnusedPublicClassConstRule implements Rule
         $classConstFetchCollector = $node->get(ClassConstFetchCollector::class);
         $publicClassLikeConstCollector = $node->get(PublicClassLikeConstCollector::class);
 
-        $usedConstFetches = Arrays::flatten($classConstFetchCollector);
+        $usedConstFetches = array_map(static function (string $constantReference): ConstantReference {
+            return ConstantReference::fromString($constantReference);
+        }, Arrays::flatten($classConstFetchCollector));
 
         $ruleErrors = [];
 
         foreach ($publicClassLikeConstCollector as $filePath => $declarationsGroups) {
             foreach ($declarationsGroups as $declarationGroup) {
-                foreach ($declarationGroup as [$className, $constantName, $line]) {
+                foreach ($declarationGroup as [$className, $constantName, $line, $isInternal]) {
                     if ($this->isClassConstantUsed(
                         $className,
                         $constantName,
                         $usedConstFetches,
-                        $bladeConstFetchNames
+                        $bladeConstFetchNames,
+                        $isInternal,
                     )) {
                         continue;
                     }
@@ -93,14 +97,15 @@ final class UnusedPublicClassConstRule implements Rule
     }
 
     /**
-     * @param mixed[] $usedConstFetches
+     * @param ConstantReference[] $usedConstFetches
      * @param string[] $bladeConstFetchNames
      */
     private function isClassConstantUsed(
         string $className,
         string $constantName,
         array $usedConstFetches,
-        array $bladeConstFetchNames
+        array $bladeConstFetchNames,
+        bool $isInternal,
     ): bool {
         // used in template
         if (in_array($constantName, $bladeConstFetchNames, true)) {
@@ -109,6 +114,18 @@ final class UnusedPublicClassConstRule implements Rule
 
         $publicConstantReference = $className . '::' . $constantName;
 
-        return in_array($publicConstantReference, $usedConstFetches, true);
+        foreach ($usedConstFetches as $usedConstFetch) {
+            // skip calls in tests, if they are not internal
+            if (! $isInternal && $usedConstFetch->isTest()) {
+                continue;
+            }
+
+            $usedConstReference = $usedConstFetch->getClass() . '::' . $usedConstFetch->getConstant();
+            if ($usedConstReference === $publicConstantReference) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

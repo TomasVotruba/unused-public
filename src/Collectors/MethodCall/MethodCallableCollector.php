@@ -9,10 +9,8 @@ use PhpParser\Node\Expr;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Node\MethodCallableNode;
-use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\CallReferece\CallReferencesFlatter;
 use TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver;
-use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -23,7 +21,6 @@ final class MethodCallableCollector implements Collector
     public function __construct(
         private readonly ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
         private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
         private readonly CallReferencesFlatter $callReferencesFlatter,
     ) {
     }
@@ -45,13 +42,6 @@ final class MethodCallableCollector implements Collector
 
         // unable to resolve method name
         if ($node->getName() instanceof Expr) {
-            return null;
-        }
-
-        // skip calls in tests, as they are not used in production
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection
-            && $this->classTypeDetector->isTestClass($classReflection)) {
             return null;
         }
 

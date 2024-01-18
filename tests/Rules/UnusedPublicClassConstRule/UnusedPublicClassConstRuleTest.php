@@ -15,8 +15,10 @@ use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\LocallyUsedPublicConstantByName;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedInternalClassPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicConstantFromInterface;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UnusedPublicInternalConstant;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\UsedInTestCaseOnly;
 
 final class UnusedPublicClassConstRuleTest extends RuleTestCase
@@ -85,6 +87,50 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
             __DIR__ . '/Fixture/UsedInTestCaseOnly.php',
             __DIR__ . '/Source/TestCaseUser.php',
         ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedPublicInternalConstantInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalConstantUser.php',
+            ],
+            [],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicClassConstRule::ERROR_MESSAGE,
+            UnusedPublicInternalConstant::class,
+            'UNUSED',
+        );
+        yield [
+            [
+                __DIR__ . '/Fixture/UnusedPublicInternalConstant.php',
+            ],
+            [
+                [$errorMessage, 12, RuleTips::SOLUTION_MESSAGE],
+            ],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedInternalClassPublicConstantInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalConstantUser.php',
+            ],
+            [],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicClassConstRule::ERROR_MESSAGE,
+            UnusedInternalClassPublicConstant::class,
+            'UNUSED',
+        );
+        yield [
+            [
+                __DIR__ . '/Fixture/UnusedInternalClassPublicConstant.php',
+            ],
+            [
+                [$errorMessage, 12, RuleTips::SOLUTION_MESSAGE],
+            ],
+        ];
     }
 
     /**

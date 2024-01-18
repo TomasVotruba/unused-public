@@ -9,5 +9,10 @@ final class ReferenceMarker
     /**
      * @var string
      */
-    public const LOCAL = 'local::';
+    public const LOCAL = 'local@';
+
+    /**
+     * @var string
+     */
+    public const TEST = 'test@';
 }

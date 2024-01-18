@@ -16,6 +16,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Utils\Arrays;
+use TomasVotruba\UnusedPublic\ValueObject\PropertyReference;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
@@ -53,17 +54,20 @@ final class UnusedPublicPropertyRule implements Rule
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
         $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
 
-        $usedProperties = [
+        $usedPropertiesFlattened = [
             ...Arrays::flatten($publicPropertyFetchCollector),
             ...Arrays::flatten($publicStaticPropertyFetchCollector),
         ];
+        $usedProperties = array_map(static function (string $propertyReference): PropertyReference {
+            return PropertyReference::fromString($propertyReference);
+        }, $usedPropertiesFlattened);
 
         $ruleErrors = [];
 
         foreach ($publicPropertyCollector as $filePath => $declarationsGroups) {
             foreach ($declarationsGroups as $declarationGroup) {
-                foreach ($declarationGroup as [$className, $propertyName, $line]) {
-                    if ($this->isPropertyUsed($className, $propertyName, $usedProperties)) {
+                foreach ($declarationGroup as [$className, $propertyName, $line, $isInternal]) {
+                    if ($this->isPropertyUsed($className, $propertyName, $usedProperties, $isInternal)) {
                         continue;
                     }
 
@@ -83,12 +87,28 @@ final class UnusedPublicPropertyRule implements Rule
     }
 
     /**
-     * @param mixed[] $usedProperties
+     * @param PropertyReference[] $usedProperties
      */
-    private function isPropertyUsed(string $className, string $constantName, array $usedProperties): bool
-    {
+    private function isPropertyUsed(
+        string $className,
+        string $constantName,
+        array $usedProperties,
+        bool $isInternal,
+    ): bool {
         $publicPropertyReference = $className . '::' . $constantName;
 
-        return in_array($publicPropertyReference, $usedProperties, true);
+        foreach ($usedProperties as $usedProperty) {
+            // skip calls in tests, if they are not internal
+            if (! $isInternal && $usedProperty->isTest()) {
+                continue;
+            }
+
+            $usedPropertyReference = $usedProperty->getClass() . '::' . $usedProperty->getProperty();
+            if ($usedPropertyReference === $publicPropertyReference) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

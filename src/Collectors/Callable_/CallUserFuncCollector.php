@@ -9,9 +9,7 @@ use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
-use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Constant\ConstantArrayType;
-use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -21,7 +19,6 @@ final class CallUserFuncCollector implements Collector
 {
     public function __construct(
         private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
     ) {
     }
 
@@ -46,13 +43,6 @@ final class CallUserFuncCollector implements Collector
 
         $args = $node->getArgs();
         if (count($args) < 1) {
-            return null;
-        }
-
-        // skip calls in tests, as they are not used in production
-        $classReflection = $scope->getClassReflection();
-        if ($classReflection instanceof ClassReflection
-            && $this->classTypeDetector->isTestClass($classReflection)) {
             return null;
         }
 

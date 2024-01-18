@@ -18,6 +18,8 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\Ignor
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticPropertyViaStatic;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UnusedInternalClassPublicProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UnusedPublicInternalProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UsedInTestCaseOnly;
 
 final class UnusedPublicPropertyRuleTest extends RuleTestCase
@@ -128,6 +130,68 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
                 __DIR__ . '/Fixture/plain-superclass-static.php',
                 __DIR__ . '/Source/PublicStaticPropertyClass.php',
                 __DIR__ . '/Source/PublicStaticPropertySubclass.php',
+            ],
+            [],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedPublicInternalPropertyInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalPropertyUser.php',
+            ],
+            [],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            UnusedPublicInternalProperty::class,
+            'property',
+        );
+        yield [
+            [
+                __DIR__ . '/Fixture/UnusedPublicInternalProperty.php',
+            ],
+            [
+                [$errorMessage, 7, RuleTips::SOLUTION_MESSAGE],
+            ],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedInternalClassPublicPropertyInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalPropertyUser.php',
+            ],
+            [],
+        ];
+
+        $errorMessage = sprintf(
+            UnusedPublicPropertyRule::ERROR_MESSAGE,
+            UnusedInternalClassPublicProperty::class,
+            'property',
+        );
+        yield [
+            [
+                __DIR__ . '/Fixture/UnusedInternalClassPublicProperty.php',
+            ],
+            [
+                [$errorMessage, 10, RuleTips::SOLUTION_MESSAGE],
+            ],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedPublicInternalPropertyInTestCaseOnly.php',
+                __DIR__ . '/Fixture/UsedPublicInternalSubpropertyInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalPropertyUser.php',
+            ],
+            [],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/UsedInternalClassPublicPropertyInTestCaseOnly.php',
+                __DIR__ . '/Fixture/UsedInternalSubclassPublicPropertyInTestCaseOnly.php',
+                __DIR__ . '/Source/TestCaseInternalPropertyUser.php',
             ],
             [],
         ];

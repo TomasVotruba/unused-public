@@ -13,6 +13,7 @@ use PHPStan\Node\InClassNode;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\InternalDocStmtAnalyzer;
 
 /**
  * @implements Collector<InClassNode, array<array{class-string, string, int}>>
@@ -26,6 +27,7 @@ final class PublicPropertyCollector implements Collector
 
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private readonly InternalDocStmtAnalyzer $internalDocStmtAnalyzer,
         private readonly Configuration $configuration
     ) {
     }
@@ -75,11 +77,38 @@ final class PublicPropertyCollector implements Collector
                     continue;
                 }
 
-                $publicPropertyNames[] = [$classReflection->getName(), $propertyName, $node->getLine()];
+                $isInternal = $this->isInternalRecursive($classReflection, $classLike, $propertyName, $scope);
+
+                $publicPropertyNames[] = [$classReflection->getName(), $propertyName, $node->getLine(), $isInternal];
             }
         }
 
         return $publicPropertyNames;
+    }
+
+    private function isInternalRecursive(ClassReflection $classReflection, Class_ $class, string $propertyName, Scope $scope): bool
+    {
+        if ($this->internalDocStmtAnalyzer->isInternalDoc($class, $classReflection)) {
+            return true;
+        }
+
+        while (true) {
+            if (! $classReflection->hasProperty($propertyName)) {
+                return false;
+            }
+
+            $propertyReflection = $classReflection->getProperty($propertyName, $scope);
+
+            $docComment = $propertyReflection->getDocComment();
+            if ($docComment !== null && $this->internalDocStmtAnalyzer->isInternalDocComment($docComment)) {
+                return true;
+            }
+
+            $classReflection = $classReflection->getParentClass();
+            if (! $classReflection instanceof ClassReflection) {
+                return false;
+            }
+        }
     }
 
     private function shouldSkipProperty(ClassReflection $classReflection, string $propertyName, Scope $scope): bool
@@ -97,6 +126,10 @@ final class PublicPropertyCollector implements Collector
         $docComment = $propertyReflection->getDocComment();
         if ($docComment !== null && $this->apiDocStmtAnalyzer->isApiDocComment($docComment)) {
             return true;
+        }
+
+        if ($docComment !== null && $this->internalDocStmtAnalyzer->isInternalDocComment($docComment)) {
+            return false;
         }
 
         $parentClassReflection = $classReflection->getParentClass();

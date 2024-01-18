@@ -129,3 +129,22 @@ final class Book
     }
 }
 ```
+
+## Public Methods Used in Tests Only
+
+Some public methods are designed to be used in tests only. Is element reported as unused, but it's actually used in tests?
+
+Mark the class or element with `@internal` annotation to reported as used:
+
+```php
+final class Book
+{
+    /**
+     * @internal
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+}
+```

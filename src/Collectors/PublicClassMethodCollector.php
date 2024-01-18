@@ -11,6 +11,7 @@ use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\InternalDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\MethodTypeDetector;
 use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 
@@ -38,6 +39,7 @@ final class PublicClassMethodCollector implements Collector
 
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private readonly InternalDocStmtAnalyzer $internalDocStmtAnalyzer,
         private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
         private readonly MethodTypeDetector $methodTypeDetector,
         private readonly Configuration $configuration,
@@ -93,7 +95,9 @@ final class PublicClassMethodCollector implements Collector
             return null;
         }
 
-        return [$classReflection->getName(), $methodName, $node->getLine()];
+        $isInternal = $this->internalDocStmtAnalyzer->isInternalDoc($node, $classReflection);
+
+        return [$classReflection->getName(), $methodName, $node->getLine(), $isInternal];
     }
 
     private function shouldSkip(ClassReflection $classReflection, ClassMethod $classMethod, Scope $scope): bool
