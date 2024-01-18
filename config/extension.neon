@@ -28,6 +28,8 @@ services:
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+    - TomasVotruba\UnusedPublic\ConstantReference\ParentConstantReferenceResolver
+    - TomasVotruba\UnusedPublic\PropertyReference\ParentPropertyReferenceResolver
     # templates
     - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
     - TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder

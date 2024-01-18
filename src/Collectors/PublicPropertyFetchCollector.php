@@ -14,6 +14,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\PropertyReference\ParentPropertyReferenceResolver;
 
 /**
  * @implements Collector<PropertyFetch, string[]>
@@ -21,6 +22,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class PublicPropertyFetchCollector implements Collector
 {
     public function __construct(
+        private readonly ParentPropertyReferenceResolver $parentPropertyReferenceResolver,
         private readonly Configuration $configuration,
         private readonly ClassTypeDetector $classTypeDetector,
     ) {
@@ -66,6 +68,10 @@ final class PublicPropertyFetchCollector implements Collector
         $className = $propertyFetcherType->getClassName();
         $propertyName = $node->name->toString();
 
-        return [$className . '::' . $propertyName];
+        $propertyReferences = [$className . '::' . $propertyName];
+        $parentPropertyReferences = $this->parentPropertyReferenceResolver->findParentPropertyReferences($className, $propertyName);
+        $propertyReferences = [...$propertyReferences, ...$parentPropertyReferences];
+
+        return $propertyReferences;
     }
 }

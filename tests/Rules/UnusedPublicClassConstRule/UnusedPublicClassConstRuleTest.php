@@ -69,8 +69,12 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipApiPublicConstant.php'], []];
         yield [[__DIR__ . '/Fixture/SkipApiClassPublicConstant.php'], []];
         yield [[__DIR__ . '/Fixture/SkipUsedPublicConstant.php', __DIR__ . '/Source/ConstantUser.php'], []];
-        yield [[
-            __DIR__ . '/Fixture/SkipUsedConstantInSubclass.php', __DIR__ . '/Source/ConstantUserFromSubclass.php', ],
+        yield [
+            [
+                __DIR__ . '/Fixture/PublicConstant.php',
+                __DIR__ . '/Fixture/SkipUsedPublicConstantInSubclass.php',
+                __DIR__ . '/Source/ConstantUserFromSubclass.php',
+            ],
             [],
         ];
 

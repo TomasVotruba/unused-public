@@ -13,6 +13,7 @@ use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\ConstantReference\ParentConstantReferenceResolver;
 
 /**
  * @implements Collector<ClassConstFetch, string[]>
@@ -20,6 +21,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class ClassConstFetchCollector implements Collector
 {
     public function __construct(
+        private readonly ParentConstantReferenceResolver $parentConstantReferenceResolver,
         private readonly Configuration $configuration,
         private readonly ClassTypeDetector $classTypeDetector,
     ) {
@@ -61,13 +63,23 @@ final class ClassConstFetchCollector implements Collector
                 $constantReflection = $classReflection->getConstant($constantName);
                 $declaringClass = $constantReflection->getDeclaringClass();
                 if ($declaringClass->getFileName() !== $classReflection->getFileName()) {
-                    return [$declaringClass->getName() . '::' . $constantName];
+                    $declaringClassName = $declaringClass->getName();
+
+                    $constantReferences = [$declaringClassName . '::' . $constantName];
+                    $parentConstantReferences = $this->parentConstantReferenceResolver->findParentConstantReferences($declaringClassName, $constantName);
+                    $constantReferences = [...$constantReferences, ...$parentConstantReferences];
+
+                    return $constantReferences;
                 }
 
                 return null;
             }
         }
 
-        return [$className . '::' . $constantName];
+        $constantReferences = [$className . '::' . $constantName];
+        $parentConstantReferences = $this->parentConstantReferenceResolver->findParentConstantReferences($className, $constantName);
+        $constantReferences = [...$constantReferences, ...$parentConstantReferences];
+
+        return $constantReferences;
     }
 }
