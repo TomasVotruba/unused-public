@@ -11,6 +11,7 @@ use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\PropertyReference\ParentPropertyReferenceResolver;
 
 /**
  * @implements Collector<StaticPropertyFetch, string[]>
@@ -18,7 +19,8 @@ use TomasVotruba\UnusedPublic\Configuration;
 final class PublicStaticPropertyFetchCollector implements Collector
 {
     public function __construct(
-        private readonly Configuration $configuration
+        private readonly ParentPropertyReferenceResolver $parentPropertyReferenceResolver,
+        private readonly Configuration $configuration,
     ) {
     }
 
@@ -53,6 +55,10 @@ final class PublicStaticPropertyFetchCollector implements Collector
         $className = $node->class->toString();
         $propertyName = $node->name->toString();
 
-        return [$className . '::' . $propertyName];
+        $propertyReferences = [$className . '::' . $propertyName];
+        $parentPropertyReferences = $this->parentPropertyReferenceResolver->findParentPropertyReferences($className, $propertyName);
+        $propertyReferences = [...$propertyReferences, ...$parentPropertyReferences];
+
+        return $propertyReferences;
     }
 }
