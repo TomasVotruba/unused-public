@@ -15,5 +15,5 @@ final class RuleTips
     /**
      * @var string
      */
-    public const NARROW_SCOPE = 'Make it private or protected';
+    public const NARROW_SCOPE = 'Make it private or protected, or annotate it or its class with @internal if it is used in tests';
 }

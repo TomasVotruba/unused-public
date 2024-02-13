@@ -22,6 +22,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
 use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
+use TomasVotruba\UnusedPublic\ValueObject\MethodCallReference;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
@@ -70,26 +71,18 @@ final class LocalOnlyPublicClassMethodRule implements Rule
         ]);
 
         $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
-        // php method calls are case-insensitive
-        $lowerExternalRefs = array_map(
-            static fn (string $item): string => strtolower($item),
-            $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
-        );
-        $lowerLocalRefs = array_map(
-            static fn (string $item): string => strtolower($item),
-            $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
-        );
 
         $ruleErrors = [];
 
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
-            foreach ($declarations as [$className, $methodName, $line]) {
+            foreach ($declarations as [$className, $methodName, $line, $isInternal]) {
                 if (! $this->isUsedOnlyLocally(
                     $className,
                     $methodName,
-                    $lowerExternalRefs,
-                    $lowerLocalRefs,
-                    $twigMethodNames
+                    $localAndExternalMethodCallReferences->getExternalMethodCallReferences(),
+                    $localAndExternalMethodCallReferences->getLocalMethodCallReferences(),
+                    $twigMethodNames,
+                    $isInternal,
                 )) {
                     continue;
                 }
@@ -109,16 +102,17 @@ final class LocalOnlyPublicClassMethodRule implements Rule
     }
 
     /**
-     * @param string[] $lowerExternalRefs
-     * @param string[] $lowerLocalRefs
+     * @param MethodCallReference[] $externalRefs
+     * @param MethodCallReference[] $localRefs
      * @param string[] $twigMethodNames
      */
     private function isUsedOnlyLocally(
         string $className,
         string $methodName,
-        array $lowerExternalRefs,
-        array $lowerLocalRefs,
-        array $twigMethodNames
+        array $externalRefs,
+        array $localRefs,
+        array $twigMethodNames,
+        bool $isInternal,
     ): bool {
         if ($this->usedMethodAnalyzer->isUsedInTwig($methodName, $twigMethodNames)) {
             return true;
@@ -126,10 +120,27 @@ final class LocalOnlyPublicClassMethodRule implements Rule
 
         $publicMethodReference = strtolower($className . '::' . $methodName);
 
-        if (in_array($publicMethodReference, $lowerExternalRefs, true)) {
-            return false;
+        foreach ($externalRefs as $externalRef) {
+            // skip calls in tests, if they are not internal
+            if (! $isInternal && $externalRef->isTest()) {
+                continue;
+            }
+
+            $methodCallReference = $externalRef->getClass() . '::' . $externalRef->getMethod();
+            // php method calls are case-insensitive
+            if (strtolower($methodCallReference) === $publicMethodReference) {
+                return false;
+            }
         }
 
-        return in_array($publicMethodReference, $lowerLocalRefs, true);
+        foreach ($localRefs as $localRef) {
+            $methodCallReference = $localRef->getClass() . '::' . $localRef->getMethod();
+            // php method calls are case-insensitive
+            if (strtolower($methodCallReference) === $publicMethodReference) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

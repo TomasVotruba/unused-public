@@ -7,8 +7,8 @@ namespace TomasVotruba\UnusedPublic\ValueObject;
 final class LocalAndExternalMethodCallReferences
 {
     /**
-     * @param string[] $localMethodCallReferences
-     * @param string[] $externalMethodCallReferences
+     * @param MethodCallReference[] $localMethodCallReferences
+     * @param MethodCallReference[] $externalMethodCallReferences
      */
     public function __construct(
         private readonly array $localMethodCallReferences,
@@ -17,7 +17,7 @@ final class LocalAndExternalMethodCallReferences
     }
 
     /**
-     * @return string[]
+     * @return MethodCallReference[]
      */
     public function getLocalMethodCallReferences(): array
     {
@@ -25,7 +25,7 @@ final class LocalAndExternalMethodCallReferences
     }
 
     /**
-     * @return string[]
+     * @return MethodCallReference[]
      */
     public function getExternalMethodCallReferences(): array
     {

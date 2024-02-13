@@ -36,9 +36,9 @@ final class MethodCallCollectorMapper
 
         foreach ($methodCallReferences as $methodCallReference) {
             if (str_contains($methodCallReference, ReferenceMarker::LOCAL)) {
-                $localMethodCallReferences[] = str_replace(ReferenceMarker::LOCAL, '', $methodCallReference);
+                $localMethodCallReferences[] = MethodCallReference::fromString(str_replace(ReferenceMarker::LOCAL, '', $methodCallReference));
             } else {
-                $externalMethodCallReferences[] = $methodCallReference;
+                $externalMethodCallReferences[] = MethodCallReference::fromString($methodCallReference);
             }
         }
 

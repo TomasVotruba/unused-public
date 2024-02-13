@@ -48,7 +48,23 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
             'runHere'
         );
 
-        yield [[__DIR__ . '/Fixture/LocallyUsedPublicMethod.php'], [[$errorMessage, 9, RuleTips::NARROW_SCOPE]]];
+        yield [
+            [
+                __DIR__ . '/Fixture/LocallyUsedPublicMethod.php',
+                __DIR__ . '/Source/TestCaseInternalMethodUser.php',
+            ],
+            [
+                [$errorMessage, 9, RuleTips::NARROW_SCOPE],
+            ],
+        ];
+
+        yield [
+            [
+                __DIR__ . '/Fixture/LocallyUsedPublicInternalMethod.php',
+                __DIR__ . '/Source/TestCaseInternalMethodUser.php',
+            ],
+            [],
+        ];
 
         $errorMessage = sprintf(
             LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
