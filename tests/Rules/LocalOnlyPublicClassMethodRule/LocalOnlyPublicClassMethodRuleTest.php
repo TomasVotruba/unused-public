@@ -64,6 +64,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
         );
         yield [[__DIR__ . '/Fixture/LocallyUsedEnumMethod.php'], [[$errorMessage, 12, RuleTips::NARROW_SCOPE]]];
         yield [[__DIR__ . '/Fixture/SkipPublicCallbackMethod.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipTestCaseUsedPublicMethod.php'], []];
     }
 
     /**
