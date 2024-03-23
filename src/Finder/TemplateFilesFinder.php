@@ -15,7 +15,6 @@ final class TemplateFilesFinder
         $templateFilePaths = [];
 
         foreach ($directories as $directory) {
-            /** @var string[] $currentTemplateFilePaths */
             $currentTemplateFilePathsL1 = glob($directory . '/*/*.' . $suffix);
             $currentTemplateFilePathsL2 = glob($directory . '/**/*/*.' . $suffix);
 
