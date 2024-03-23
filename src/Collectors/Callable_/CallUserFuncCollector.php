@@ -91,11 +91,6 @@ final class CallUserFuncCollector implements Collector
         if ($node->name instanceof Expr) {
             return true;
         }
-
-        if (strtolower($node->name->toString()) !== 'call_user_func') {
-            return true;
-        }
-
-        return false;
+        return strtolower($node->name->toString()) !== 'call_user_func';
     }
 }
