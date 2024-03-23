@@ -28,10 +28,6 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Source\Som
 
 final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 {
-    /**
-     * @param string[] $filePaths
-     * @param mixed[] $expectedErrorMessagesWithLines
-     */
     #[DataProvider('provideData')]
     #[DataProvider('provideDataTests')]
     #[DataProvider('provideDataSymfony')]
@@ -65,6 +61,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
     public static function provideDataSymfony(): Iterator
     {
+        yield [[__DIR__ . '/Fixture/Serializer/SkipSerializerMethod.php'], []];
+
         yield [[__DIR__ . '/Fixture/Symfony/SkipRequiredMethodCall.php'], []];
         yield [[__DIR__ . '/Fixture/Symfony/SkipSymfonyValidatorMethod.php'], []];
 

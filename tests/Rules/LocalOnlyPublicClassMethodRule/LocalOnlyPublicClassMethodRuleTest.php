@@ -23,10 +23,6 @@ use TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\Fixture
 
 final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
 {
-    /**
-     * @param string[] $filePaths
-     * @param mixed[] $expectedErrorMessagesWithLines
-     */
     #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
