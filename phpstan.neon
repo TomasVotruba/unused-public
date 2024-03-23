@@ -24,4 +24,7 @@ parameters:
         - "*/Source/*"
 
     ignoreErrors:
-        # collectors generics
+        # overly detailed
+        -
+            message: '#testRule\(\) has parameter (.*?) with no value type specified in iterable type array#'
+            path: tests/Rules

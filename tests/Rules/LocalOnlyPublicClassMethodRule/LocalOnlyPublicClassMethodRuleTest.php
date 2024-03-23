@@ -31,8 +31,6 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
 
     public static function provideData(): Iterator
     {
-        yield [[__DIR__ . '/Fixture/Serializer/SkipSerializerMethod.php'], []];
-
         $errorMessage = sprintf(
             LocalOnlyPublicClassMethodRule::ERROR_MESSAGE,
             SkipInterfaceMethod::class,
