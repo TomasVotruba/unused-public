@@ -7,13 +7,25 @@ namespace TomasVotruba\UnusedPublic\ValueObject;
 final class LocalAndExternalMethodCallReferences
 {
     /**
+     * @var string[]
+     * @readonly
+     */
+    private $localMethodCallReferences;
+
+    /**
+     * @var string[]
+     * @readonly
+     */
+    private $externalMethodCallReferences;
+
+    /**
      * @param string[] $localMethodCallReferences
      * @param string[] $externalMethodCallReferences
      */
-    public function __construct(
-        private readonly array $localMethodCallReferences,
-        private readonly array $externalMethodCallReferences,
-    ) {
+    public function __construct(array $localMethodCallReferences, array $externalMethodCallReferences)
+    {
+        $this->localMethodCallReferences = $localMethodCallReferences;
+        $this->externalMethodCallReferences = $externalMethodCallReferences;
     }
 
     /**
