@@ -85,7 +85,8 @@ final class CallUserFuncCollector implements Collector
     /**
      * @param FuncCall $node
      */
-    private function shouldSkipNode(Node $node): bool {
+    private function shouldSkipNode(Node $node): bool
+    {
         // unable to resolve method name
         if ($node->name instanceof Expr) {
             return true;
