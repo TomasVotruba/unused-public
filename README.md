@@ -31,10 +31,10 @@ But what about public class elements?
 
 **How can we detect such element?**
 
-* find a e.g. public method
-* find all public method calls
-* compare those in simple diff
-* if the public method is not found, it probably unused
+-   find a e.g. public method
+-   find all public method calls
+-   compare those in simple diff
+-   if the public method is not found, it probably unused
 
 That's exactly what this package does.
 
@@ -92,7 +92,6 @@ Some methods are used only in TWIG or Blade templates, and could be reported fal
 
 How can we exclude them? Add your TWIG or Blade template directories in config to exclude methods names:
 
-
 ```neon
 # phpstan.neon
 parameters:
@@ -107,7 +106,7 @@ parameters:
 
 In some cases, the rules report false positives:
 
-* when used only in templates, apart Twig paths, it's not possible to detect them
+-   when used only in templates, apart Twig paths, it's not possible to detect them
 
 <br>
 
@@ -127,5 +126,31 @@ final class Book
     {
         return $this->name;
     }
+}
+```
+
+You can also use the `@required` or `@internal` to make it clearer in certain situations that you want the check skipped or that it is used internally. In this situation in Laravel, while the direct call is not present, it can be used as a property when [referencing relationships in Laravel Eloquent models](https://laravel.com/docs/11.x/eloquent-relationships#defining-relationships):
+
+```php
+<?php
+
+class User extends Model
+{
+    // ...
+
+    /**
+     * @internal
+     */
+    public $timestamps = false;
+
+    /**
+     * @required
+     */
+    public function post(): HasOne
+    {
+        return $this->hasOne(Post::class);
+    }
+
+    // ...
 }
 ```

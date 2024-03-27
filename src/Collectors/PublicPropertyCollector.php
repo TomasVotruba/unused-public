@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
-use Livewire\Component;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Class_;
+use Livewire\Component;
 use PHPStan\Analyser\Scope;
-use PHPStan\Collectors\Collector;
 use PHPStan\Node\InClassNode;
+use PhpParser\Node\Stmt\Class_;
+use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
+use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\InternalOrRequiredStmtAnalyzer;
 
 /**
  * @implements Collector<InClassNode, array<array{class-string, string, int}>>
@@ -26,6 +27,7 @@ final class PublicPropertyCollector implements Collector
 
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private readonly InternalOrRequiredStmtAnalyzer $internalOrRequiredStmtAnalyzer,
         private readonly Configuration $configuration
     ) {
     }
@@ -115,6 +117,8 @@ final class PublicPropertyCollector implements Collector
             }
         }
 
-        return $this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection);
+        return
+            $this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection) ||
+            $this->internalOrRequiredStmtAnalyzer->isInternalOrRequired($class, $classReflection);
     }
 }
