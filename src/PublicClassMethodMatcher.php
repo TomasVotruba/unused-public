@@ -17,9 +17,15 @@ final class PublicClassMethodMatcher
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
 
-    public function __construct(
-        private readonly ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    public function __construct(ClassTypeDetector $classTypeDetector)
+    {
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function shouldSkipClassReflection(ClassReflection $classReflection): bool
@@ -82,10 +88,10 @@ final class PublicClassMethodMatcher
             return false;
         }
 
-        if (str_contains($doc->getText(), '@Route')) {
+        if (strpos($doc->getText(), '@Route') !== false) {
             return true;
         }
 
-        return str_contains($doc->getText(), '@Required');
+        return strpos($doc->getText(), '@Required') !== false;
     }
 }
