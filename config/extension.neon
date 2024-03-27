@@ -25,8 +25,9 @@ services:
     - TomasVotruba\UnusedPublic\CallReferece\CallReferencesFlatter
     - TomasVotruba\UnusedPublic\MethodTypeDetector
     - TomasVotruba\UnusedPublic\ClassTypeDetector
-    - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
-    - TomasVotruba\UnusedPublic\InternalOrRequiredStmtAnalyzer
+    - TomasVotruba\UnusedPublic\StmtAnalyzers\ApiDocStmtAnalyzer
+    - TomasVotruba\UnusedPublic\StmtAnalyzers\InternalStmtAnalyzer
+    - TomasVotruba\UnusedPublic\StmtAnalyzers\RequiredStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
     # templates

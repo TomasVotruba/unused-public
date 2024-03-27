@@ -9,9 +9,10 @@ use PhpParser\Node\Stmt\ClassConst;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
-use TomasVotruba\UnusedPublic\InternalOrRequiredStmtAnalyzer;
+use TomasVotruba\UnusedPublic\StmtAnalyzers\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\StmtAnalyzers\InternalStmtAnalyzer;
+use TomasVotruba\UnusedPublic\StmtAnalyzers\RequiredStmtAnalyzer;
 
 /**
  * @implements Collector<ClassConst, array<array{class-string, string, int}>>
@@ -20,7 +21,8 @@ final class PublicClassLikeConstCollector implements Collector
 {
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly InternalOrRequiredStmtAnalyzer $internalOrRequiredStmtAnalyzer,
+        private readonly InternalStmtAnalyzer $internalStmtAnalyzer,
+        private readonly RequiredStmtAnalyzer $requiredStmtAnalyzer,
         private readonly Configuration $configuration,
     ) {
     }
@@ -49,11 +51,11 @@ final class PublicClassLikeConstCollector implements Collector
             return null;
         }
 
-        if ($this->apiDocStmtAnalyzer->isApiDoc($node, $classReflection)) {
-            return null;
-        }
-
-        if ($this->internalOrRequiredStmtAnalyzer->isInternalOrRequired($node, $classReflection)) {
+        if (
+            $this->apiDocStmtAnalyzer->isDoc($node, $classReflection) ||
+            $this->internalStmtAnalyzer->isDoc($node, $classReflection) ||
+            $this->requiredStmtAnalyzer->isDoc($node, $classReflection)
+        ) {
             return null;
         }
 

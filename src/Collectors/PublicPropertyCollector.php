@@ -12,8 +12,9 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
 use TomasVotruba\UnusedPublic\Configuration;
-use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
-use TomasVotruba\UnusedPublic\InternalOrRequiredStmtAnalyzer;
+use TomasVotruba\UnusedPublic\StmtAnalyzers\ApiDocStmtAnalyzer;
+use TomasVotruba\UnusedPublic\StmtAnalyzers\InternalStmtAnalyzer;
+use TomasVotruba\UnusedPublic\StmtAnalyzers\RequiredStmtAnalyzer;
 
 /**
  * @implements Collector<InClassNode, array<array{class-string, string, int}>>
@@ -27,7 +28,8 @@ final class PublicPropertyCollector implements Collector
 
     public function __construct(
         private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly InternalOrRequiredStmtAnalyzer $internalOrRequiredStmtAnalyzer,
+        private readonly InternalStmtAnalyzer $internalStmtAnalyzer,
+        private readonly RequiredStmtAnalyzer $requiredStmtAnalyzer,
         private readonly Configuration $configuration
     ) {
     }
@@ -97,7 +99,14 @@ final class PublicPropertyCollector implements Collector
         }
 
         $docComment = $propertyReflection->getDocComment();
-        if ($docComment !== null && $this->apiDocStmtAnalyzer->isApiDocComment($docComment)) {
+        if (
+            $docComment !== null &&
+            (
+                $this->apiDocStmtAnalyzer->isDocComment($docComment) ||
+                $this->internalStmtAnalyzer->isDocComment($docComment) ||
+                $this->requiredStmtAnalyzer->isDocComment($docComment)
+            )
+        ) {
             return true;
         }
 
@@ -118,7 +127,8 @@ final class PublicPropertyCollector implements Collector
         }
 
         return
-            $this->apiDocStmtAnalyzer->isApiDoc($class, $classReflection) ||
-            $this->internalOrRequiredStmtAnalyzer->isInternalOrRequired($class, $classReflection);
+            $this->apiDocStmtAnalyzer->isDoc($class, $classReflection) ||
+            $this->internalStmtAnalyzer->isDoc($class, $classReflection) ||
+            $this->requiredStmtAnalyzer->isDoc($class, $classReflection);
     }
 }
