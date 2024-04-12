@@ -1,11 +1,10 @@
 parametersSchema:
     unused_public: structure([
-        methods: bool()
+        methods: anyOf(bool(), int(), float())
         local_methods: bool()
         properties: bool()
         constants: bool()
         template_paths: listOf(string())
-        twig_template_paths: listOf(string())
     ])
 
 # default parameters
@@ -16,8 +15,6 @@ parameters:
         properties: true
         constants: true
         template_paths: []
-        # deprecated
-        twig_template_paths: []
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
@@ -28,6 +25,7 @@ services:
     - TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
     - TomasVotruba\UnusedPublic\ClassMethodCallReferenceResolver
     - TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+    - TomasVotruba\UnusedPublic\NodeCollectorExtractor
     # templates
     - TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
     - TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder
@@ -109,3 +107,4 @@ rules:
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicClassConstRule
     - TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule
     - TomasVotruba\UnusedPublic\Rules\LocalOnlyPublicClassMethodRule
+    - TomasVotruba\UnusedPublic\Rules\RelativeUnusedPublicClassMethodRule

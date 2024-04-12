@@ -8,7 +8,7 @@
 
 <br>
 
-It's easy to find unused private class elements, because they're not used in the class itself:
+It's easy to find unused private class elements, because they're not used in the class itself. But what about public methods/properties/constants?
 
 ```diff
  final class Book
@@ -18,29 +18,24 @@ It's easy to find unused private class elements, because they're not used in the
          // ...
      }
 
--    private function getSubtitle(): string
+-    public function getSubtitle(): string
 -    {
 -        // ...
 -    }
 }
 ```
 
-But what about public class elements?
+**How can we detect unused public element?**
 
-<br>
-
-**How can we detect such element?**
-
-* find a e.g. public method
-* find all public method calls
-* compare those in simple diff
+* find a public method
+* find all public method calls in code and templates
 * if the public method is not found, it probably unused
 
 That's exactly what this package does.
 
 <br>
 
-This technique is very useful for private projects and to detect accidentally open public API that should be used only locally.
+This technique is very useful for private projects and to detect accidentally used `public` modifier that should be changed to `private` as called locally only.
 
 <br>
 
@@ -50,7 +45,7 @@ This technique is very useful for private projects and to detect accidentally op
 composer require tomasvotruba/unused-public --dev
 ```
 
-The package is available on PHP 7.2-8.1 versions in tagged releases.
+The package is available for PHP 7.2+ version.
 
 <br>
 
@@ -68,6 +63,24 @@ parameters:
         properties: true
         constants: true
 ```
+
+<br>
+
+Do you have hundreds of reported public method? You don't have time to check them all, but want to handle them gradually?
+
+Set maximum allowed % configuration instead:
+
+```yaml
+# phpstan.neon
+parameters:
+    unused_public:
+        methods: 2.5
+```
+
+This means maximum 2.5 % of all public methods is allowed as unused:
+
+* If it's 5 %, you'll be alerted.
+* If it's 1 %, it will be skipped as tolerated.
 
 <br>
 
