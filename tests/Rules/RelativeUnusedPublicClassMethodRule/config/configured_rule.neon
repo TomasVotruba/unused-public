@@ -1,0 +1,6 @@
+includes:
+    - ../../../../config/extension.neon
+
+parameters:
+    unused_public:
+        methods: 55

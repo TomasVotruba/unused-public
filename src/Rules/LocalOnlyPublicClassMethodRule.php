@@ -10,18 +10,13 @@ use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
-use TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper;
-use TomasVotruba\UnusedPublic\Collectors\Callable_\AttributeCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\Callable_\CallUserFuncCollector;
-use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
-use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
+use TomasVotruba\UnusedPublic\NodeCollectorExtractor;
 use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
 use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
+use TomasVotruba\UnusedPublic\Utils\Strings;
 
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
@@ -39,7 +34,7 @@ final readonly class LocalOnlyPublicClassMethodRule implements Rule
         private Configuration $configuration,
         private UsedMethodAnalyzer $usedMethodAnalyzer,
         private TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private MethodCallCollectorMapper $methodCallCollectorMapper
+        private NodeCollectorExtractor $nodeCollectorExtractor,
     ) {
     }
 
@@ -60,28 +55,22 @@ final readonly class LocalOnlyPublicClassMethodRule implements Rule
 
         $twigMethodNames = $this->templateMethodCallsProvider->provideTwigMethodCalls();
 
-        $localAndExternalMethodCallReferences = $this->methodCallCollectorMapper->mapToLocalAndExternal([
-            $node->get(MethodCallCollector::class),
-            $node->get(MethodCallableCollector::class),
-            $node->get(StaticMethodCallCollector::class),
-            $node->get(StaticMethodCallableCollector::class),
-            $node->get(AttributeCallableCollector::class),
-            $node->get(CallUserFuncCollector::class),
-        ]);
+        $localAndExternalMethodCallReferences = $this->nodeCollectorExtractor->extractLocalAndExternalMethodCallReferences(
+            $node
+        );
 
-        $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         // php method calls are case-insensitive
-        $lowerExternalRefs = array_map(
-            static fn (string $item): string => strtolower($item),
+        $lowerExternalRefs = Strings::lowercase(
             $localAndExternalMethodCallReferences->getExternalMethodCallReferences()
         );
-        $lowerLocalRefs = array_map(
-            static fn (string $item): string => strtolower($item),
+
+        $lowerLocalRefs = Strings::lowercase(
             $localAndExternalMethodCallReferences->getLocalMethodCallReferences()
         );
 
         $ruleErrors = [];
 
+        $publicClassMethodCollector = $node->get(PublicClassMethodCollector::class);
         foreach ($publicClassMethodCollector as $filePath => $declarations) {
             foreach ($declarations as [$className, $methodName, $line]) {
                 if (! $this->isUsedOnlyLocally(
