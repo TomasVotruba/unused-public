@@ -19,14 +19,14 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<MethodCall, array<string>|null>
  */
-final class MethodCallCollector implements Collector
+final readonly class MethodCallCollector implements Collector
 {
     public function __construct(
-        private readonly ParentCallReferenceResolver $parentCallReferenceResolver,
-        private readonly ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
-        private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
-        private readonly CallReferencesFlatter $callReferencesFlatter,
+        private ParentCallReferenceResolver $parentCallReferenceResolver,
+        private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
+        private Configuration $configuration,
+        private ClassTypeDetector $classTypeDetector,
+        private CallReferencesFlatter $callReferencesFlatter,
     ) {
     }
 

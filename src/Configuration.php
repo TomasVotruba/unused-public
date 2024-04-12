@@ -9,13 +9,13 @@ use Webmozart\Assert\Assert;
 /**
  * @inspired by https://github.com/phpstan/phpstan-symfony/blob/1.2.x/src/Symfony/Configuration.php
  */
-final class Configuration
+final readonly class Configuration
 {
     /**
      * @param array<string, mixed> $parameters
      */
     public function __construct(
-        private readonly array $parameters
+        private array $parameters
     ) {
     }
 

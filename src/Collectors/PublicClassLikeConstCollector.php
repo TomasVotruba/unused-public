@@ -15,11 +15,11 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<ClassConst, array<array{class-string, string, int}>>
  */
-final class PublicClassLikeConstCollector implements Collector
+final readonly class PublicClassLikeConstCollector implements Collector
 {
     public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly Configuration $configuration,
+        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private Configuration $configuration,
     ) {
     }
 

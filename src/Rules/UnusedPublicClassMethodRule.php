@@ -28,7 +28,7 @@ use TomasVotruba\UnusedPublic\Utils\Arrays;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
  */
-final class UnusedPublicClassMethodRule implements Rule
+final readonly class UnusedPublicClassMethodRule implements Rule
 {
     /**
      * @var string
@@ -38,10 +38,10 @@ final class UnusedPublicClassMethodRule implements Rule
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
 
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly MethodCallCollectorMapper $methodCallCollectorMapper,
+        private Configuration $configuration,
+        private TemplateMethodCallsProvider $templateMethodCallsProvider,
+        private UsedMethodAnalyzer $usedMethodAnalyzer,
+        private MethodCallCollectorMapper $methodCallCollectorMapper,
     ) {
     }
 

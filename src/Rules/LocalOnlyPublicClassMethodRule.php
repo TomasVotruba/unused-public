@@ -26,7 +26,7 @@ use TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
  */
-final class LocalOnlyPublicClassMethodRule implements Rule
+final readonly class LocalOnlyPublicClassMethodRule implements Rule
 {
     /**
      * @var string
@@ -36,10 +36,10 @@ final class LocalOnlyPublicClassMethodRule implements Rule
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should be turned protected/private';
 
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly UsedMethodAnalyzer $usedMethodAnalyzer,
-        private readonly TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private readonly MethodCallCollectorMapper $methodCallCollectorMapper
+        private Configuration $configuration,
+        private UsedMethodAnalyzer $usedMethodAnalyzer,
+        private TemplateMethodCallsProvider $templateMethodCallsProvider,
+        private MethodCallCollectorMapper $methodCallCollectorMapper
     ) {
     }
 

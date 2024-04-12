@@ -8,7 +8,7 @@ use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Reflection\ClassReflection;
 
-final class PublicClassMethodMatcher
+final readonly class PublicClassMethodMatcher
 {
     /**
      * @var string[]
@@ -18,7 +18,7 @@ final class PublicClassMethodMatcher
     ];
 
     public function __construct(
-        private readonly ClassTypeDetector $classTypeDetector,
+        private ClassTypeDetector $classTypeDetector,
     ) {
     }
 

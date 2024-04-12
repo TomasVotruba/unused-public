@@ -6,10 +6,10 @@ namespace TomasVotruba\UnusedPublic\CallReferece;
 
 use PHPStan\Reflection\ReflectionProvider;
 
-final class ParentCallReferenceResolver
+final readonly class ParentCallReferenceResolver
 {
     public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
+        private ReflectionProvider $reflectionProvider,
     ) {
     }
 

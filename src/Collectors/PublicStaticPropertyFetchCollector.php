@@ -15,10 +15,10 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<StaticPropertyFetch, string[]>
  */
-final class PublicStaticPropertyFetchCollector implements Collector
+final readonly class PublicStaticPropertyFetchCollector implements Collector
 {
     public function __construct(
-        private readonly Configuration $configuration
+        private Configuration $configuration
     ) {
     }
 

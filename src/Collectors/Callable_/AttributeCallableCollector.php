@@ -19,10 +19,10 @@ use TomasVotruba\UnusedPublic\ValueObject\ClassAndMethodArrayExprs;
 /**
  * @implements Collector<AttributeGroup, array<string>|null>
  */
-final class AttributeCallableCollector implements Collector
+final readonly class AttributeCallableCollector implements Collector
 {
     public function __construct(
-        private readonly Configuration $configuration,
+        private Configuration $configuration,
     ) {
     }
 
