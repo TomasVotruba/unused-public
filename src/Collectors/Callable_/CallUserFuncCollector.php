@@ -17,11 +17,11 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<FuncCall, array<string>|null>
  */
-final class CallUserFuncCollector implements Collector
+final readonly class CallUserFuncCollector implements Collector
 {
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
+        private Configuration $configuration,
+        private ClassTypeDetector $classTypeDetector,
     ) {
     }
 

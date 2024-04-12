@@ -17,11 +17,11 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<ClassConstFetch, string[]>
  */
-final class ClassConstFetchCollector implements Collector
+final readonly class ClassConstFetchCollector implements Collector
 {
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly ClassTypeDetector $classTypeDetector,
+        private Configuration $configuration,
+        private ClassTypeDetector $classTypeDetector,
     ) {
     }
 

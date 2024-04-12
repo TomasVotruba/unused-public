@@ -20,7 +20,7 @@ use TomasVotruba\UnusedPublic\Utils\Arrays;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
  */
-final class UnusedPublicPropertyRule implements Rule
+final readonly class UnusedPublicPropertyRule implements Rule
 {
     /**
      * @var string
@@ -30,7 +30,7 @@ final class UnusedPublicPropertyRule implements Rule
     public const ERROR_MESSAGE = 'Public property "%s::$%s" is never used';
 
     public function __construct(
-        private readonly Configuration $configuration
+        private Configuration $configuration
     ) {
     }
 

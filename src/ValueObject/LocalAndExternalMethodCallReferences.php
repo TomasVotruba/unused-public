@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\ValueObject;
 
-final class LocalAndExternalMethodCallReferences
+final readonly class LocalAndExternalMethodCallReferences
 {
     /**
      * @param string[] $localMethodCallReferences
      * @param string[] $externalMethodCallReferences
      */
     public function __construct(
-        private readonly array $localMethodCallReferences,
-        private readonly array $externalMethodCallReferences,
+        private array $localMethodCallReferences,
+        private array $externalMethodCallReferences,
     ) {
     }
 

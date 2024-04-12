@@ -17,7 +17,7 @@ use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 /**
  * @implements Collector<ClassMethod, array{class-string, string, int}|null>
  */
-final class PublicClassMethodCollector implements Collector
+final readonly class PublicClassMethodCollector implements Collector
 {
     /**
      * @var string[]
@@ -38,10 +38,10 @@ final class PublicClassMethodCollector implements Collector
     ];
 
     public function __construct(
-        private readonly ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private readonly PublicClassMethodMatcher $publicClassMethodMatcher,
-        private readonly MethodTypeDetector $methodTypeDetector,
-        private readonly Configuration $configuration,
+        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        private PublicClassMethodMatcher $publicClassMethodMatcher,
+        private MethodTypeDetector $methodTypeDetector,
+        private Configuration $configuration,
     ) {
     }
 

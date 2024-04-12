@@ -6,11 +6,11 @@ namespace TomasVotruba\UnusedPublic\ValueObject;
 
 use PhpParser\Node\Expr;
 
-final class ClassAndMethodArrayExprs
+final readonly class ClassAndMethodArrayExprs
 {
     public function __construct(
-        private readonly Expr $classExpr,
-        private readonly Expr $methodExpr
+        private Expr $classExpr,
+        private Expr $methodExpr
     ) {
     }
 
