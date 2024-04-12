@@ -8,12 +8,24 @@ use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\Template\BladeRegex;
 use TomasVotruba\UnusedPublic\Enum\Template\TwigRegex;
 
-final readonly class TemplateMethodCallsProvider
+final class TemplateMethodCallsProvider
 {
-    public function __construct(
-        private Configuration $configuration,
-        private TemplateRegexFinder $templateRegexFinder,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateRegexFinder
+     */
+    private $templateRegexFinder;
+
+    public function __construct(Configuration $configuration, TemplateRegexFinder $templateRegexFinder)
+    {
+        $this->configuration = $configuration;
+        $this->templateRegexFinder = $templateRegexFinder;
     }
 
     /**
