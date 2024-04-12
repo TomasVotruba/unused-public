@@ -53,7 +53,7 @@ final readonly class Configuration
      */
     public function getTemplatePaths(): array
     {
-        $templatePaths = $this->parameters['template_paths'] ?? $this->parameters['twig_template_paths'];
+        $templatePaths = $this->parameters['template_paths'];
 
         Assert::allDirectory($templatePaths);
         Assert::allFileExists($templatePaths);

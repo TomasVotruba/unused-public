@@ -5,7 +5,6 @@ parametersSchema:
         properties: bool()
         constants: bool()
         template_paths: listOf(string())
-        twig_template_paths: listOf(string())
     ])
 
 # default parameters
@@ -16,8 +15,6 @@ parameters:
         properties: true
         constants: true
         template_paths: []
-        # deprecated
-        twig_template_paths: []
 
 services:
     - TomasVotruba\UnusedPublic\PublicClassMethodMatcher
