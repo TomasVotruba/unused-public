@@ -175,6 +175,8 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/plain.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/plain-call-user-func.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/SkipCrashBug89.php.inc'], []];
+
+        yield [[__DIR__ . '/Fixture/SkipJsonSerialize.php'], []];
     }
 
     /**
