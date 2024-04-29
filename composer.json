@@ -7,7 +7,8 @@
     "require": {
         "php": "^8.2",
         "phpstan/phpstan": "^1.10",
-        "webmozart/assert": "^1.11"
+        "webmozart/assert": "^1.11",
+        "nette/utils": "^4.0"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.3",
