@@ -6,7 +6,7 @@ use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 $config = new Configuration();
 
 return $config
-    ->ignoreErrorsOnPackage('nikic/php-parser', [ErrorType::DEV_DEPENDENCY_IN_PROD]) // prepared test tooling
+    ->ignoreErrorsOnPackage('nikic/php-parser', [ErrorType::DEV_DEPENDENCY_IN_PROD])
     ->ignoreErrorsOnPaths([
         __DIR__ . '/tests',
     ], [ErrorType::UNKNOWN_CLASS]);
