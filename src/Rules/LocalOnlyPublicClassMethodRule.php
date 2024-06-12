@@ -90,6 +90,7 @@ final readonly class LocalOnlyPublicClassMethodRule implements Rule
                     ->file($filePath)
                     ->line($line)
                     ->tip(RuleTips::NARROW_SCOPE)
+                    ->identifier('public.method.unused')
                     ->build();
             }
         }
