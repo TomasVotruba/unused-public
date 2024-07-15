@@ -53,19 +53,18 @@ final readonly class PublicPropertyFetchCollector implements Collector
             return null;
         }
 
-        $propertyFetcherType = $scope->getType($node->var);
-        if (! $propertyFetcherType instanceof TypeWithClassName) {
-            return null;
-        }
-
         $classReflection = $scope->getClassReflection();
         if ($classReflection instanceof ClassReflection && $this->classTypeDetector->isTestClass($classReflection)) {
             return null;
         }
 
-        $className = $propertyFetcherType->getClassName();
-        $propertyName = $node->name->toString();
+        $result = [];
+        $propertyFetcherType = $scope->getType($node->var);
+        foreach($propertyFetcherType->getObjectClassReflections() as $classReflection) {
+            $propertyName = $node->name->toString();
+            $result[] = $classReflection->getName() . '::' . $propertyName;
+        }
 
-        return [$className . '::' . $propertyName];
+        return $result;
     }
 }
