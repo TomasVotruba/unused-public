@@ -19,6 +19,7 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\Local
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticPropertyViaStatic;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UsedInTestCaseOnly;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\StaticUsedInTestCaseOnly;
 
 final class UnusedPublicPropertyRuleTest extends RuleTestCase
 {
@@ -99,6 +100,12 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             [[$errorMessage1, 7, RuleTips::SOLUTION_MESSAGE]],
         ];
 
+        $errorMessage1 = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, StaticUsedInTestCaseOnly::class, 'property');
+        yield [
+            [__DIR__ . '/Fixture/StaticUsedInTestCaseOnly.php', __DIR__ . '/Source/TestCaseUser.php'],
+            [[$errorMessage1, 7, RuleTips::SOLUTION_MESSAGE]],
+        ];
+
         yield [[__DIR__ . '/Fixture/plain.php', __DIR__ . '/Source/PublicPropertyClass.php'], []];
 
         yield [
@@ -112,6 +119,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/UsedInUnionA.php', __DIR__ . '/Fixture/UsedInUnionB.php', __DIR__ . '/Source/UsedInUnion.php'], []];
         yield [[__DIR__ . '/Fixture/UsedInUnionA.php', __DIR__ . '/Fixture/UsedInUnionB.php', __DIR__ . '/Source/UsedInUnionPhpdoc.php'], []];
+        yield [[__DIR__ . '/Fixture/StaticUsedInUnionA.php', __DIR__ . '/Fixture/StaticUsedInUnionB.php', __DIR__ . '/Source/StaticUsedInUnion.php'], []];
 
     }
 
