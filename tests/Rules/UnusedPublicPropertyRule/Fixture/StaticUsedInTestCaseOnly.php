@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rules\UnusedPublicPropertyRule\Fixture;
+namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture;
 
 final class StaticUsedInTestCaseOnly
 {
