@@ -9,6 +9,7 @@ use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Rules\UnusedPublicPropertyRule\Fixture\StaticUsedInTestCaseOnly;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
@@ -96,6 +97,12 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         $errorMessage1 = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, UsedInTestCaseOnly::class, 'property');
         yield [
             [__DIR__ . '/Fixture/UsedInTestCaseOnly.php', __DIR__ . '/Source/TestCaseUser.php'],
+            [[$errorMessage1, 7, RuleTips::SOLUTION_MESSAGE]],
+        ];
+
+        $errorMessage1 = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, StaticUsedInTestCaseOnly::class, 'property');
+        yield [
+            [__DIR__ . '/Fixture/StaticUsedInTestCaseOnly.php', __DIR__ . '/Source/TestCaseUser.php'],
             [[$errorMessage1, 7, RuleTips::SOLUTION_MESSAGE]],
         ];
 
