@@ -120,7 +120,6 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/UsedInUnionA.php', __DIR__ . '/Fixture/UsedInUnionB.php', __DIR__ . '/Source/UsedInUnion.php'], []];
         yield [[__DIR__ . '/Fixture/UsedInUnionA.php', __DIR__ . '/Fixture/UsedInUnionB.php', __DIR__ . '/Source/UsedInUnionPhpdoc.php'], []];
         yield [[__DIR__ . '/Fixture/StaticUsedInUnionA.php', __DIR__ . '/Fixture/StaticUsedInUnionB.php', __DIR__ . '/Source/StaticUsedInUnion.php'], []];
-        yield [[__DIR__ . '/Fixture/StaticUsedInUnionA.php', __DIR__ . '/Fixture/StaticUsedInUnionB.php', __DIR__ . '/Source/StaticUsedInUnion.php'], []];
 
     }
 
