@@ -63,9 +63,14 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
             $classType = $scope->getType($node->class);
         }
         $result = [];
-        foreach($classType->getObjectClassNames() as $className) {
+        foreach($classType->getObjectClassReflections() as $classReflection) {
             $propertyName = $node->name->toString();
-            $result[] = $className . '::' . $propertyName;
+
+            if (!$classReflection->hasProperty($propertyName)) {
+                continue;
+            }
+            $propertyReflection = $classReflection->getProperty($propertyName, $scope);
+            $result[] = $propertyReflection->getDeclaringClass()->getName() . '::' . $propertyName;
         }
 
         return $result;
