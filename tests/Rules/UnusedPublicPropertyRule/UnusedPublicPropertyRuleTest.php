@@ -32,6 +32,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/PropertyUsedViaSubClass.php'], []];
+        yield [[__DIR__ . '/Fixture/StaticPropertyUsedViaSubClass.php'], []];
 
         $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, LocalyUsedPublicProperty::class, 'name');
         yield [[__DIR__ . '/Fixture/LocalyUsedPublicProperty.php'],
