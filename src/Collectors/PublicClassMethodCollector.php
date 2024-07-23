@@ -17,7 +17,7 @@ use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 /**
  * @implements Collector<ClassMethod, array{class-string, string, int}|null>
  */
-final readonly class PublicClassMethodCollector implements Collector
+final class PublicClassMethodCollector implements Collector
 {
     /**
      * @var string[]
@@ -37,12 +37,36 @@ final readonly class PublicClassMethodCollector implements Collector
         'Illuminate\Support\ServiceProvider',
     ];
 
-    public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private PublicClassMethodMatcher $publicClassMethodMatcher,
-        private MethodTypeDetector $methodTypeDetector,
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\PublicClassMethodMatcher
+     */
+    private $publicClassMethodMatcher;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\MethodTypeDetector
+     */
+    private $methodTypeDetector;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(ApiDocStmtAnalyzer $apiDocStmtAnalyzer, PublicClassMethodMatcher $publicClassMethodMatcher, MethodTypeDetector $methodTypeDetector, Configuration $configuration)
+    {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->publicClassMethodMatcher = $publicClassMethodMatcher;
+        $this->methodTypeDetector = $methodTypeDetector;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -98,7 +122,7 @@ final readonly class PublicClassMethodCollector implements Collector
     private function shouldSkip(ClassReflection $classReflection, ClassMethod $classMethod, Scope $scope): bool
     {
         // skip acceptance tests, codeception
-        if (str_ends_with($classReflection->getName(), 'Cest')) {
+        if (substr_compare($classReflection->getName(), 'Cest', -strlen('Cest')) === 0) {
             return true;
         }
 

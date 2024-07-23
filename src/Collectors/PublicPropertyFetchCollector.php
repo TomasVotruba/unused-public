@@ -11,19 +11,30 @@ use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
  * @implements Collector<PropertyFetch, string[]>
  */
-final readonly class PublicPropertyFetchCollector implements Collector
+final class PublicPropertyFetchCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    public function __construct(Configuration $configuration, ClassTypeDetector $classTypeDetector)
+    {
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     /**
@@ -60,10 +71,10 @@ final readonly class PublicPropertyFetchCollector implements Collector
 
         $result = [];
         $propertyFetcherType = $scope->getType($node->var);
-        foreach($propertyFetcherType->getObjectClassReflections() as $classReflection) {
+        foreach ($propertyFetcherType->getObjectClassReflections() as $classReflection) {
             $propertyName = $node->name->toString();
 
-            if (!$classReflection->hasProperty($propertyName)) {
+            if (! $classReflection->hasProperty($propertyName)) {
                 continue;
             }
             $propertyReflection = $classReflection->getProperty($propertyName, $scope);

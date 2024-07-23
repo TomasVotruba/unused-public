@@ -17,12 +17,24 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<StaticPropertyFetch, string[]>
  */
-final readonly class PublicStaticPropertyFetchCollector implements Collector
+final class PublicStaticPropertyFetchCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    public function __construct(Configuration $configuration, ClassTypeDetector $classTypeDetector)
+    {
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function getNodeType(): string
@@ -36,11 +48,11 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
-        if (!$this->configuration->isUnusedPropertyEnabled()) {
+        if (! $this->configuration->isUnusedPropertyEnabled()) {
             return null;
         }
 
-        if (!$node->name instanceof Identifier) {
+        if (! $node->name instanceof Identifier) {
             return null;
         }
 
@@ -63,10 +75,10 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
             $classType = $scope->getType($node->class);
         }
         $result = [];
-        foreach($classType->getObjectClassReflections() as $classReflection) {
+        foreach ($classType->getObjectClassReflections() as $classReflection) {
             $propertyName = $node->name->toString();
 
-            if (!$classReflection->hasProperty($propertyName)) {
+            if (! $classReflection->hasProperty($propertyName)) {
                 continue;
             }
             $propertyReflection = $classReflection->getProperty($propertyName, $scope);
