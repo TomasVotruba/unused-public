@@ -88,13 +88,13 @@ final readonly class PublicPropertyCollector implements Collector
             return false;
         }
 
-        $propertyReflection = $classReflection->getProperty($propertyName, $scope);
+        $extendedPropertyReflection = $classReflection->getProperty($propertyName, $scope);
         // don't inherit doc from a private property
-        if ($propertyReflection->isPrivate()) {
+        if ($extendedPropertyReflection->isPrivate()) {
             return false;
         }
 
-        $docComment = $propertyReflection->getDocComment();
+        $docComment = $extendedPropertyReflection->getDocComment();
         if ($docComment !== null && $this->apiDocStmtAnalyzer->isApiDocComment($docComment)) {
             return true;
         }
