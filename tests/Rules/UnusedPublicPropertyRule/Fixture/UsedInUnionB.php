@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture;
 
-class UsedInUnionB {
+class UsedInUnionB
+{
     public float $amount;
 }

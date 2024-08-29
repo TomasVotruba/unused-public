@@ -8,7 +8,8 @@ class PropertyUsedViaSubClass
 {
     private SubClass $prop;
 
-    protected function doFoo() {
+    protected function doFoo()
+    {
         $this->prop->x = 1;
     }
 }

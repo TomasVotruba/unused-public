@@ -6,10 +6,6 @@ parameters:
         return_type: 99
         param_type: 99
         property_type: 99
-        # print_suggestions: true
-
-    cognitive_complexity:
-        function: 11
 
     level: 8
 
@@ -17,13 +13,14 @@ parameters:
         - src
         - tests
 
-    checkGenericClassInNonGenericObjectType: false
-
     excludePaths:
         - "*/Fixture/*"
         - "*/Source/*"
 
     ignoreErrors:
+        -
+            identifier: missingType.generics
+
         # overly detailed
         -
             message: '#testRule\(\) has parameter (.*?) with no value type specified in iterable type array#'
