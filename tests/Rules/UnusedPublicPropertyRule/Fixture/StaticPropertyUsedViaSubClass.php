@@ -8,7 +8,8 @@ class StaticPropertyUsedViaSubClass
 {
     private SubClass $prop;
 
-    protected function doFoo() {
+    protected function doFoo()
+    {
         $this->prop::$x = 1;
     }
 }
@@ -19,5 +20,5 @@ class SubClass extends BaseClass
 
 class BaseClass
 {
-    static public int $x;
+    public static int $x;
 }

@@ -11,7 +11,6 @@ use PhpParser\Node\Identifier;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\TypeWithClassName;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
@@ -60,12 +59,13 @@ final readonly class PublicPropertyFetchCollector implements Collector
 
         $result = [];
         $propertyFetcherType = $scope->getType($node->var);
-        foreach($propertyFetcherType->getObjectClassReflections() as $classReflection) {
+        foreach ($propertyFetcherType->getObjectClassReflections() as $classReflection) {
             $propertyName = $node->name->toString();
 
-            if (!$classReflection->hasProperty($propertyName)) {
+            if (! $classReflection->hasProperty($propertyName)) {
                 continue;
             }
+
             $propertyReflection = $classReflection->getProperty($propertyName, $scope);
             $result[] = $propertyReflection->getDeclaringClass()->getName() . '::' . $propertyName;
         }

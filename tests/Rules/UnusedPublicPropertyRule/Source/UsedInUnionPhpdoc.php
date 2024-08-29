@@ -8,6 +8,7 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UsedI
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\UsedInUnionB;
 
 /** @param UsedInUnionA|UsedInUnionB $aOrB */
-function doFoo($aOrB): void {
+function doFoo($aOrB): void
+{
     echo $aOrB->amount;
 }
