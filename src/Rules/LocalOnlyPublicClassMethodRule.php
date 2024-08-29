@@ -21,7 +21,7 @@ use TomasVotruba\UnusedPublic\Utils\Strings;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule\LocalOnlyPublicClassMethodRuleTest
  */
-final readonly class LocalOnlyPublicClassMethodRule implements Rule
+final class LocalOnlyPublicClassMethodRule implements Rule
 {
     /**
      * @var string
@@ -30,12 +30,36 @@ final readonly class LocalOnlyPublicClassMethodRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should be turned protected/private';
 
-    public function __construct(
-        private Configuration $configuration,
-        private UsedMethodAnalyzer $usedMethodAnalyzer,
-        private TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private NodeCollectorExtractor $nodeCollectorExtractor,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\UsedMethodAnalyzer
+     */
+    private $usedMethodAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider
+     */
+    private $templateMethodCallsProvider;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\NodeCollectorExtractor
+     */
+    private $nodeCollectorExtractor;
+
+    public function __construct(Configuration $configuration, UsedMethodAnalyzer $usedMethodAnalyzer, TemplateMethodCallsProvider $templateMethodCallsProvider, NodeCollectorExtractor $nodeCollectorExtractor)
+    {
+        $this->configuration = $configuration;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
+        $this->templateMethodCallsProvider = $templateMethodCallsProvider;
+        $this->nodeCollectorExtractor = $nodeCollectorExtractor;
     }
 
     public function getNodeType(): string

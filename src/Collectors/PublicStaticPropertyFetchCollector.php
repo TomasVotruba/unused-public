@@ -17,12 +17,24 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<StaticPropertyFetch, string[]>
  */
-final readonly class PublicStaticPropertyFetchCollector implements Collector
+final class PublicStaticPropertyFetchCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    public function __construct(Configuration $configuration, ClassTypeDetector $classTypeDetector)
+    {
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function getNodeType(): string
@@ -57,7 +69,9 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
             return null;
         }
 
-        $classType = $node->class instanceof Name ? $scope->resolveTypeByName($node->class) : $scope->getType($node->class);
+        $classType = $node->class instanceof Name ? $scope->resolveTypeByName($node->class) : $scope->getType(
+            $node->class
+        );
 
         $result = [];
         foreach ($classType->getObjectClassReflections() as $classReflection) {
