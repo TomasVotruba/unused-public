@@ -28,7 +28,7 @@ jobs:
             -   run: cp build/composer-php-72.json composer.json
 
             # clear the dev files
-            -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
+            -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml composer-dependency-analyser.php
 
             # setup git user
             -
