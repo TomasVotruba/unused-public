@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Finder;
 
+/**
+ * @see \TomasVotruba\UnusedPublic\Tests\Templates\TemplateFilesFinder\TemplateFilesFinderTest
+ */
 final class TemplateFilesFinder
 {
     /**
@@ -15,10 +18,12 @@ final class TemplateFilesFinder
         $templateFilePaths = [];
 
         foreach ($directories as $directory) {
+            $currentTemplateFilePathsL0 = glob($directory . '/*.' . $suffix);
             $currentTemplateFilePathsL1 = glob($directory . '/*/*.' . $suffix);
             $currentTemplateFilePathsL2 = glob($directory . '/**/*/*.' . $suffix);
 
             $currentTemplateFilePaths = array_merge(
+                $currentTemplateFilePathsL0 === false ? [] : $currentTemplateFilePathsL0,
                 $currentTemplateFilePathsL1 === false ? [] : $currentTemplateFilePathsL1,
                 $currentTemplateFilePathsL2 === false ? [] : $currentTemplateFilePathsL2
             );
