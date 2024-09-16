@@ -57,7 +57,9 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
             return null;
         }
 
-        $classType = $node->class instanceof Name ? $scope->resolveTypeByName($node->class) : $scope->getType($node->class);
+        $classType = $node->class instanceof Name ? $scope->resolveTypeByName($node->class) : $scope->getType(
+            $node->class
+        );
 
         $result = [];
         foreach ($classType->getObjectClassReflections() as $classReflection) {
