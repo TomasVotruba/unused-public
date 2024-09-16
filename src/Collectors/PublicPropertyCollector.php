@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<InClassNode, array<array{class-string, string, int}>>
+ * @implements Collector<InClassNode, non-empty-array<array{class-string, string, int}>>
  */
 final readonly class PublicPropertyCollector implements Collector
 {
@@ -40,7 +40,7 @@ final readonly class PublicPropertyCollector implements Collector
 
     /**
      * @param InClassNode $node
-     * @return array<array{string, string, int}>|null
+     * @return non-empty-array<array{string, string, int}>|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
@@ -77,6 +77,10 @@ final readonly class PublicPropertyCollector implements Collector
 
                 $publicPropertyNames[] = [$classReflection->getName(), $propertyName, $node->getLine()];
             }
+        }
+
+        if ($publicPropertyNames === []) {
+            return null;
         }
 
         return $publicPropertyNames;

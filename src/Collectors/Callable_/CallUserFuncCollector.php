@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<FuncCall, array<string>|null>
+ * @implements Collector<FuncCall, non-empty-array<string>|null>
  */
 final readonly class CallUserFuncCollector implements Collector
 {

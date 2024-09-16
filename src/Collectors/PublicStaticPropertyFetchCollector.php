@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<StaticPropertyFetch, string[]>
+ * @implements Collector<StaticPropertyFetch, non-empty-array<string>|null>
  */
 final readonly class PublicStaticPropertyFetchCollector implements Collector
 {
@@ -32,7 +32,7 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
 
     /**
      * @param StaticPropertyFetch $node
-     * @return string[]|null
+     * @return non-empty-array<string>|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
@@ -71,6 +71,10 @@ final readonly class PublicStaticPropertyFetchCollector implements Collector
 
             $propertyReflection = $classReflection->getProperty($propertyName, $scope);
             $result[] = $propertyReflection->getDeclaringClass()->getName() . '::' . $propertyName;
+        }
+
+        if ($result === []) {
+            return null;
         }
 
         return $result;
