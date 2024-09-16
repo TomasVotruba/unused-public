@@ -19,10 +19,10 @@ final class BladeRegex
     public const TAG_REGEX = '#@\w+(?<contents>.*?)\n#';
 
     /**
-     * @see https://regex101.com/r/G7zAue/1
+     * @see https://regex101.com/r/P1EaIR/1
      * @var string
      */
-    public const METHOD_CALL_REGEX = '#\w+(\-\>|::)(?<desired_name>\w+)\(\)#';
+    public const METHOD_CALL_REGEX = '#\w+(\-\>|::)(?<desired_name>\w+)\((.*?)\)#';
 
     /**
      * @var string
