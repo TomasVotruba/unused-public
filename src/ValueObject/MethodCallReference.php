@@ -4,13 +4,31 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\ValueObject;
 
-final readonly class MethodCallReference
+final class MethodCallReference
 {
-    public function __construct(
-        private string $class,
-        private string $method,
-        private bool $isLocal
-    ) {
+    /**
+     * @readonly
+     * @var string
+     */
+    private $class;
+
+    /**
+     * @readonly
+     * @var string
+     */
+    private $method;
+
+    /**
+     * @readonly
+     * @var bool
+     */
+    private $isLocal;
+
+    public function __construct(string $class, string $method, bool $isLocal)
+    {
+        $this->class = $class;
+        $this->method = $method;
+        $this->isLocal = $isLocal;
     }
 
     public function getClass(): string
