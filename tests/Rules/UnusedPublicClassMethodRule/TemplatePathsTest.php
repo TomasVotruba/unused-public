@@ -14,6 +14,7 @@ use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\DontSkipTwigEntityWithMethods;
 
 final class TemplatePathsTest extends RuleTestCase
 {
@@ -26,7 +27,13 @@ final class TemplatePathsTest extends RuleTestCase
 
     public static function provideDataWithTwigTemplates(): Iterator
     {
-        yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php'], []];
+        $errorMessage = sprintf(
+            UnusedPublicClassMethodRule::ERROR_MESSAGE,
+            DontSkipTwigEntityWithMethods::class,
+            'getComplicatedValue'
+        );
+
+        yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php', __DIR__ . '/Fixture/DontSkipTwigEntityWithMethods.php'], [[$errorMessage, 9]]];
 
         // this method is required by parent contract, and should be skipped
         yield [[
