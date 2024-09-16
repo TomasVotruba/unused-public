@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<StaticMethodCallableNode, array<string>|null>
+ * @implements Collector<StaticMethodCallableNode, non-empty-array<string>|null>
  */
 final readonly class StaticMethodCallableCollector implements Collector
 {
@@ -32,7 +32,7 @@ final readonly class StaticMethodCallableCollector implements Collector
 
     /**
      * @param StaticMethodCallableNode $node
-     * @return string[]|null
+     * @return non-empty-array<string>|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {

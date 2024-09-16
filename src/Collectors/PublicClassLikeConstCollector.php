@@ -13,7 +13,7 @@ use TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<ClassConst, array<array{class-string, string, int}>>
+ * @implements Collector<ClassConst, non-empty-array<array{class-string, string, int}>|null>
  */
 final readonly class PublicClassLikeConstCollector implements Collector
 {
@@ -30,12 +30,12 @@ final readonly class PublicClassLikeConstCollector implements Collector
 
     /**
      * @param ClassConst $node
-     * @return array<array{class-string, string, int}>|null
+     * @return non-empty-array<array{class-string, string, int}>|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
         if (! $this->configuration->isUnusedConstantsEnabled()) {
-            return [];
+            return null;
         }
 
         if (! $node->isPublic()) {
@@ -54,6 +54,10 @@ final readonly class PublicClassLikeConstCollector implements Collector
         $constantNames = [];
         foreach ($node->consts as $constConst) {
             $constantNames[] = [$classReflection->getName(), $constConst->name->toString(), $node->getLine()];
+        }
+
+        if ([] === $constantNames) {
+            return null;
         }
 
         return $constantNames;

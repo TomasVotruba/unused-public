@@ -17,7 +17,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\ValueObject\ClassAndMethodArrayExprs;
 
 /**
- * @implements Collector<AttributeGroup, array<string>|null>
+ * @implements Collector<AttributeGroup, non-empty-array<string>|null>
  */
 final readonly class AttributeCallableCollector implements Collector
 {
