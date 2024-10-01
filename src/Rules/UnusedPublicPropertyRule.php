@@ -20,7 +20,7 @@ use TomasVotruba\UnusedPublic\Utils\Arrays;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\UnusedPublicPropertyRuleTest
  */
-final readonly class UnusedPublicPropertyRule implements Rule
+final class UnusedPublicPropertyRule implements Rule
 {
     /**
      * @var string
@@ -29,9 +29,15 @@ final readonly class UnusedPublicPropertyRule implements Rule
      */
     public const ERROR_MESSAGE = 'Public property "%s::$%s" is never used';
 
-    public function __construct(
-        private Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -53,10 +59,10 @@ final readonly class UnusedPublicPropertyRule implements Rule
         $publicPropertyFetchCollector = $node->get(PublicPropertyFetchCollector::class);
         $publicStaticPropertyFetchCollector = $node->get(PublicStaticPropertyFetchCollector::class);
 
-        $usedProperties = [
-            ...Arrays::flatten($publicPropertyFetchCollector),
-            ...Arrays::flatten($publicStaticPropertyFetchCollector),
-        ];
+        $usedProperties = array_merge(
+            Arrays::flatten($publicPropertyFetchCollector),
+            Arrays::flatten($publicStaticPropertyFetchCollector)
+        );
 
         $ruleErrors = [];
 

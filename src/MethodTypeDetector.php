@@ -15,7 +15,7 @@ final class MethodTypeDetector
     public function isTestMethod(ClassMethod $classMethod, Scope $scope): bool
     {
         $classMethodName = $classMethod->name->toString();
-        if (str_starts_with($classMethodName, 'test')) {
+        if (strncmp($classMethodName, 'test', strlen('test')) === 0) {
             return true;
         }
 
@@ -30,7 +30,7 @@ final class MethodTypeDetector
             return false;
         }
 
-        return str_contains($extendedMethodReflection->getDocComment(), '@test');
+        return strpos($extendedMethodReflection->getDocComment(), '@test') !== false;
     }
 
     public function isTraitMethod(ClassMethod $classMethod, Scope $scope): bool

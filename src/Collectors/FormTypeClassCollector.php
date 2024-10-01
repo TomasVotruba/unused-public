@@ -16,11 +16,17 @@ use TomasVotruba\UnusedPublic\Configuration;
  * Match Symfony data_class element in forms types, as those use magic setters/getters
  * @implements Collector<ArrayItem, non-empty-array<string>|null>
  */
-final readonly class FormTypeClassCollector implements Collector
+final class FormTypeClassCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
