@@ -10,7 +10,6 @@ use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\Constant\ConstantArrayType;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
@@ -57,11 +56,12 @@ final readonly class CallUserFuncCollector implements Collector
         }
 
         $callableType = $scope->getType($args[0]->value);
-        if (! $callableType instanceof ConstantArrayType) {
+        if (count($callableType->getConstantArrays()) !== 1) {
             return null;
         }
 
-        $typeAndMethodNames = $callableType->findTypeAndMethodNames();
+        $typeAndMethodNames = $callableType->getConstantArrays()[0]
+            ->findTypeAndMethodNames();
         if ($typeAndMethodNames === []) {
             return null;
         }

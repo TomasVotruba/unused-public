@@ -20,8 +20,3 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.generics
-
-        # overly detailed
-        -
-            message: '#testRule\(\) has parameter (.*?) with no value type specified in iterable type array#'
-            path: tests/Rules
