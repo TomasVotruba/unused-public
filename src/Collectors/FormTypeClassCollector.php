@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Collectors;
 
 use PhpParser\Node;
-use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
-use PHPStan\Type\Constant\ConstantStringType;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -47,10 +46,10 @@ final readonly class FormTypeClassCollector implements Collector
         }
 
         $valueType = $scope->getType($node->value);
-        if (! $valueType instanceof ConstantStringType) {
+        if (count($valueType->getConstantStrings()) !== 1) {
             return null;
         }
 
-        return [$valueType->getValue()];
+        return [$valueType->getConstantStrings()[0]->getValue()];
     }
 }

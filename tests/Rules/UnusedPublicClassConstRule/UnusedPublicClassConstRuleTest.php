@@ -21,6 +21,10 @@ use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\Fixture\Use
 
 final class UnusedPublicClassConstRuleTest extends RuleTestCase
 {
+    /**
+     * @param string[] $filePaths
+     * @param list<array{0: string, 1: int, 2?: string|null}> $expectedErrorMessagesWithLines
+     */
     #[DataProvider('provideData')]
     #[DataProvider('provideDataFromBladeTemplates')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
