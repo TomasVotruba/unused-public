@@ -16,7 +16,7 @@
         "symplify/easy-coding-standard": "^12.3",
         "rector/rector": "^1.2.5",
         "phpunit/phpunit": "^10.5",
-        "tomasvotruba/class-leak": "^0.2.11",
+        "tomasvotruba/class-leak": "^1",
         "tomasvotruba/type-coverage": "^0.3",
         "symplify/easy-ci": "^12.1",
         "shipmonk/composer-dependency-analyser": "^1.7",
