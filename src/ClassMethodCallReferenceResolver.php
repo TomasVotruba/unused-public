@@ -39,7 +39,11 @@ final class ClassMethodCallReferenceResolver
 
         $methodCallReferences = [];
         foreach ($callerType->getReferencedClasses() as $referencedClass) {
-            $methodCallReferences[] = new MethodCallReference($referencedClass, $methodCall->name->toString(), $isLocal);
+            $methodCallReferences[] = new MethodCallReference(
+                $referencedClass,
+                $methodCall->name->toString(),
+                $isLocal
+            );
         }
 
         return $methodCallReferences;

@@ -9,6 +9,7 @@ use PhpParser\Node\Expr;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
+use PHPStan\Type\Constant\ConstantArrayType;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
@@ -45,32 +46,35 @@ final readonly class CallableTypeCollector implements Collector
             return null;
         }
 
-<<<<<<< HEAD:src/Collectors/Callable_/CallableTypeCollector.php
         $callableType = $scope->getType($node);
+        //        $callableType = $scope->getType($args[0]->value);
         if (! $callableType instanceof ConstantArrayType) {
-=======
-        $callableType = $scope->getType($args[0]->value);
-        if (count($callableType->getConstantArrays()) !== 1) {
->>>>>>> 3c5981b (Update to PHPStan 2.0):src/Collectors/Callable_/CallUserFuncCollector.php
             return null;
         }
 
-        $typeAndMethodNames = $callableType->getConstantArrays()[0]
-            ->findTypeAndMethodNames();
-        if ($typeAndMethodNames === []) {
-            return null;
-        }
+        //        $typeAndMethodNames = $callableType->getConstantArrays()[0]
+        //            ->findTypeAndMethodNames();
+        //        if ($typeAndMethodNames === []) {
+        //            return null;
+        //        }
 
         $classMethodReferences = [];
-        foreach ($typeAndMethodNames as $typeAndMethodName) {
-            if ($typeAndMethodName->isUnknown()) {
+        foreach ($callableType->getConstantArrays() as $constantArray) {
+            $typeAndMethodNames = $constantArray->findTypeAndMethodNames();
+            if ($typeAndMethodNames === []) {
                 continue;
             }
 
-            $objectClassNames = $typeAndMethodName->getType()
-                ->getObjectClassNames();
-            foreach ($objectClassNames as $objectClassName) {
-                $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+            foreach ($typeAndMethodNames as $typeAndMethodName) {
+                if ($typeAndMethodName->isUnknown()) {
+                    continue;
+                }
+
+                $objectClassNames = $typeAndMethodName->getType()
+                    ->getObjectClassNames();
+                foreach ($objectClassNames as $objectClassName) {
+                    $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+                }
             }
         }
 
