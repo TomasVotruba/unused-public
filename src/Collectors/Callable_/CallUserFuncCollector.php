@@ -10,7 +10,6 @@ use PhpParser\Node\Expr\FuncCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\Constant\ConstantArrayType;
 use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
@@ -57,25 +56,24 @@ final readonly class CallUserFuncCollector implements Collector
         }
 
         $callableType = $scope->getType($args[0]->value);
-        if (! $callableType instanceof ConstantArrayType) {
-            return null;
-        }
-
-        $typeAndMethodNames = $callableType->findTypeAndMethodNames();
-        if ($typeAndMethodNames === []) {
-            return null;
-        }
 
         $classMethodReferences = [];
-        foreach ($typeAndMethodNames as $typeAndMethodName) {
-            if ($typeAndMethodName->isUnknown()) {
+        foreach ($callableType->getConstantArrays() as $constantArray) {
+            $typeAndMethodNames = $constantArray->findTypeAndMethodNames();
+            if ($typeAndMethodNames === []) {
                 continue;
             }
 
-            $objectClassNames = $typeAndMethodName->getType()
-                ->getObjectClassNames();
-            foreach ($objectClassNames as $objectClassName) {
-                $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+            foreach ($typeAndMethodNames as $typeAndMethodName) {
+                if ($typeAndMethodName->isUnknown()) {
+                    continue;
+                }
+
+                $objectClassNames = $typeAndMethodName->getType()
+                    ->getObjectClassNames();
+                foreach ($objectClassNames as $objectClassName) {
+                    $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+                }
             }
         }
 

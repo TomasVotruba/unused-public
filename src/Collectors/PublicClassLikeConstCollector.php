@@ -56,7 +56,7 @@ final readonly class PublicClassLikeConstCollector implements Collector
             $constantNames[] = [$classReflection->getName(), $constConst->name->toString(), $node->getLine()];
         }
 
-        if ([] === $constantNames) {
+        if ($constantNames === []) {
             return null;
         }
 

@@ -8,11 +8,9 @@ use PhpParser\Node;
 use PhpParser\Node\Attribute;
 use PhpParser\Node\AttributeGroup;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
-use PHPStan\Type\Constant\ConstantStringType;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\ValueObject\ClassAndMethodArrayExprs;
 
@@ -53,8 +51,9 @@ final readonly class AttributeCallableCollector implements Collector
             }
 
             $classType = $scope->getType($classAndMethodArrayExprs->getClassExpr());
-            if ($classType instanceof ConstantStringType) {
-                $className = $classType->getValue();
+            if (count($classType->getConstantStrings()) === 1) {
+                $className = $classType->getConstantStrings()[0]
+                    ->getValue();
             } else {
                 continue;
             }
@@ -81,14 +80,6 @@ final readonly class AttributeCallableCollector implements Collector
 
         $array = $firstArg->value;
         if (count($array->items) !== 2) {
-            return null;
-        }
-
-        if (! $array->items[0] instanceof ArrayItem) {
-            return null;
-        }
-
-        if (! $array->items[1] instanceof ArrayItem) {
             return null;
         }
 

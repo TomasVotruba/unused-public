@@ -18,5 +18,6 @@ final class SkipPublicCallbackMethod
 
 function doFoo()
 {
-    call_user_func([SkipPublicCallbackMethod::class, 'runHere']);
+    $object = new SkipPublicCallbackMethod();
+    call_user_func([$object, 'runHere']);
 }
