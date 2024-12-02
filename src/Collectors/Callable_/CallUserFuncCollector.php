@@ -56,26 +56,24 @@ final readonly class CallUserFuncCollector implements Collector
         }
 
         $callableType = $scope->getType($args[0]->value);
-        if (count($callableType->getConstantArrays()) !== 1) {
-            return null;
-        }
-
-        $typeAndMethodNames = $callableType->getConstantArrays()[0]
-            ->findTypeAndMethodNames();
-        if ($typeAndMethodNames === []) {
-            return null;
-        }
 
         $classMethodReferences = [];
-        foreach ($typeAndMethodNames as $typeAndMethodName) {
-            if ($typeAndMethodName->isUnknown()) {
+        foreach ($callableType->getConstantArrays() as $constantArray) {
+            $typeAndMethodNames = $constantArray->findTypeAndMethodNames();
+            if ($typeAndMethodNames === []) {
                 continue;
             }
 
-            $objectClassNames = $typeAndMethodName->getType()
-                ->getObjectClassNames();
-            foreach ($objectClassNames as $objectClassName) {
-                $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+            foreach ($typeAndMethodNames as $typeAndMethodName) {
+                if ($typeAndMethodName->isUnknown()) {
+                    continue;
+                }
+
+                $objectClassNames = $typeAndMethodName->getType()
+                    ->getObjectClassNames();
+                foreach ($objectClassNames as $objectClassName) {
+                    $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+                }
             }
         }
 
