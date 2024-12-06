@@ -10,7 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\Callable_\AttributeCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\Callable_\CallUserFuncCollector;
+use TomasVotruba\UnusedPublic\Collectors\Callable_\CallbackFunctionCollector;
 use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
@@ -174,6 +174,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
 
         yield [[__DIR__ . '/Fixture/plain.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/plain-call-user-func.php', __DIR__ . '/Source/Caller1.php'], []];
+        yield [[__DIR__ . '/Fixture/plain-call-shutdown-function.php', __DIR__ . '/Source/Caller1.php'], []];
         yield [[__DIR__ . '/Fixture/SkipCrashBug89.php.inc'], []];
 
         yield [[__DIR__ . '/Fixture/SkipJsonSerialize.php'], []];
@@ -203,7 +204,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             // callables
             self::getContainer()->getByType(StaticMethodCallableCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
-            self::getContainer()->getByType(CallUserFuncCollector::class),
+            self::getContainer()->getByType(CallbackFunctionCollector::class),
         ];
     }
 

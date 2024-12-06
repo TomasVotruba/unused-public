@@ -7,7 +7,7 @@ namespace TomasVotruba\UnusedPublic;
 use PHPStan\Node\CollectedDataNode;
 use TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper;
 use TomasVotruba\UnusedPublic\Collectors\Callable_\AttributeCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\Callable_\CallUserFuncCollector;
+use TomasVotruba\UnusedPublic\Collectors\Callable_\CallbackFunctionCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallableCollector;
@@ -48,7 +48,7 @@ final readonly class NodeCollectorExtractor
             $collectedDataNode->get(StaticMethodCallCollector::class),
             $collectedDataNode->get(StaticMethodCallableCollector::class),
             $collectedDataNode->get(AttributeCallableCollector::class),
-            $collectedDataNode->get(CallUserFuncCollector::class),
+            $collectedDataNode->get(CallbackFunctionCollector::class),
         ];
     }
 }
