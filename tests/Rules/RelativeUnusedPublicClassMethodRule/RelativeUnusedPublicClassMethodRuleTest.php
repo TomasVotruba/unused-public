@@ -10,7 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\Callable_\AttributeCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\Callable_\CallbackFunctionCollector;
+use TomasVotruba\UnusedPublic\Collectors\Callable_\CallableTypeCollector;
 use TomasVotruba\UnusedPublic\Collectors\FormTypeClassCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallableCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
@@ -64,7 +64,7 @@ final class RelativeUnusedPublicClassMethodRuleTest extends RuleTestCase
             // callables
             self::getContainer()->getByType(StaticMethodCallableCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
-            self::getContainer()->getByType(CallbackFunctionCollector::class),
+            self::getContainer()->getByType(CallableTypeCollector::class),
         ];
     }
 

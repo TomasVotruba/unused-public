@@ -10,7 +10,7 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\UnusedPublic\Collectors\Callable_\AttributeCallableCollector;
-use TomasVotruba\UnusedPublic\Collectors\Callable_\CallbackFunctionCollector;
+use TomasVotruba\UnusedPublic\Collectors\Callable_\CallableTypeCollector;
 use TomasVotruba\UnusedPublic\Collectors\MethodCall\MethodCallCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicClassMethodCollector;
 use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector;
@@ -80,7 +80,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
             self::getContainer()->getByType(MethodCallCollector::class),
             self::getContainer()->getByType(StaticMethodCallCollector::class),
             self::getContainer()->getByType(AttributeCallableCollector::class),
-            self::getContainer()->getByType(CallbackFunctionCollector::class),
+            self::getContainer()->getByType(CallableTypeCollector::class),
         ];
     }
 
