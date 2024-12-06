@@ -10,4 +10,6 @@ namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixt
 
 myFunc([$caller1, 'callIt']);
 
-function myFunc(callable $c) {}
+function myFunc(callable $c)
+{
+}

@@ -70,7 +70,7 @@ final readonly class UnusedPublicClassConstRule implements Rule
                 if ($declarationGroup === null) {
                     continue;
                 }
-                
+
                 foreach ($declarationGroup as [$className, $constantName, $line]) {
                     if ($this->isClassConstantUsed(
                         $className,

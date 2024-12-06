@@ -11,6 +11,9 @@ namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixt
 $c = new MyClass();
 $c->myMethod([$caller1, 'callIt']);
 
-class MyClass {
-    function myMethod(callable $c) {}
+class MyClass
+{
+    public function myMethod(callable $c)
+    {
+    }
 }
