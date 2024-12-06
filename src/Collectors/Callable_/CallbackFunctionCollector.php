@@ -17,7 +17,7 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<FuncCall, non-empty-array<string>|null>
  */
-final readonly class CallUserFuncCollector implements Collector
+final readonly class CallbackFunctionCollector implements Collector
 {
     public function __construct(
         private Configuration $configuration,
@@ -92,6 +92,10 @@ final readonly class CallUserFuncCollector implements Collector
             return true;
         }
 
-        return strtolower($node->name->toString()) !== 'call_user_func';
+        return !in_array(
+            strtolower($node->name->toString()),
+            ['call_user_func', 'register_shutdown_function'],
+            true
+        );
     }
 }
