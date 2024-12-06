@@ -17,17 +17,29 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<InClassNode, non-empty-array<array{class-string, string, int}>>
  */
-final readonly class PublicPropertyCollector implements Collector
+final class PublicPropertyCollector implements Collector
 {
     /**
      * @var array<class-string<Component>>
      */
     private const CLASSES_TO_SKIP = ['Livewire\Component'];
 
-    public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private Configuration $configuration
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(ApiDocStmtAnalyzer $apiDocStmtAnalyzer, Configuration $configuration)
+    {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->configuration = $configuration;
     }
 
     /**

@@ -19,11 +19,17 @@ use TomasVotruba\UnusedPublic\ValueObject\ClassAndMethodArrayExprs;
 /**
  * @implements Collector<AttributeGroup, non-empty-array<string>|null>
  */
-final readonly class AttributeCallableCollector implements Collector
+final class AttributeCallableCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string

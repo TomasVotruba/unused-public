@@ -16,12 +16,24 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<Expr\Array_, non-empty-array<string>|null>
  */
-final readonly class CallableTypeCollector implements Collector
+final class CallableTypeCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ClassTypeDetector
+     */
+    private $classTypeDetector;
+
+    public function __construct(Configuration $configuration, ClassTypeDetector $classTypeDetector)
+    {
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function getNodeType(): string

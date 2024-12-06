@@ -14,11 +14,17 @@ use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallableCollecto
 use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\ValueObject\LocalAndExternalMethodCallReferences;
 
-final readonly class NodeCollectorExtractor
+final class NodeCollectorExtractor
 {
-    public function __construct(
-        private MethodCallCollectorMapper $methodCallCollectorMapper
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\CollectorMapper\MethodCallCollectorMapper
+     */
+    private $methodCallCollectorMapper;
+
+    public function __construct(MethodCallCollectorMapper $methodCallCollectorMapper)
+    {
+        $this->methodCallCollectorMapper = $methodCallCollectorMapper;
     }
 
     public function extractLocalAndExternalMethodCallReferences(

@@ -9,14 +9,20 @@ use Webmozart\Assert\Assert;
 /**
  * @inspired by https://github.com/phpstan/phpstan-symfony/blob/1.2.x/src/Symfony/Configuration.php
  */
-final readonly class Configuration
+final class Configuration
 {
+    /**
+     * @var array<string, mixed>
+     * @readonly
+     */
+    private $parameters;
+
     /**
      * @param array<string, mixed> $parameters
      */
-    public function __construct(
-        private array $parameters
-    ) {
+    public function __construct(array $parameters)
+    {
+        $this->parameters = $parameters;
     }
 
     public function isUnusedMethodEnabled(): bool
@@ -35,7 +41,10 @@ final readonly class Configuration
         return is_numeric($methods);
     }
 
-    public function getMaximumRelativeUnusedPublicMethod(): float|int
+    /**
+     * @return float|int
+     */
+    public function getMaximumRelativeUnusedPublicMethod()
     {
         return $this->parameters['methods'] ?? 0;
     }

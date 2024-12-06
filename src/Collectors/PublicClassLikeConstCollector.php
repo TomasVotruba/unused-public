@@ -15,12 +15,24 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<ClassConst, non-empty-array<array{class-string, string, int}>|null>
  */
-final readonly class PublicClassLikeConstCollector implements Collector
+final class PublicClassLikeConstCollector implements Collector
 {
-    public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\ApiDocStmtAnalyzer
+     */
+    private $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\UnusedPublic\Configuration
+     */
+    private $configuration;
+
+    public function __construct(ApiDocStmtAnalyzer $apiDocStmtAnalyzer, Configuration $configuration)
+    {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
