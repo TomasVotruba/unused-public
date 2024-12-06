@@ -15,9 +15,9 @@ use TomasVotruba\UnusedPublic\ClassTypeDetector;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
- * @implements Collector<FuncCall, non-empty-array<string>|null>
+ * @implements Collector<Expr\Array_, non-empty-array<string>|null>
  */
-final readonly class CallbackFunctionCollector implements Collector
+final readonly class CallableTypeCollector implements Collector
 {
     public function __construct(
         private Configuration $configuration,
@@ -27,25 +27,16 @@ final readonly class CallbackFunctionCollector implements Collector
 
     public function getNodeType(): string
     {
-        return FuncCall::class;
+        return Expr\Array_::class;
     }
 
     /**
-     * @param FuncCall $node
+     * @param Expr\Array_ $node
      * @return string[]|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
         if (! $this->configuration->shouldCollectMethods()) {
-            return null;
-        }
-
-        if ($this->shouldSkipNode($node)) {
-            return null;
-        }
-
-        $args = $node->getArgs();
-        if (count($args) < 1) {
             return null;
         }
 
@@ -56,7 +47,7 @@ final readonly class CallbackFunctionCollector implements Collector
             return null;
         }
 
-        $callableType = $scope->getType($args[0]->value);
+        $callableType = $scope->getType($node);
         if (! $callableType instanceof ConstantArrayType) {
             return null;
         }
@@ -82,20 +73,4 @@ final readonly class CallbackFunctionCollector implements Collector
         return $classMethodReferences;
     }
 
-    /**
-     * @param FuncCall $node
-     */
-    private function shouldSkipNode(Node $node): bool
-    {
-        // unable to resolve method name
-        if ($node->name instanceof Expr) {
-            return true;
-        }
-
-        return !in_array(
-            strtolower($node->name->toString()),
-            ['call_user_func', 'register_shutdown_function'],
-            true
-        );
-    }
 }
