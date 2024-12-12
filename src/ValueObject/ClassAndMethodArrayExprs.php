@@ -6,12 +6,22 @@ namespace TomasVotruba\UnusedPublic\ValueObject;
 
 use PhpParser\Node\Expr;
 
-final readonly class ClassAndMethodArrayExprs
+final class ClassAndMethodArrayExprs
 {
-    public function __construct(
-        private Expr $classExpr,
-        private Expr $methodExpr
-    ) {
+    /**
+     * @readonly
+     */
+    private Expr $classExpr;
+
+    /**
+     * @readonly
+     */
+    private Expr $methodExpr;
+
+    public function __construct(Expr $classExpr, Expr $methodExpr)
+    {
+        $this->classExpr = $classExpr;
+        $this->methodExpr = $methodExpr;
     }
 
     public function getClassExpr(): Expr

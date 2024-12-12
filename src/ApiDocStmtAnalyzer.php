@@ -15,7 +15,7 @@ final class ApiDocStmtAnalyzer
     {
         if ($classReflection->getResolvedPhpDoc() instanceof ResolvedPhpDocBlock) {
             $resolvedPhpDoc = $classReflection->getResolvedPhpDoc();
-            if (str_contains($resolvedPhpDoc->getPhpDocString(), '@api')) {
+            if (strpos($resolvedPhpDoc->getPhpDocString(), '@api') !== false) {
                 return true;
             }
         }
@@ -30,6 +30,6 @@ final class ApiDocStmtAnalyzer
 
     public function isApiDocComment(string $docComment): bool
     {
-        return str_contains($docComment, '@api');
+        return strpos($docComment, '@api') !== false;
     }
 }
