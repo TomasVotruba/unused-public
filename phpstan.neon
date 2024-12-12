@@ -24,3 +24,11 @@ parameters:
         # removes important type knowledge
         -
             identifier: phpstanApi.instanceofType
+
+        # not useful - we need to check reflection instance
+        -
+            path: src/MethodTypeDetector.php
+            identifier: phpstanApi.instanceofAssumption
+        -
+            path: src/MethodTypeDetector.php
+            identifier: phpstanApi.class

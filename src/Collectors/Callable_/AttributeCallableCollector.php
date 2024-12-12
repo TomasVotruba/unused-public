@@ -11,6 +11,7 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Type\Constant\ConstantStringType;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\ValueObject\ClassAndMethodArrayExprs;
 

@@ -9,6 +9,7 @@ use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Type\Constant\ConstantStringType;
 use TomasVotruba\UnusedPublic\Configuration;
 
 /**
@@ -46,10 +47,10 @@ final readonly class FormTypeClassCollector implements Collector
         }
 
         $valueType = $scope->getType($node->value);
-        if (count($valueType->getConstantStrings()) !== 1) {
+        if (! $valueType instanceof ConstantStringType) {
             return null;
         }
 
-        return [$valueType->getConstantStrings()[0]->getValue()];
+        return [$valueType->getValue()];
     }
 }
