@@ -8,7 +8,6 @@ use PhpParser\Node;
 use PhpParser\Node\Attribute;
 use PhpParser\Node\AttributeGroup;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
@@ -81,14 +80,6 @@ final readonly class AttributeCallableCollector implements Collector
 
         $array = $firstArg->value;
         if (count($array->items) !== 2) {
-            return null;
-        }
-
-        if (! $array->items[0] instanceof ArrayItem) {
-            return null;
-        }
-
-        if (! $array->items[1] instanceof ArrayItem) {
             return null;
         }
 

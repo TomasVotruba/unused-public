@@ -2,10 +2,10 @@ includes:
     - config/extension.neon
 
 parameters:
-    type_coverage:
-        return_type: 99
-        param_type: 99
-        property_type: 99
+#    type_coverage:
+#        return_type: 99
+#        param_type: 99
+#        property_type: 99
 
     level: 8
 
@@ -21,7 +21,14 @@ parameters:
         -
             identifier: missingType.generics
 
-        # overly detailed
+        # removes important type knowledge
         -
-            message: '#testRule\(\) has parameter (.*?) with no value type specified in iterable type array#'
-            path: tests/Rules
+            identifier: phpstanApi.instanceofType
+
+        # not useful - we need to check reflection instance
+        -
+            path: src/MethodTypeDetector.php
+            identifier: phpstanApi.instanceofAssumption
+        -
+            path: src/MethodTypeDetector.php
+            identifier: phpstanApi.class

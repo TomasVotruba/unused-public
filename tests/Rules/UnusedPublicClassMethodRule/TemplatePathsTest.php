@@ -17,6 +17,10 @@ use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 
 final class TemplatePathsTest extends RuleTestCase
 {
+    /**
+     * @param string[] $filePaths
+     * @param list<array{0: string, 1: int, 2?: string|null}> $expectedErrorMessagesWithLines
+     */
     #[DataProvider('provideDataWithTwigTemplates')]
     #[DataProvider('provideDataWithBladeTemplates')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void

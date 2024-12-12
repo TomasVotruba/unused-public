@@ -6,6 +6,7 @@ namespace TomasVotruba\UnusedPublic\Collectors\Callable_;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr;
+use PhpParser\Node\Expr\Array_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Reflection\ClassReflection;
@@ -26,7 +27,7 @@ final readonly class CallableTypeCollector implements Collector
 
     public function getNodeType(): string
     {
-        return Expr\Array_::class;
+        return Array_::class;
     }
 
     /**
@@ -51,21 +52,23 @@ final readonly class CallableTypeCollector implements Collector
             return null;
         }
 
-        $typeAndMethodNames = $callableType->findTypeAndMethodNames();
-        if ($typeAndMethodNames === []) {
-            return null;
-        }
-
         $classMethodReferences = [];
-        foreach ($typeAndMethodNames as $typeAndMethodName) {
-            if ($typeAndMethodName->isUnknown()) {
+        foreach ($callableType->getConstantArrays() as $constantArray) {
+            $typeAndMethodNames = $constantArray->findTypeAndMethodNames();
+            if ($typeAndMethodNames === []) {
                 continue;
             }
 
-            $objectClassNames = $typeAndMethodName->getType()
-                ->getObjectClassNames();
-            foreach ($objectClassNames as $objectClassName) {
-                $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+            foreach ($typeAndMethodNames as $typeAndMethodName) {
+                if ($typeAndMethodName->isUnknown()) {
+                    continue;
+                }
+
+                $objectClassNames = $typeAndMethodName->getType()
+                    ->getObjectClassNames();
+                foreach ($objectClassNames as $objectClassName) {
+                    $classMethodReferences[] = $objectClassName . '::' . $typeAndMethodName->getMethod();
+                }
             }
         }
 
