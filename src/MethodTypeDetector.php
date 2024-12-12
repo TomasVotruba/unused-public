@@ -41,7 +41,6 @@ final class MethodTypeDetector
         }
 
         $extendedMethodReflection = $classReflection->getMethod($classMethod->name->toString(), $scope);
-        // @phpstan-ignore phpstanApi.instanceofAssumption, phpstanApi.class
         if ($extendedMethodReflection instanceof PhpMethodReflection || $extendedMethodReflection instanceof ResolvedMethodReflection) {
             return $extendedMethodReflection->getDeclaringTrait() instanceof ClassReflection;
         }

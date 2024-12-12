@@ -51,9 +51,8 @@ final readonly class AttributeCallableCollector implements Collector
             }
 
             $classType = $scope->getType($classAndMethodArrayExprs->getClassExpr());
-            if (count($classType->getConstantStrings()) === 1) {
-                $className = $classType->getConstantStrings()[0]
-                    ->getValue();
+            if ($classType instanceof ConstantStringType) {
+                $className = $classType->getValue();
             } else {
                 continue;
             }
