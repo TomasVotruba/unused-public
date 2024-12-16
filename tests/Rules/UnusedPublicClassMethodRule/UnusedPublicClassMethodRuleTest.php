@@ -20,6 +20,7 @@ use TomasVotruba\UnusedPublic\Collectors\StaticCall\StaticMethodCallCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicClassMethodRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Interface\InterfaceWithExtraMethod;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticProtectedMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\StaticPublicMethod;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\Tests\MethodForTests;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\Fixture\UsedInTestCaseOnly;
@@ -35,6 +36,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     #[DataProvider('provideData')]
     #[DataProvider('provideDataTests')]
     #[DataProvider('provideDataSymfony')]
+    #[DataProvider('provideProtectedMethodData')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
@@ -74,6 +76,17 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
             __DIR__ . '/Fixture/Symfony/SomeFormType.php',
             __DIR__ . '/Fixture/Symfony/SkipEntityGetterSetters.php',
         ], []];
+    }
+
+    public static function provideProtectedMethodData(): Iterator
+    {
+        yield [[__DIR__ . '/Fixture/SkipLocallyUsedProtectedMethod.php'], []];
+
+        $errorMessage = sprintf(UnusedPublicClassMethodRule::ERROR_MESSAGE, StaticProtectedMethod::class, 'runHere');
+        yield [[
+            __DIR__ . '/Source/StaticProtectedCalls.php',
+            __DIR__ . '/Fixture/StaticProtectedMethod.php',
+        ], [[$errorMessage, 9, RuleTips::SOLUTION_MESSAGE]]];
     }
 
     public static function provideData(): Iterator

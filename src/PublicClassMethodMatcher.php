@@ -62,7 +62,7 @@ final readonly class PublicClassMethodMatcher
 
     public function shouldSkipClassMethod(ClassMethod $classMethod): bool
     {
-        if (! $classMethod->isPublic()) {
+        if ($classMethod->isPrivate()) {
             return true;
         }
 
