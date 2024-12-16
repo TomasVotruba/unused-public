@@ -30,7 +30,7 @@ final readonly class UnusedPublicClassMethodRule implements Rule
      *
      * @api
      */
-    public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
+    public const ERROR_MESSAGE = 'Method "%s::%s()" is never used';
 
     public function __construct(
         private Configuration $configuration,
