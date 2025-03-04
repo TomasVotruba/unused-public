@@ -19,15 +19,40 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<MethodCall, non-empty-array<string>|null>
  */
-final readonly class MethodCallCollector implements Collector
+final class MethodCallCollector implements Collector
 {
-    public function __construct(
-        private ParentCallReferenceResolver $parentCallReferenceResolver,
-        private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-        private CallReferencesFlatter $callReferencesFlatter,
-    ) {
+    /**
+     * @readonly
+     */
+    private ParentCallReferenceResolver $parentCallReferenceResolver;
+
+    /**
+     * @readonly
+     */
+    private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private ClassTypeDetector $classTypeDetector;
+
+    /**
+     * @readonly
+     */
+    private CallReferencesFlatter $callReferencesFlatter;
+
+    public function __construct(ParentCallReferenceResolver $parentCallReferenceResolver, ClassMethodCallReferenceResolver $classMethodCallReferenceResolver, Configuration $configuration, ClassTypeDetector $classTypeDetector, CallReferencesFlatter $callReferencesFlatter)
+    {
+        $this->parentCallReferenceResolver = $parentCallReferenceResolver;
+        $this->classMethodCallReferenceResolver = $classMethodCallReferenceResolver;
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
+        $this->callReferencesFlatter = $callReferencesFlatter;
     }
 
     public function getNodeType(): string
