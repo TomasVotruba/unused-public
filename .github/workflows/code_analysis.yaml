@@ -30,7 +30,7 @@ jobs:
 
                     -
                         name: 'Check Commented Code'
-                        run: vendor/bin/easy-ci check-commented-code src tests --ansi
+                        run: vendor/bin/swiss-knife check-commented-code src tests --ansi
 
                     -
                         name: 'Check Active Classes'

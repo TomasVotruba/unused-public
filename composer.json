@@ -6,21 +6,21 @@
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
         "php": "^8.2",
-        "phpstan/phpstan": "^2.0.3",
+        "phpstan/phpstan": "^2.1.6",
         "webmozart/assert": "^1.11",
-        "nikic/php-parser": "^5.3"
+        "nikic/php-parser": "^5.4"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
         "tracy/tracy": "^2.10",
-        "symplify/easy-coding-standard": "^12.4",
+        "phpecs/phpecs": "^2.0",
         "rector/rector": "^2.0.0",
         "phpunit/phpunit": "^11.5",
         "tomasvotruba/class-leak": "^1.2",
-        "symplify/easy-ci": "^12.1",
         "symplify/phpstan-rules": "^14.0",
         "shipmonk/composer-dependency-analyser": "^1.7",
-        "tomasvotruba/type-coverage": "^2.0"
+        "tomasvotruba/type-coverage": "^2.0",
+        "rector/swiss-knife": "*"
     },
     "autoload": {
         "psr-4": {
@@ -39,8 +39,7 @@
         "check-cs": "vendor/bin/ecs check --ansi",
         "fix-cs": "vendor/bin/ecs check --fix --ansi",
         "phpstan": "vendor/bin/phpstan --ansi",
-        "rector": "vendor/bin/rector --dry-run --ansi",
-        "release": "vendor/bin/monorepo-builder release patch --ansi"
+        "rector": "vendor/bin/rector --dry-run --ansi"
     },
     "config": {
         "allow-plugins": {
