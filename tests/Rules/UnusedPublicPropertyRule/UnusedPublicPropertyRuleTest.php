@@ -138,6 +138,9 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         ];
         yield [[__DIR__ . '/Fixture/NullableProperty.php', __DIR__ . '/Source/PublicPropertyClass.php'], []];
 
+        if (PHP_VERSION_ID >= 80400) {
+            yield 'foo' => [[__DIR__ . '/Fixture/PropertyFromInterfaces.php'], []];
+        }
     }
 
     /**
