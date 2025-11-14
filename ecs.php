@@ -10,6 +10,7 @@ return ECSConfig::configure()
     ->withRootFiles()
     ->withSkip([
         '*/Fixture/*',
+        '*/Source/*',
         PhpUnitTestAnnotationFixer::class => 'tests/Rules/UnusedPublicClassMethodRule/Fixture/SkipTestCaseAnnotationMethod.php',
     ])
     ->withPreparedSets(common: true, psr12: true, cleanCode: true, symplify: true);
