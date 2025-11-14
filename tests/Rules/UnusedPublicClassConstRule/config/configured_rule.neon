@@ -1,8 +1,0 @@
-includes:
-    - ../../../../config/extension.neon
-
-parameters:
-    unused_public:
-        constants: true
-        template_paths:
-            - tests/Rules/UnusedPublicClassConstRule/templates
