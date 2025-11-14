@@ -104,6 +104,13 @@ final readonly class PublicPropertyCollector implements Collector
         }
 
         $parentClassReflection = $classReflection->getParentClass();
+
+        foreach ($classReflection->getInterfaces() as $interface) {
+            if ($interface->hasProperty($propertyName)) {
+                return true;
+            }
+        }
+
         if (! $parentClassReflection instanceof ClassReflection) {
             return false;
         }
