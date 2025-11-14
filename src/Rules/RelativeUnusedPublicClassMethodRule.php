@@ -20,7 +20,7 @@ use TomasVotruba\UnusedPublic\Utils\Strings;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\RelativeUnusedPublicClassMethodRule\RelativeUnusedPublicClassMethodRuleTest
  */
-final readonly class RelativeUnusedPublicClassMethodRule implements Rule
+final class RelativeUnusedPublicClassMethodRule implements Rule
 {
     /**
      * @var string
@@ -29,12 +29,36 @@ final readonly class RelativeUnusedPublicClassMethodRule implements Rule
      */
     public const ERROR_MESSAGE = 'Found %.1f %% of public methods as unused. Reduce it under %.1f %%';
 
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private UsedMethodAnalyzer $usedMethodAnalyzer;
+
+    /**
+     * @readonly
+     */
+    private TemplateMethodCallsProvider $templateMethodCallsProvider;
+
+    /**
+     * @readonly
+     */
+    private NodeCollectorExtractor $nodeCollectorExtractor;
+
     public function __construct(
-        private Configuration $configuration,
-        private UsedMethodAnalyzer $usedMethodAnalyzer,
-        private TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private NodeCollectorExtractor $nodeCollectorExtractor,
+        Configuration $configuration,
+        UsedMethodAnalyzer $usedMethodAnalyzer,
+        TemplateMethodCallsProvider $templateMethodCallsProvider,
+        NodeCollectorExtractor $nodeCollectorExtractor
     ) {
+        $this->configuration = $configuration;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
+        $this->templateMethodCallsProvider = $templateMethodCallsProvider;
+        $this->nodeCollectorExtractor = $nodeCollectorExtractor;
     }
 
     public function getNodeType(): string
@@ -127,8 +151,9 @@ final readonly class RelativeUnusedPublicClassMethodRule implements Rule
     /**
      * @param array<string, int[]> $filePathToLines
      * @return RuleError[]
+     * @param int|float $maximumLimit
      */
-    private function createRuleErrors(array $filePathToLines, float $relative, int|float $maximumLimit): array
+    private function createRuleErrors(array $filePathToLines, float $relative, $maximumLimit): array
     {
         $ruleErrors = [];
 
