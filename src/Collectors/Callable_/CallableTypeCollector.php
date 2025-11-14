@@ -53,8 +53,8 @@ final readonly class CallableTypeCollector implements Collector
         }
 
         $classMethodReferences = [];
-        foreach ($callableType->getConstantArrays() as $constantArray) {
-            $typeAndMethodNames = $constantArray->findTypeAndMethodNames();
+        foreach ($callableType->getConstantArrays() as $constantArrayType) {
+            $typeAndMethodNames = $constantArrayType->findTypeAndMethodNames();
             if ($typeAndMethodNames === []) {
                 continue;
             }

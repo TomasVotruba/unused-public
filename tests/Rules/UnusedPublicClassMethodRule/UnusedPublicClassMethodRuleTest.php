@@ -33,11 +33,18 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
      * @param list<array{0: string, 1: int, 2?: string|null}> $expectedErrorMessagesWithLines
      */
     #[DataProvider('provideData')]
+    #[DataProvider('provideDataDoctrine')]
     #[DataProvider('provideDataTests')]
     #[DataProvider('provideDataSymfony')]
     public function testRule(array $filePaths, array $expectedErrorMessagesWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
+    }
+
+    public static function provideDataDoctrine(): Iterator
+    {
+        // doctrine
+        yield [[__DIR__ . '/Fixture/Doctrine/SkipDoctrineEventSubscriber.php'], []];
     }
 
     public static function provideDataTests(): Iterator

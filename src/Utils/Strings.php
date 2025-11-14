@@ -21,6 +21,6 @@ final class Strings
      */
     public static function lowercase(array $values): array
     {
-        return array_map(static fn (string $value): string => strtolower($value), $values);
+        return array_map(strtolower(...), $values);
     }
 }

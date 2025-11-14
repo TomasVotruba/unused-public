@@ -25,6 +25,8 @@ final readonly class PublicClassMethodCollector implements Collector
     private const SKIPPED_TYPES = [
         // symfony
         'Symfony\Component\EventDispatcher\EventSubscriberInterface',
+        // doctrine
+        'Doctrine\Common\EventSubscriber',
         'JMS\Serializer\Handler\SubscribingHandlerInterface',
         'Twig\Extension\ExtensionInterface',
         'Symfony\Bundle\FrameworkBundle\Controller\Controller',
