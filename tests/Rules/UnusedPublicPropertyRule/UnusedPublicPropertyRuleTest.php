@@ -15,6 +15,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
 use TomasVotruba\UnusedPublic\Rules\UnusedPublicPropertyRule;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\IgnoresPrivateApiProperty;
+use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedPromotedProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticProperty;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocallyUsedStaticPropertyViaStatic;
 use TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule\Fixture\LocalyUsedPublicProperty;
@@ -139,6 +140,20 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/NullableProperty.php', __DIR__ . '/Source/PublicPropertyClass.php'], []];
 
         yield [[__DIR__ . '/Fixture/PropertyFromInterfaces.php'], []];
+
+        // constructor promoted properties
+        $errorMessage = sprintf(UnusedPublicPropertyRule::ERROR_MESSAGE, LocallyUsedPromotedProperty::class, 'name');
+        yield [[__DIR__ . '/Fixture/LocallyUsedPromotedProperty.php'],
+            [[$errorMessage, 10, RuleTips::SOLUTION_MESSAGE]], ];
+
+        yield [
+            [__DIR__ . '/Fixture/LocallyUsedPromotedProperty.php', __DIR__ . '/Source/UsingExternalPromotedProperty.php'],
+            [],
+        ];
+
+        yield [[__DIR__ . '/Fixture/SkipPrivatePromotedProperty.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipProtectedPromotedProperty.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipPublicApiPromotedProperty.php'], []];
     }
 
     /**
