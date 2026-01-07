@@ -22,7 +22,7 @@ final readonly class PublicClassMethodCollector implements Collector
     /**
      * @var string[]
      */
-    private const SKIPPED_TYPES = [
+    private const array SKIPPED_TYPES = [
         // symfony
         'Symfony\Component\EventDispatcher\EventSubscriberInterface',
         // doctrine

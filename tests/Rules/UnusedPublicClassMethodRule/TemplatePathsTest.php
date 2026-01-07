@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -28,6 +29,9 @@ final class TemplatePathsTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataWithTwigTemplates(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php'], []];
@@ -39,6 +43,9 @@ final class TemplatePathsTest extends RuleTestCase
         ], []];
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataWithBladeTemplates(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Blade/SkipUsedInBlade.php'], []];
@@ -49,6 +56,7 @@ final class TemplatePathsTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -57,6 +65,7 @@ final class TemplatePathsTest extends RuleTestCase
     /**
      * @return array<Collector>
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [

@@ -24,11 +24,9 @@ use TomasVotruba\UnusedPublic\Utils\Strings;
 final readonly class LocalOnlyPublicClassMethodRule implements Rule
 {
     /**
-     * @var string
-     *
      * @api
      */
-    public const ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should be turned protected/private';
+    public const string ERROR_MESSAGE = 'Public method "%s::%s()" is used only locally and should be turned protected/private';
 
     public function __construct(
         private Configuration $configuration,

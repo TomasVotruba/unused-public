@@ -23,11 +23,9 @@ use TomasVotruba\UnusedPublic\Utils\Strings;
 final readonly class RelativeUnusedPublicClassMethodRule implements Rule
 {
     /**
-     * @var string
-     *
      * @api
      */
-    public const ERROR_MESSAGE = 'Found %.1f %% of public methods as unused. Reduce it under %.1f %%';
+    public const string ERROR_MESSAGE = 'Found %.1f %% of public methods as unused. Reduce it under %.1f %%';
 
     public function __construct(
         private Configuration $configuration,

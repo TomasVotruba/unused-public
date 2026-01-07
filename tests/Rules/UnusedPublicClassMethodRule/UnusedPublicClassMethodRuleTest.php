@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -41,12 +42,18 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataDoctrine(): Iterator
     {
         // doctrine
         yield [[__DIR__ . '/Fixture/Doctrine/SkipDoctrineEventSubscriber.php'], []];
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideDataTests(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Tests/SkipTestCaseAnnotationMethod.php'], []];
@@ -70,6 +77,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ], [[$errorMessage2, 9, RuleTips::SOLUTION_MESSAGE], [$errorMessage1, 13, RuleTips::SOLUTION_MESSAGE]]];
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataSymfony(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Serializer/SkipSerializerMethod.php'], []];
@@ -83,6 +93,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ], []];
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];
@@ -196,6 +209,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -204,6 +218,7 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
     /**
      * @return array<Collector>
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [

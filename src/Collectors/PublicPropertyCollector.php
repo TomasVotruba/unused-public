@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TomasVotruba\UnusedPublic\Collectors;
 
-use Livewire\Component;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
@@ -23,9 +22,9 @@ use TomasVotruba\UnusedPublic\Configuration;
 final readonly class PublicPropertyCollector implements Collector
 {
     /**
-     * @var array<class-string<Component>>
+     * @var array<string>
      */
-    private const CLASSES_TO_SKIP = ['Livewire\Component'];
+    private const array CLASSES_TO_SKIP = ['Livewire\Component'];
 
     public function __construct(
         private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
@@ -85,12 +84,12 @@ final readonly class PublicPropertyCollector implements Collector
         }
 
         // Collect constructor promoted public properties
-        foreach ($classLike->getMethods() as $method) {
-            if (! $this->isConstructorMethod($method)) {
+        foreach ($classLike->getMethods() as $classMethod) {
+            if (! $this->isConstructorMethod($classMethod)) {
                 continue;
             }
 
-            foreach ($method->getParams() as $param) {
+            foreach ($classMethod->getParams() as $param) {
                 if (! $this->isPublicPromotedProperty($param)) {
                     continue;
                 }
@@ -119,9 +118,9 @@ final readonly class PublicPropertyCollector implements Collector
         return $publicPropertyNames;
     }
 
-    private function isConstructorMethod(ClassMethod $method): bool
+    private function isConstructorMethod(ClassMethod $classMethod): bool
     {
-        return $method->name->toLowerString() === '__construct';
+        return $classMethod->name->toLowerString() === '__construct';
     }
 
     private function isPublicPromotedProperty(Param $param): bool
