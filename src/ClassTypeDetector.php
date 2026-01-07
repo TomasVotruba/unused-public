@@ -10,9 +10,14 @@ final class ClassTypeDetector
 {
     public function isTestClass(ClassReflection $classReflection): bool
     {
-        return $classReflection->isSubclassOf('PHPUnit\Framework\TestCase')
-            || $classReflection->isSubclassOf('PHPUnit_Framework_TestCase')
-            || $classReflection->implementsInterface('Behat\Behat\Context\Context')
-        ;
+        if ($classReflection->isSubclassOf('PHPUnit\Framework\TestCase')) {
+            return true;
+        }
+
+        if ($classReflection->isSubclassOf('PHPUnit_Framework_TestCase')) {
+            return true;
+        }
+
+        return $classReflection->implementsInterface('Behat\Behat\Context\Context');
     }
 }

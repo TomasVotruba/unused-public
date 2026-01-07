@@ -33,11 +33,17 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataFromBladeTemplates(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Blade/RouteName.php'], []];
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         $errorMessage = sprintf(UnusedPublicClassConstRule::ERROR_MESSAGE, UnusedPublicConstant::class, 'UNUSED');

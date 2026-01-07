@@ -35,6 +35,9 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/PropertyUsedViaSubClass.php'], []];

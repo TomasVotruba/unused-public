@@ -32,6 +32,9 @@ final class RelativeUnusedPublicClassMethodRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         $firstErrorMessage = sprintf(RelativeUnusedPublicClassMethodRule::ERROR_MESSAGE, 100, 55);

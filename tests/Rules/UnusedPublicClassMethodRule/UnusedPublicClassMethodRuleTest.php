@@ -42,12 +42,18 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataDoctrine(): Iterator
     {
         // doctrine
         yield [[__DIR__ . '/Fixture/Doctrine/SkipDoctrineEventSubscriber.php'], []];
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideDataTests(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Tests/SkipTestCaseAnnotationMethod.php'], []];
@@ -71,6 +77,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ], [[$errorMessage2, 9, RuleTips::SOLUTION_MESSAGE], [$errorMessage1, 13, RuleTips::SOLUTION_MESSAGE]]];
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataSymfony(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Serializer/SkipSerializerMethod.php'], []];
@@ -84,6 +93,9 @@ final class UnusedPublicClassMethodRuleTest extends RuleTestCase
         ], []];
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipLocallyUsedPublicMethod.php'], []];

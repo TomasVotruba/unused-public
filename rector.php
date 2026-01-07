@@ -21,7 +21,10 @@ return RectorConfig::configure()
         typeDeclarationDocblocks: true,
     )
     ->withSkip([
-        StringClassNameToClassConstantRector::class => [__DIR__ . '/src/Collectors/PublicClassMethodCollector.php'],
+        StringClassNameToClassConstantRector::class => [
+            __DIR__ . '/src/Collectors/PublicClassMethodCollector.php',
+            __DIR__ . '/src/Collectors/PublicPropertyCollector.php',
+        ],
     ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         'Twig\Extension\ExtensionInterface',

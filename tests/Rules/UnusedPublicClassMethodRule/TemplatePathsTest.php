@@ -29,6 +29,9 @@ final class TemplatePathsTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataWithTwigTemplates(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipTwigEntityWithMethods.php'], []];
@@ -40,6 +43,9 @@ final class TemplatePathsTest extends RuleTestCase
         ], []];
     }
 
+    /**
+     * @return Iterator<array<int, array<mixed>>>
+     */
     public static function provideDataWithBladeTemplates(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Blade/SkipUsedInBlade.php'], []];
