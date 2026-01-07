@@ -27,11 +27,9 @@ use TomasVotruba\UnusedPublic\Utils\Strings;
 final readonly class UnusedPublicClassMethodRule implements Rule
 {
     /**
-     * @var string
-     *
      * @api
      */
-    public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
+    public const string ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
 
     public function __construct(
         private Configuration $configuration,

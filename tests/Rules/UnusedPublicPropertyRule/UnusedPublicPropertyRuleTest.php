@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicPropertyRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -147,7 +148,10 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
             [[$errorMessage, 10, RuleTips::SOLUTION_MESSAGE]], ];
 
         yield [
-            [__DIR__ . '/Fixture/LocallyUsedPromotedProperty.php', __DIR__ . '/Source/UsingExternalPromotedProperty.php'],
+            [
+                __DIR__ . '/Fixture/LocallyUsedPromotedProperty.php',
+                __DIR__ . '/Source/UsingExternalPromotedProperty.php',
+            ],
             [],
         ];
 
@@ -159,6 +163,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -167,6 +172,7 @@ final class UnusedPublicPropertyRuleTest extends RuleTestCase
     /**
      * @return array<Collector>
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [

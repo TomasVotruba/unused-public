@@ -13,7 +13,7 @@ final readonly class PublicClassMethodMatcher
     /**
      * @var string[]
      */
-    private const SKIPPED_TYPES = [
+    private const array SKIPPED_TYPES = [
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
 

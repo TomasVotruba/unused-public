@@ -6,8 +6,8 @@
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
         "php": "^7.4 || ^8.0",
-        "phpstan/phpstan": "^2.1.6",
-        "webmozart/assert": "^1.11"
+        "phpstan/phpstan": "^2.1.33",
+        "webmozart/assert": "^1.11|^2.0"
     },
     "autoload": {
         "psr-4": {

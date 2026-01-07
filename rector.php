@@ -16,8 +16,13 @@ return RectorConfig::configure()
         deadCode: true,
         privatization: true,
         naming: true,
-        codeQuality: true
+        codeQuality: true,
+        earlyReturn: true,
+        typeDeclarationDocblocks: true,
     )
+    ->withSkip([
+        StringClassNameToClassConstantRector::class => [__DIR__ . '/src/Collectors/PublicClassMethodCollector.php'],
+    ])
     ->withConfiguredRule(StringClassNameToClassConstantRector::class, [
         'Twig\Extension\ExtensionInterface',
         'PHPUnit\Framework\TestCase',

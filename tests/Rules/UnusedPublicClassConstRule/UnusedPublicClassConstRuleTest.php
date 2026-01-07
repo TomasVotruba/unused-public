@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -86,6 +87,7 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -94,6 +96,7 @@ final class UnusedPublicClassConstRuleTest extends RuleTestCase
     /**
      * @return array<Collector>
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [

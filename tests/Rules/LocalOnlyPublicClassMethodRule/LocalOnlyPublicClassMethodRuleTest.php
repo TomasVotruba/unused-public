@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\UnusedPublic\Tests\Rules\LocalOnlyPublicClassMethodRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -69,6 +70,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -77,6 +79,7 @@ final class LocalOnlyPublicClassMethodRuleTest extends RuleTestCase
     /**
      * @return array<Collector>
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [
