@@ -6,5 +6,8 @@ namespace TomasVotruba\UnusedPublic\Enum;
 
 final class RuleIdentifier
 {
-    public const string PUBLIC_METHOD_UNUSED = 'public.method.unused';
+    /**
+     * @var string
+     */
+    public const PUBLIC_METHOD_UNUSED = 'public.method.unused';
 }

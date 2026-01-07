@@ -8,18 +8,23 @@ use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Reflection\ClassReflection;
 
-final readonly class PublicClassMethodMatcher
+final class PublicClassMethodMatcher
 {
     /**
      * @var string[]
      */
-    private const array SKIPPED_TYPES = [
+    private const SKIPPED_TYPES = [
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
 
-    public function __construct(
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassTypeDetector $classTypeDetector;
+
+    public function __construct(ClassTypeDetector $classTypeDetector)
+    {
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function shouldSkipClassReflection(ClassReflection $classReflection): bool
@@ -82,10 +87,10 @@ final readonly class PublicClassMethodMatcher
             return false;
         }
 
-        if (str_contains($doc->getText(), '@Route')) {
+        if (strpos($doc->getText(), '@Route') !== false) {
             return true;
         }
 
-        return str_contains($doc->getText(), '@Required');
+        return strpos($doc->getText(), '@Required') !== false;
     }
 }

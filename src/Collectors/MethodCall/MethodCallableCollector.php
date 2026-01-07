@@ -18,14 +18,38 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<MethodCallableNode, non-empty-array<string>|null>
  */
-final readonly class MethodCallableCollector implements Collector
+final class MethodCallableCollector implements Collector
 {
+    /**
+     * @readonly
+     */
+    private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private ClassTypeDetector $classTypeDetector;
+
+    /**
+     * @readonly
+     */
+    private CallReferencesFlatter $callReferencesFlatter;
+
     public function __construct(
-        private ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-        private CallReferencesFlatter $callReferencesFlatter,
+        ClassMethodCallReferenceResolver $classMethodCallReferenceResolver,
+        Configuration $configuration,
+        ClassTypeDetector $classTypeDetector,
+        CallReferencesFlatter $callReferencesFlatter
     ) {
+        $this->classMethodCallReferenceResolver = $classMethodCallReferenceResolver;
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
+        $this->callReferencesFlatter = $callReferencesFlatter;
     }
 
     public function getNodeType(): string

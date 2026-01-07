@@ -8,11 +8,13 @@ final class TwigRegex
 {
     /**
      * @see https://regex101.com/r/3gLWCt/1
+     * @var string
      */
-    public const string INNER_REGEX = '#\{(\{|%)(?<contents>.*?)(\}|%)\}#';
+    public const INNER_REGEX = '#\{(\{|%)(?<contents>.*?)(\}|%)\}#';
 
     /**
      * @see https://regex101.com/r/G7zAue/1
+     * @var string
      */
-    public const string METHOD_CALL_REGEX = '#\w+\.(?<desired_name>\w+)#';
+    public const METHOD_CALL_REGEX = '#\w+\.(?<desired_name>\w+)#';
 }

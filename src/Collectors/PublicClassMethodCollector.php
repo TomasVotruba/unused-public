@@ -17,12 +17,12 @@ use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 /**
  * @implements Collector<ClassMethod, array{class-string, string, int}|null>
  */
-final readonly class PublicClassMethodCollector implements Collector
+final class PublicClassMethodCollector implements Collector
 {
     /**
      * @var string[]
      */
-    private const array SKIPPED_TYPES = [
+    private const SKIPPED_TYPES = [
         // symfony
         'Symfony\Component\EventDispatcher\EventSubscriberInterface',
         // doctrine
@@ -39,12 +39,36 @@ final readonly class PublicClassMethodCollector implements Collector
         'Illuminate\Support\ServiceProvider',
     ];
 
+    /**
+     * @readonly
+     */
+    private ApiDocStmtAnalyzer $apiDocStmtAnalyzer;
+
+    /**
+     * @readonly
+     */
+    private PublicClassMethodMatcher $publicClassMethodMatcher;
+
+    /**
+     * @readonly
+     */
+    private MethodTypeDetector $methodTypeDetector;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
     public function __construct(
-        private ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
-        private PublicClassMethodMatcher $publicClassMethodMatcher,
-        private MethodTypeDetector $methodTypeDetector,
-        private Configuration $configuration,
+        ApiDocStmtAnalyzer $apiDocStmtAnalyzer,
+        PublicClassMethodMatcher $publicClassMethodMatcher,
+        MethodTypeDetector $methodTypeDetector,
+        Configuration $configuration
     ) {
+        $this->apiDocStmtAnalyzer = $apiDocStmtAnalyzer;
+        $this->publicClassMethodMatcher = $publicClassMethodMatcher;
+        $this->methodTypeDetector = $methodTypeDetector;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string
@@ -100,7 +124,7 @@ final readonly class PublicClassMethodCollector implements Collector
     private function shouldSkip(ClassReflection $classReflection, ClassMethod $classMethod, Scope $scope): bool
     {
         // skip acceptance tests, codeception
-        if (str_ends_with($classReflection->getName(), 'Cest')) {
+        if (substr_compare($classReflection->getName(), 'Cest', -strlen('Cest')) === 0) {
             return true;
         }
 

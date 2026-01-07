@@ -21,17 +21,28 @@ use TomasVotruba\UnusedPublic\Utils\Arrays;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassConstRule\UnusedPublicClassConstRuleTest
  */
-final readonly class UnusedPublicClassConstRule implements Rule
+final class UnusedPublicClassConstRule implements Rule
 {
     /**
      * @api
+     * @var string
      */
-    public const string ERROR_MESSAGE = 'Public constant "%s::%s" is never used';
+    public const ERROR_MESSAGE = 'Public constant "%s::%s" is never used';
 
-    public function __construct(
-        private Configuration $configuration,
-        private TemplateRegexFinder $templateRegexFinder,
-    ) {
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private TemplateRegexFinder $templateRegexFinder;
+
+    public function __construct(Configuration $configuration, TemplateRegexFinder $templateRegexFinder)
+    {
+        $this->configuration = $configuration;
+        $this->templateRegexFinder = $templateRegexFinder;
     }
 
     public function getNodeType(): string

@@ -24,19 +24,44 @@ use TomasVotruba\UnusedPublic\Utils\Strings;
 /**
  * @see \TomasVotruba\UnusedPublic\Tests\Rules\UnusedPublicClassMethodRule\UnusedPublicClassMethodRuleTest
  */
-final readonly class UnusedPublicClassMethodRule implements Rule
+final class UnusedPublicClassMethodRule implements Rule
 {
     /**
      * @api
+     * @var string
      */
-    public const string ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
+    public const ERROR_MESSAGE = 'Public method "%s::%s()" is never used';
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private TemplateMethodCallsProvider $templateMethodCallsProvider;
+
+    /**
+     * @readonly
+     */
+    private UsedMethodAnalyzer $usedMethodAnalyzer;
+
+    /**
+     * @readonly
+     */
+    private NodeCollectorExtractor $nodeCollectorExtractor;
 
     public function __construct(
-        private Configuration $configuration,
-        private TemplateMethodCallsProvider $templateMethodCallsProvider,
-        private UsedMethodAnalyzer $usedMethodAnalyzer,
-        private NodeCollectorExtractor $nodeCollectorExtractor,
+        Configuration $configuration,
+        TemplateMethodCallsProvider $templateMethodCallsProvider,
+        UsedMethodAnalyzer $usedMethodAnalyzer,
+        NodeCollectorExtractor $nodeCollectorExtractor
     ) {
+        $this->configuration = $configuration;
+        $this->templateMethodCallsProvider = $templateMethodCallsProvider;
+        $this->usedMethodAnalyzer = $usedMethodAnalyzer;
+        $this->nodeCollectorExtractor = $nodeCollectorExtractor;
     }
 
     public function getNodeType(): string
