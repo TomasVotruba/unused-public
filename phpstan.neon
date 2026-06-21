@@ -14,6 +14,13 @@ parameters:
         param_type: 99
         property_type: 99
 
+    # see https://github.com/symplify/phpstan-rules
+    symplify:
+        symfonyReturnType: true
+        laravelReturnType: true
+        pathStrings: true
+        ctor: true
+
     level: 8
 
     paths:

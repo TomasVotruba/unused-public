@@ -1,0 +1,9 @@
+includes:
+    - ../../../../config/extension.neon
+
+parameters:
+    unused_public:
+        properties: true
+
+        template_paths:
+            - tests/Rules/UnusedPublicPropertyRule/templates

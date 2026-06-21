@@ -32,6 +32,19 @@ final readonly class TemplateMethodCallsProvider
     /**
      * @return string[]
      */
+    public function provideBladePropertyFetches(): array
+    {
+        return $this->templateRegexFinder->find(
+            $this->configuration->getTemplatePaths(),
+            'blade.php',
+            [BladeRegex::INNER_REGEX, BladeRegex::TAG_REGEX],
+            BladeRegex::PROPERTY_FETCH_REGEX
+        );
+    }
+
+    /**
+     * @return string[]
+     */
     public function provideTwigMethodCalls(): array
     {
         return $this->templateRegexFinder->find(
