@@ -8,18 +8,23 @@ use PhpParser\Comment\Doc;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Reflection\ClassReflection;
 
-final readonly class PublicClassMethodMatcher
+final class PublicClassMethodMatcher
 {
     /**
      * @var string[]
      */
-    private const array SKIPPED_TYPES = [
+    private const SKIPPED_TYPES = [
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
 
-    public function __construct(
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassTypeDetector $classTypeDetector;
+
+    public function __construct(ClassTypeDetector $classTypeDetector)
+    {
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function shouldSkipClassReflection(ClassReflection $classReflection): bool
@@ -32,11 +37,14 @@ final readonly class PublicClassMethodMatcher
         if ($this->classTypeDetector->isTestClass($classReflection)) {
             return true;
         }
-
-        return array_any(
-            self::SKIPPED_TYPES,
-            fn (string $skippedType): bool => $classReflection->isSubclassOf($skippedType)
-        );
+        $found = false;
+        foreach (self::SKIPPED_TYPES as $skippedType) {
+            if ($classReflection->isSubclassOf($skippedType)) {
+                $found = true;
+                break;
+            }
+        }
+        return $found;
     }
 
     public function isUsedByParentClassOrInterface(ClassReflection $classReflection, string $methodName): bool
@@ -47,11 +55,14 @@ final readonly class PublicClassMethodMatcher
                 return true;
             }
         }
-
-        return array_any(
-            $classReflection->getParents(),
-            fn (ClassReflection $parentClassReflection): bool => $parentClassReflection->hasMethod($methodName)
-        );
+        $found = false;
+        foreach ($classReflection->getParents() as $parentClassReflection) {
+            if ($parentClassReflection->hasMethod($methodName)) {
+                $found = true;
+                break;
+            }
+        }
+        return $found;
     }
 
     public function shouldSkipClassMethod(ClassMethod $classMethod): bool
@@ -76,10 +87,10 @@ final readonly class PublicClassMethodMatcher
             return false;
         }
 
-        if (str_contains($doc->getText(), '@Route')) {
+        if (strpos($doc->getText(), '@Route') !== false) {
             return true;
         }
 
-        return str_contains($doc->getText(), '@Required');
+        return strpos($doc->getText(), '@Required') !== false;
     }
 }

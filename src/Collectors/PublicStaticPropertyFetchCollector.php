@@ -17,12 +17,22 @@ use TomasVotruba\UnusedPublic\Configuration;
 /**
  * @implements Collector<StaticPropertyFetch, non-empty-array<string>|null>
  */
-final readonly class PublicStaticPropertyFetchCollector implements Collector
+final class PublicStaticPropertyFetchCollector implements Collector
 {
-    public function __construct(
-        private Configuration $configuration,
-        private ClassTypeDetector $classTypeDetector,
-    ) {
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private ClassTypeDetector $classTypeDetector;
+
+    public function __construct(Configuration $configuration, ClassTypeDetector $classTypeDetector)
+    {
+        $this->configuration = $configuration;
+        $this->classTypeDetector = $classTypeDetector;
     }
 
     public function getNodeType(): string

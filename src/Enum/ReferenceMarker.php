@@ -6,5 +6,8 @@ namespace TomasVotruba\UnusedPublic\Enum;
 
 final class ReferenceMarker
 {
-    public const string LOCAL = 'local::';
+    /**
+     * @var string
+     */
+    public const LOCAL = 'local::';
 }
