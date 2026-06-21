@@ -33,13 +33,10 @@ final readonly class PublicClassMethodMatcher
             return true;
         }
 
-        foreach (self::SKIPPED_TYPES as $skippedType) {
-            if ($classReflection->isSubclassOf($skippedType)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(
+            self::SKIPPED_TYPES,
+            fn (string $skippedType): bool => $classReflection->isSubclassOf($skippedType)
+        );
     }
 
     public function isUsedByParentClassOrInterface(ClassReflection $classReflection, string $methodName): bool
@@ -51,13 +48,10 @@ final readonly class PublicClassMethodMatcher
             }
         }
 
-        foreach ($classReflection->getParents() as $parentClassReflection) {
-            if ($parentClassReflection->hasMethod($methodName)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(
+            $classReflection->getParents(),
+            fn (ClassReflection $parentClassReflection): bool => $parentClassReflection->hasMethod($methodName)
+        );
     }
 
     public function shouldSkipClassMethod(ClassMethod $classMethod): bool

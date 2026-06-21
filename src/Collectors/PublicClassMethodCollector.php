@@ -113,12 +113,9 @@ final readonly class PublicClassMethodCollector implements Collector
 
     private function isSkippedType(ClassReflection $classReflection): bool
     {
-        foreach (self::SKIPPED_TYPES as $skippedType) {
-            if ($classReflection->isSubclassOf($skippedType)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(
+            self::SKIPPED_TYPES,
+            fn (string $skippedType): bool => $classReflection->isSubclassOf($skippedType)
+        );
     }
 }
