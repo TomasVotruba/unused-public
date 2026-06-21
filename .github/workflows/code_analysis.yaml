@@ -30,11 +30,11 @@ jobs:
 
                     -
                         name: 'Check Commented Code'
-                        run: vendor/bin/swiss-knife check-commented-code src tests --ansi
+                        run: vendor/bin/swiss-knife check-commented-code src tests
 
                     -
                         name: 'Check Active Classes'
-                        run: vendor/bin/class-leak check src --ansi
+                        run: vendor/bin/class-leak check src
 
                     -
                         name: 'Detect composer dependency issues'
