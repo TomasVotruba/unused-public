@@ -15,6 +15,7 @@ use TomasVotruba\UnusedPublic\Collectors\PublicPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Collectors\PublicStaticPropertyFetchCollector;
 use TomasVotruba\UnusedPublic\Configuration;
 use TomasVotruba\UnusedPublic\Enum\RuleTips;
+use TomasVotruba\UnusedPublic\Templates\TemplateMethodCallsProvider;
 use TomasVotruba\UnusedPublic\Utils\Arrays;
 
 /**
@@ -28,7 +29,8 @@ final readonly class UnusedPublicPropertyRule implements Rule
     public const string ERROR_MESSAGE = 'Public property "%s::$%s" is never used';
 
     public function __construct(
-        private Configuration $configuration
+        private Configuration $configuration,
+        private TemplateMethodCallsProvider $templateMethodCallsProvider,
     ) {
     }
 
@@ -56,12 +58,22 @@ final readonly class UnusedPublicPropertyRule implements Rule
             ...Arrays::flatten($publicStaticPropertyFetchCollector),
         ];
 
+        // property fetches used in templates, matched by bare property name
+        $templatePropertyNames = [
+            ...$this->templateMethodCallsProvider->provideBladePropertyFetches(),
+            ...$this->templateMethodCallsProvider->provideTwigMethodCalls(),
+        ];
+
         $ruleErrors = [];
 
         foreach ($publicPropertyCollector as $filePath => $declarationsGroups) {
             foreach ($declarationsGroups as $declarationGroup) {
                 foreach ($declarationGroup as [$className, $propertyName, $line]) {
                     if ($this->isPropertyUsed($className, $propertyName, $usedProperties)) {
+                        continue;
+                    }
+
+                    if (in_array($propertyName, $templatePropertyNames, true)) {
                         continue;
                     }
 

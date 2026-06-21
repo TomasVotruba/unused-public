@@ -6,7 +6,7 @@
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
         "php": "^8.4",
-        "webmozart/assert": " ^2.0",
+        "webmozart/assert": "^2.4",
         "phpstan/phpstan": "^2.2",
         "nikic/php-parser": "^5.7"
     },
@@ -21,8 +21,7 @@
         "shipmonk/composer-dependency-analyser": "^1.8",
         "tomasvotruba/type-coverage": "^2.2",
         "rector/swiss-knife": "^2.4",
-        "rector/jack": "^1.1",
-        "symplify/phpstan-extensions": "^12.0"
+        "rector/jack": "^1.1"
     },
     "autoload": {
         "psr-4": {
