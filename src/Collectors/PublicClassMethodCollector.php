@@ -15,7 +15,7 @@ use TomasVotruba\UnusedPublic\MethodTypeDetector;
 use TomasVotruba\UnusedPublic\PublicClassMethodMatcher;
 
 /**
- * @implements Collector<ClassMethod, array{class-string, string, int}|null>
+ * @implements Collector<ClassMethod, array{class-string, string, int}>
  */
 final readonly class PublicClassMethodCollector implements Collector
 {

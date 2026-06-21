@@ -36,6 +36,3 @@ parameters:
         -
             path: src/MethodTypeDetector.php
             identifier: phpstanApi.instanceofAssumption
-        -
-            path: src/MethodTypeDetector.php
-            identifier: phpstanApi.class

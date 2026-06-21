@@ -8,7 +8,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\Php\PhpMethodReflection;
-use PHPStan\Reflection\ResolvedMethodReflection;
 
 final class MethodTypeDetector
 {
@@ -41,7 +40,7 @@ final class MethodTypeDetector
         }
 
         $extendedMethodReflection = $classReflection->getMethod($classMethod->name->toString(), $scope);
-        if ($extendedMethodReflection instanceof PhpMethodReflection || $extendedMethodReflection instanceof ResolvedMethodReflection) {
+        if ($extendedMethodReflection instanceof PhpMethodReflection) {
             return $extendedMethodReflection->getDeclaringTrait() instanceof ClassReflection;
         }
 
