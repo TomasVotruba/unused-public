@@ -4,6 +4,7 @@
     "description": "Detect unused public properties, constants and methods in your code",
     "license": "MIT",
     "keywords": ["static analysis", "phpstan-extension"],
+    "abandoned": "shipmonk/dead-code-detector",
     "require": {
         "php": "^8.4",
         "webmozart/assert": "^2.4",

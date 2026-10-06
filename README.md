@@ -1,5 +1,9 @@
 # Find Unused Public Elements in Your Code
 
+> [!WARNING]
+> This package is deprecated and no longer maintained. Use [shipmonk/dead-code-detector](https://github.com/shipmonk-rnd/dead-code-detector) instead.
+
+
 <br>
 
 <div align="center">
